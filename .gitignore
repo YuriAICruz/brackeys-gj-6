@@ -11,6 +11,8 @@
 
 /TempLocalizations/*
 
+local_data/*
+
 /Assets/FacebookSDK/Examples/*
 /Assets/FacebookSDK/Examples.*
 
