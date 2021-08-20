@@ -12,6 +12,14 @@ namespace Graphene.Installers
         public override void InstallBindings()
         {
             SignalBusInstaller.Install(Container);
+
+            Container.DeclareSignal<InputSignal.Up>();
+            Container.DeclareSignal<InputSignal.Down>();
+            Container.DeclareSignal<InputSignal.Axes>();
+
+            Container.BindInstance(settings);
+
+            Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle().NonLazy();
         }
     }
 }

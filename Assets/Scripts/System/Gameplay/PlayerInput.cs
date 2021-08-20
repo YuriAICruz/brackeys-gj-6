@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Zenject;
 
 namespace System.Gameplay
@@ -10,30 +11,48 @@ namespace System.Gameplay
 
         public InputSignal.Axes _axes;
 
-        private int _axesCount;
+        public class buttonInfo
+        {
+            public bool down;
+            public float time;
+        }
+
+        public buttonInfo[] _buttons;
+
+        private readonly int _axesCount = 4;
 
         public PlayerInput(SignalBus signalBus, InputSettings settings)
         {
             _signalBus = signalBus;
             _settings = settings;
             _axes = new InputSignal.Axes();
+            _buttons = new buttonInfo[_settings.inputMap.inputs.Max(x => x.id) + 1];
+            for (int i = 0; i < _buttons.Length; i++)
+            {
+                _buttons[i] = new buttonInfo();
+            }
         }
 
         public void Tick()
         {
             for (int i = 0, n = _settings.inputMap.inputs.Length; i < n; i++)
             {
-                if (Input.GetKeyDown(_settings.inputMap.inputs[i].key))
+                if (!_buttons[_settings.inputMap.inputs[i].id].down &&
+                    Input.GetKeyDown(_settings.inputMap.inputs[i].key))
                 {
+                    _buttons[_settings.inputMap.inputs[i].id].down = true;
+                    _buttons[_settings.inputMap.inputs[i].id].time = Time.time;
                     _signalBus.Fire(new InputSignal.Down(_settings.inputMap.inputs[i].id));
                 }
 
-                if (Input.GetKeyUp(_settings.inputMap.inputs[i].key))
+                if (_buttons[_settings.inputMap.inputs[i].id].down && Input.GetKeyUp(_settings.inputMap.inputs[i].key))
                 {
-                    _signalBus.Fire(new InputSignal.Up(_settings.inputMap.inputs[i].id));
+                    _buttons[_settings.inputMap.inputs[i].id].down = false;
+                    _signalBus.Fire(new InputSignal.Up(_settings.inputMap.inputs[i].id,
+                        Time.time - _buttons[_settings.inputMap.inputs[i].id].time));
                 }
             }
-            
+
             _axes.Clear(_axesCount);
             for (int i = 0, n = _settings.inputMap.axes.Length; i < n; i++)
             {
@@ -49,7 +68,7 @@ namespace System.Gameplay
             for (int i = 0; i < _axesCount; i++)
             {
                 var value = Input.GetAxisRaw($"Axis_{i}");
-                
+
                 if (value != 0)
                     _axes.values[i] = value;
             }

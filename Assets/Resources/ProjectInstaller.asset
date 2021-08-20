@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8bef599cde20e43b9caff79ccf4b2f, type: 3}
   m_Name: ProjectInstaller
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 65b2bb3ea46028c4a9de6137017fbe31, type: 2}
