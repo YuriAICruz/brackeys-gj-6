@@ -1,0 +1,16 @@
+{
+    "name": "Graphene.System",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eb773b38890355647becb70cd4e5b6c3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Graphene.Presentation",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eb773b38890355647becb70cd4e5b6c3",
+        "GUID:6eb8c9104e879bb4a8d2af73bac4ab46"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
