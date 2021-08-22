@@ -19,5 +19,10 @@ namespace Presentation.Animation
         {
             
         }
+
+        public void Land()
+        {
+            
+        }
     }
 }

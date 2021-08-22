@@ -364,11 +364,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     speed: 3
+    dodgeSpeed: 4
+    runSpeed: 6
     turnSpeed: 5
+    dodgeDuration: 0.55
+    jumpForce: 5
+    height: 0.5
+    radius: 0.5
   states:
     currentSpeed: 0
     direction: {x: 0, y: 0, z: 0}
     turnAngle: 0
+    grounded: 0
+    running: 0
+    attacking: 0
+    dodging: 0
+    jumping: 0
+    attackStage: 0
 --- !u!54 &235960377
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1027,8 +1039,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609754588}
-  m_LocalRotation: {x: -0.44821087, y: -0.33649847, z: 0.18744476, w: -0.8066848}
-  m_LocalPosition: {x: -2.8498523, y: 5.9657974, z: -3.0717196}
+  m_LocalRotation: {x: 0.20416243, y: 0.36129758, z: -0.08326105, w: 0.9060074}
+  m_LocalPosition: {x: -2.0870795, y: 2.4513474, z: -1.2880564}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

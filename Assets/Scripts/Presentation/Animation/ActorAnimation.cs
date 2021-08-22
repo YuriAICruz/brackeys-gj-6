@@ -21,6 +21,9 @@ namespace Presentation.Animation
             animator.SetFloat("TurnAngle", _actor.states.turnAngle);
             animator.SetBool("Attacking", _actor.states.attacking);
             animator.SetBool("Dodging", _actor.states.dodging);
+            animator.SetBool("Grounded", _actor.states.grounded);
+            animator.SetBool("Jumping", _actor.states.jumping);
+            animator.SetInteger("AttackStage", _actor.states.attackStage);
         }
     }
 }

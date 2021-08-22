@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputMap:
     inputs:
-    - key: 32
+    - key: 304
       id: 0
     - key: 323
-      id: 0
-    - key: 324
       id: 1
+    - key: 324
+      id: 2
     - key: 101
       id: 1
+    - key: 32
+      id: 3
+    - key: 113
+      id: 2
     axes:
     - positive: 119
       negative: 115

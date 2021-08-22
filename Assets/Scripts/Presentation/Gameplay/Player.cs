@@ -22,6 +22,8 @@ namespace Presentation.Gameplay
             _signalBus.Subscribe<InputSignal.Up>(OnInputEvent);
             _signalBus.Subscribe<InputSignal.Down>(OnInputEvent);
             _signalBus.Subscribe<InputSignal.Axes>(UpdateAxis);
+            
+            _physics.SetSphereRadius(stats.radius, stats.height);
         }
 
         private void SetCamera(Camera camera)
@@ -35,7 +37,7 @@ namespace Presentation.Gameplay
             _direction.y = data.values[0];
         }
 
-        private void OnInputEvent(InputSignal.Up data)
+        private void OnInputEvent(InputSignal.Down data)
         {
             switch (data.id)
             {
@@ -50,11 +52,12 @@ namespace Presentation.Gameplay
                     break;
                 case 3:
                     states.jumping = true;
+                    Jump();
                     break;
             }
         }
 
-        private void OnInputEvent(InputSignal.Down data)
+        private void OnInputEvent(InputSignal.Up data)
         {
             switch (data.id)
             {
@@ -63,44 +66,29 @@ namespace Presentation.Gameplay
                     break;
                 case 3:
                     states.jumping = false;
+                    StopJump();
                     break;
             }
         }
 
-        protected override void Move()
+        protected override void CalculateDirection()
         {
-            if (_currentCamera == null) return;
-
-            //var dir = _currentCamera.transform.TransformDirection(new Vector3(_direction.x, 0, _direction.y));
             var dir = _currentCamera.transform.TransformDirection(_direction);
             dir.y = dir.z;
             dir.z = 0;
             dir.Normalize();
-            transform.position = _physics.Evaluate(dir * stats.speed, transform.position, Time.fixedDeltaTime);
-
-            states.currentSpeed = dir.magnitude;
-            states.grounded = _physics.Grounded;
-
-            TurnTo(dir);
+            states.direction = dir;
         }
 
-        private void TurnTo(Vector2 direction)
+        protected override void Move(float delta)
         {
-            var dir = new Vector3(direction.x, 0, direction.y);
+            if (_currentCamera == null) return;
 
-            if (dir.sqrMagnitude > 0.15f)
-            {
-                states.direction = dir;
-            }
+            transform.position = _physics.Evaluate(states.direction * (states.running ? stats.runSpeed : stats.speed),
+                transform.position, delta);
 
-            if (states.direction.sqrMagnitude < 0.15f)
-                return;
-
-            var look = Quaternion.LookRotation(states.direction);
-            var fwd = transform.forward;
-            transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.fixedDeltaTime * stats.turnSpeed);
-            
-            states.turnAngle = Vector3.Angle(transform.forward, fwd);
+            states.currentSpeed = states.direction.magnitude * (states.running ? 2 : 1);
+            states.grounded = _physics.Grounded;
         }
     }
 }
