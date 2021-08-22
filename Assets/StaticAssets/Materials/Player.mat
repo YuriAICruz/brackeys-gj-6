@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Player
   m_Shader: {fileID: 4800000, guid: df96712bd1128ce41be43d6a349940bd, type: 3}
-  m_ShaderKeywords: SPECULAR_DEF_OFF
+  m_ShaderKeywords: SPECULAR_DEF_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8d6091f14c0c6604595a64a4e031e7e5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - SPECULAR_DEF: 0
+    - SPECULAR_DEF: 1
     - _BumpScale: 1
     - _CullMode: 2
     - _Cutoff: 0.5
@@ -71,9 +71,9 @@ Material:
     - _Parallax: 0.02
     - _RampSmooth: 0.1
     - _RampThreshold: 0.5
-    - _RimSmooth: 0.1
-    - _RimThreshold: 0.5
-    - _Shininess: 0.2
+    - _RimSmooth: 0.024
+    - _RimThreshold: 0.637
+    - _Shininess: 0.11
     - _SmoothnessTextureChannel: 0
     - _SpecSmooth: 0.1
     - _SpecularHighlights: 1

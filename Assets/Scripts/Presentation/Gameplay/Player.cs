@@ -12,7 +12,6 @@ namespace Presentation.Gameplay
 
         [Inject] private ICamera _camera;
         private Camera _currentCamera;
-        private Vector3 _lookDirection;
 
         protected override void Awake()
         {
@@ -55,6 +54,8 @@ namespace Presentation.Gameplay
             dir.Normalize();
             transform.position = _physics.Evaluate(dir * stats.speed, transform.position, Time.fixedDeltaTime);
 
+            states.currentSpeed = dir.magnitude;
+
             TurnTo(dir);
         }
 
@@ -63,12 +64,18 @@ namespace Presentation.Gameplay
             var dir = new Vector3(direction.x, 0, direction.y);
 
             if (dir.sqrMagnitude > 0.15f)
-                _lookDirection = dir;
-            if (_lookDirection.sqrMagnitude < 0.15f)
+            {
+                states.direction = dir;
+            }
+
+            if (states.direction.sqrMagnitude < 0.15f)
                 return;
 
-            var look = Quaternion.LookRotation(_lookDirection);
+            var look = Quaternion.LookRotation(states.direction);
+            var fwd = transform.forward;
             transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.fixedDeltaTime * stats.turnSpeed);
+            
+            states.turnAngle = Vector3.Angle(transform.forward, fwd);
         }
     }
 }

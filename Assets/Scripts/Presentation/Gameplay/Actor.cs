@@ -11,6 +11,7 @@ namespace Presentation.Gameplay
         [Inject] protected SignalBus _signalBus;
 
         public ActorStatistics stats;
+        public ActorStates states;
 
         protected virtual void Awake()
         {

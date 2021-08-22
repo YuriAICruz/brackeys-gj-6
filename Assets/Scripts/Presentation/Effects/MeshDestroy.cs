@@ -5,7 +5,7 @@ using UnityEngine;
 // Based on: https://gist.github.com/ditzel/73f4d1c9028cc3477bb921974f84ed56
 namespace Presentation.Effects
 {
-    public class MeshDestroy : MonoBehaviour
+    public class MeshDestroy : MonoBehaviour, IBreakable
     {
         private bool edgeSet = false;
         private Vector3 edgeVertex = Vector3.zero;
@@ -16,18 +16,18 @@ namespace Presentation.Effects
         public float ExplodeForce = 0;
         private List<PartMesh> _parts;
 
+        [Header("Cut")] public bool overrideDirection;
+        public Vector3 cutDirection;
+
         private void Awake()
         {
             DestroyMesh();
         }
 
-        private void Update()
+        public void Break()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                CreateParts(_parts, false);
-                Destroy(gameObject);
-            }
+            CreateParts(_parts, false);
+            Destroy(gameObject);
         }
 
         private void DestroyMesh()
@@ -57,7 +57,8 @@ namespace Presentation.Effects
                     var bounds = _parts[i].Bounds;
                     bounds.Expand(0.5f);
 
-                    var plane = new Plane(UnityEngine.Random.onUnitSphere, new Vector3(UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+                    var cD = overrideDirection ? cutDirection : UnityEngine.Random.onUnitSphere;
+                    var plane = new Plane(cD, new Vector3(UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
                         UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
                         UnityEngine.Random.Range(bounds.min.z, bounds.max.z)));
 
