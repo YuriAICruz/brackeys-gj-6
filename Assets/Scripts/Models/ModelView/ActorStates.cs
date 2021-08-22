@@ -9,5 +9,10 @@ namespace Presentation.Gameplay
         public float currentSpeed;
         public Vector3 direction;
         public float turnAngle;
+        public bool grounded;
+        public bool running;
+        public bool attacking;
+        public bool dodging;
+        public bool jumping;
     }
 }

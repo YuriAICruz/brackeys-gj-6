@@ -37,13 +37,37 @@ namespace Presentation.Gameplay
 
         private void OnInputEvent(InputSignal.Up data)
         {
+            switch (data.id)
+            {
+                case 0:
+                    states.running = true;
+                    break;
+                case 1:
+                    Attack();
+                    break;
+                case 2:
+                    Dodge();
+                    break;
+                case 3:
+                    states.jumping = true;
+                    break;
+            }
         }
 
         private void OnInputEvent(InputSignal.Down data)
         {
+            switch (data.id)
+            {
+                case 0:
+                    states.running = false;
+                    break;
+                case 3:
+                    states.jumping = false;
+                    break;
+            }
         }
 
-        protected override void FixedUpdate()
+        protected override void Move()
         {
             if (_currentCamera == null) return;
 
@@ -55,6 +79,7 @@ namespace Presentation.Gameplay
             transform.position = _physics.Evaluate(dir * stats.speed, transform.position, Time.fixedDeltaTime);
 
             states.currentSpeed = dir.magnitude;
+            states.grounded = _physics.Grounded;
 
             TurnTo(dir);
         }

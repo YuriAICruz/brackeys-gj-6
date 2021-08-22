@@ -19,6 +19,8 @@ namespace Presentation.Animation
         {
             animator.SetFloat("Speed", _actor.states.currentSpeed);
             animator.SetFloat("TurnAngle", _actor.states.turnAngle);
+            animator.SetBool("Attacking", _actor.states.attacking);
+            animator.SetBool("Dodging", _actor.states.dodging);
         }
     }
 }

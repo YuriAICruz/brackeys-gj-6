@@ -14,5 +14,10 @@ namespace Presentation.Animation
         {
             
         }
+
+        public void Hit()
+        {
+            
+        }
     }
 }

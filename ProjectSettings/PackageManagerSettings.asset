@@ -28,6 +28,7 @@ MonoBehaviour:
     m_Name: Midiadub
     m_Url: http://midiadub.servehttp.com:8090
     m_Scopes:
+    - midiadub
     - zenject
     - newtonsoft
     - explosive
@@ -42,6 +43,7 @@ MonoBehaviour:
       m_Name: Midiadub
       m_Url: http://midiadub.servehttp.com:8090
       m_Scopes:
+      - midiadub
       - zenject
       - newtonsoft
       - explosive
@@ -51,6 +53,7 @@ MonoBehaviour:
     m_Name: Midiadub
     m_Url: http://midiadub.servehttp.com:8090
     m_Scopes:
+    - midiadub
     - zenject
     - newtonsoft
     - explosive

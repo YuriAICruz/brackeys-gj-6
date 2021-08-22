@@ -96,6 +96,23 @@
       "dependencies": {},
       "url": "http://midiadub.servehttp.com:8090"
     },
+    "midiadub.easyease": {
+      "version": "1.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "http://midiadub.servehttp.com:8090"
+    },
+    "midiadub.navigation": {
+      "version": "1.1.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "midiadub.easyease": "1.0.0",
+        "com.unity.textmeshpro": "2.0.1"
+      },
+      "url": "http://midiadub.servehttp.com:8090"
+    },
     "zenject": {
       "version": "8.0.1",
       "depth": 0,

@@ -9,6 +9,8 @@ namespace System.Gameplay
         private Vector3 _groundNormal;
         private Vector3 _acceleration;
 
+        public bool Grounded => _grounded;
+        
         public Physics(PhysicsSettings settings)
         {
             _settings = settings;

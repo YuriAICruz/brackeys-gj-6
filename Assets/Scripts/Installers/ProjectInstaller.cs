@@ -1,4 +1,5 @@
 using System.Gameplay;
+using Graphene.Time;
 using UnityEngine;
 using Zenject;
 
@@ -22,6 +23,9 @@ namespace Graphene.Installers
             Container.BindInstance(physicsSettings);
 
             Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle().NonLazy();
+            
+            Container.BindInterfacesAndSelfTo<TimeManager>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<Timer>().AsSingle().NonLazy();
             
             Container.BindInterfacesAndSelfTo<System.Gameplay.Physics>().AsTransient();
         }
