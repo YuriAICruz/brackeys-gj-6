@@ -28,9 +28,17 @@
         {
             public float[] values;
 
-            public void Clear(int axesCount)
+            public Axes(int axesCount)
             {
                 values = new float[axesCount];
+            }
+
+            public void Clear()
+            {
+                for (int i = 0; i < values.Length; i++)
+                {
+                    values[i] = 0;
+                }
             }
         }
     }

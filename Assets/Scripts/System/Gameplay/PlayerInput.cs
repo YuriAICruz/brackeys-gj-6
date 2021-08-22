@@ -25,7 +25,7 @@ namespace System.Gameplay
         {
             _signalBus = signalBus;
             _settings = settings;
-            _axes = new InputSignal.Axes();
+            _axes = new InputSignal.Axes(_axesCount);
             _buttons = new buttonInfo[_settings.inputMap.inputs.Max(x => x.id) + 1];
             for (int i = 0; i < _buttons.Length; i++)
             {
@@ -53,7 +53,7 @@ namespace System.Gameplay
                 }
             }
 
-            _axes.Clear(_axesCount);
+            _axes.Clear();
             for (int i = 0, n = _settings.inputMap.axes.Length; i < n; i++)
             {
                 var index = _settings.inputMap.axes[i].id;

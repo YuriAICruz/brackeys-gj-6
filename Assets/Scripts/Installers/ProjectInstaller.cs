@@ -7,7 +7,8 @@ namespace Graphene.Installers
     [CreateAssetMenu(fileName = "ProjectInstaller", menuName = "Installers/ProjectInstaller")]
     public class ProjectInstaller : ScriptableObjectInstaller<ProjectInstaller>
     {
-        public InputSettings settings;
+        public InputSettings inputSettings;
+        public PhysicsSettings physicsSettings;
         
         public override void InstallBindings()
         {
@@ -17,9 +18,12 @@ namespace Graphene.Installers
             Container.DeclareSignal<InputSignal.Down>();
             Container.DeclareSignal<InputSignal.Axes>();
 
-            Container.BindInstance(settings);
+            Container.BindInstance(inputSettings);
+            Container.BindInstance(physicsSettings);
 
             Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle().NonLazy();
+            
+            Container.BindInterfacesAndSelfTo<System.Gameplay.Physics>().AsTransient();
         }
     }
 }

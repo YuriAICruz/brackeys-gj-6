@@ -9,8 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d8bef599cde20e43b9caff79ccf4b2f, type: 3}
-  m_Name: ProjectInstaller
+  m_Script: {fileID: 11500000, guid: 219b4a2ccc15418e9f021304494ed79b, type: 3}
+  m_Name: PhysicsSettings
   m_EditorClassIdentifier: 
-  inputSettings: {fileID: 11400000, guid: 65b2bb3ea46028c4a9de6137017fbe31, type: 2}
-  physicsSettings: {fileID: 11400000, guid: 642380edd27dc2f46b1ed187ecb99e4a, type: 2}
+  gravity: {x: 0, y: -9.8, z: 0}
+  actors:
+    serializedVersion: 2
+    m_Bits: 128
+  colliders:
+    serializedVersion: 2
+    m_Bits: 64
+  minimumDistance: 0.15
