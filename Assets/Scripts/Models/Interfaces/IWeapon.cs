@@ -5,5 +5,6 @@
         IActor Owner { get; }
 
         void Swing(float duration);
+        void Discard();
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IActor
     {
-        
+        void SetupWeapon(IWeapon weapon);
     }
 }

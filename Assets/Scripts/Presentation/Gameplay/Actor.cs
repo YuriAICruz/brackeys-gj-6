@@ -15,10 +15,18 @@ namespace Presentation.Gameplay
 
         public ActorStatistics stats;
         public ActorStates states;
+        public Inventory inventory;
 
         private Queue<float> _attackQueue = new Queue<float>();
         private Coroutine _attack;
 
+        public void SetupWeapon(IWeapon weapon)
+        {
+            if (inventory.weapon != null)
+                inventory.weapon.Discard();
+            inventory.weapon = weapon;
+        }
+        
         protected virtual void Awake()
         {
         }
@@ -109,6 +117,8 @@ namespace Presentation.Gameplay
 
             if (_attack != null)
                 _timer.Stop(_attack);
+            
+            inventory.weapon?.Swing(stats.attacksDurations[states.attackStage] * 0.6f);
             
             _attack = _timer.Wait(() =>
             {
