@@ -15,5 +15,6 @@ namespace Presentation.Gameplay
         public bool dodging;
         public bool jumping;
         public int attackStage;
+        public float lastAttack;
     }
 }

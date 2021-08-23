@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Gameplay;
 using Graphene.Time;
 using UnityEngine;
@@ -6,7 +7,7 @@ using Zenject;
 
 namespace Presentation.Gameplay
 {
-    public class Actor : MonoBehaviour
+    public class Actor : MonoBehaviour, IActor, IDamageable
     {
         [Inject] protected IPhysics _physics;
         [Inject] protected SignalBus _signalBus;
@@ -14,6 +15,9 @@ namespace Presentation.Gameplay
 
         public ActorStatistics stats;
         public ActorStates states;
+
+        private Queue<float> _attackQueue = new Queue<float>();
+        private Coroutine _attack;
 
         protected virtual void Awake()
         {
@@ -48,15 +52,15 @@ namespace Presentation.Gameplay
         {
             transform.position = _physics.Evaluate(transform.position, delta);
         }
-        
+
         protected virtual void TurnTo(Vector2 direction)
         {
             var dir = new Vector3(direction.x, 0, direction.y);
-            
+
             var look = Quaternion.LookRotation(dir);
             transform.rotation = look;
         }
-        
+
 
         protected virtual void TurnTo(Vector2 direction, float delta)
         {
@@ -80,42 +84,84 @@ namespace Presentation.Gameplay
 
         protected virtual void Attack()
         {
-            if(states.dodging || states.attacking)
+            if (states.dodging)
                 return;
 
-            states.attackStage = 0;
-            
+
+            var el = Timer.time - states.lastAttack;
+
+            if (states.attacking)
+            {
+                if (el > stats.attacksDurations[states.attackStage] * 0.5f)
+                    _attackQueue.Enqueue(Timer.time);
+
+                if (_attack != null)
+                    return;
+            }
+
+            if (el > stats.attackInputDelay)
+            {
+                states.attackStage = 0;
+            }
+
             states.attacking = true;
-            _timer.Wait(1, () => { states.attacking = false; });
+            var t = Timer.time;
+
+            if (_attack != null)
+                _timer.Stop(_attack);
+            
+            _attack = _timer.Wait(() =>
+            {
+                if (!states.attacking)
+                    return true;
+
+                var elapsed = Timer.time - t;
+                return elapsed > stats.attacksDurations[states.attackStage];
+            }, () =>
+            {
+                _attack = null;
+                states.attackStage = (states.attackStage + 1) % stats.attacksDurations.Length;
+                states.lastAttack = Timer.time;
+
+                if (_attackQueue.Count > 0)
+                {
+                    var t = _attackQueue.Dequeue();
+                    _attackQueue.Clear();
+                    Attack();
+                    return;
+                }
+
+                states.attacking = false;
+            });
         }
 
         protected virtual void Dodge()
         {
-            if(states.dodging)
+            if (states.dodging)
                 return;
-            
+
             states.attacking = false;
             states.dodging = true;
-            
+
             CalculateDirection();
 
             var dir = states.direction;
-            if(states.direction.sqrMagnitude < 0.1f)
+            if (states.direction.sqrMagnitude < 0.1f)
                 dir = new Vector3(transform.forward.x, transform.forward.z);
-            
+
             dir.Normalize();
             states.turnAngle = Vector3.Angle(transform.forward, new Vector3(dir.x, 0, dir.y));
-            
-            if(states.turnAngle < 90)
+
+            if (states.turnAngle < 90)
                 TurnTo(dir);
             else
                 TurnTo(-dir);
-            
+
             var t0 = 0f;
-            
+
             _timer.Wait(stats.dodgeDuration, (t) =>
             {
-                transform.position = _physics.Evaluate(dir * stats.dodgeSpeed, transform.position, t-t0);
+                transform.position = _physics.Evaluate(dir * stats.dodgeSpeed, transform.position, t - t0);
                 t0 = t;
             }, () => { states.dodging = false; });
         }
@@ -124,6 +170,7 @@ namespace Presentation.Gameplay
         {
             _physics.Jump(stats.jumpForce);
         }
+
         protected virtual void StopJump()
         {
             _physics.StopJump();

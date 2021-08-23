@@ -13,5 +13,7 @@ namespace Presentation.Gameplay
         public float jumpForce = 2;
         public float height;
         public float radius;
+        public float[] attacksDurations;
+        public float attackInputDelay;
     }
 }
