@@ -15,6 +15,7 @@ namespace System.Gameplay
         private float _height;
         private Vector3 _lastPosition;
         private Collider[] _colisions;
+        private float _slope;
 
         public bool Grounded => _grounded;
 
@@ -62,7 +63,7 @@ namespace System.Gameplay
             if (_useSphere)
             {
                 CheckGroundSphere(_radius, pos, _lastPosition, _settings.gravity.normalized, out var temp);
-                if ((temp - pos).magnitude > 0.05f && Mathf.Abs(pos.x - temp.x) < 0.05f &&
+                if (!_jumping && (temp - pos).magnitude > 0.05f && Mathf.Abs(pos.x - temp.x) < 0.05f &&
                     Mathf.Abs(pos.z - temp.z) < 0.05f)
                     pos.y = temp.y;
             }
@@ -93,6 +94,14 @@ namespace System.Gameplay
         public void StopJump()
         {
             _jumping = false;
+        }
+
+        public Vector3 Drop(Vector3 position, float delta)
+        {
+            _jumping = false;
+            _acceleration.y = Mathf.Min(_acceleration.y,0);
+
+            return Evaluate(position, delta);
         }
 
         private void CheckGroundRay(Vector3 position, Vector3 direction)
@@ -138,6 +147,15 @@ namespace System.Gameplay
 
                 hitPosition = hit.point;
                 _groundNormal = hit.normal;
+
+                _slope = Vector3.Angle(Vector3.up, _groundNormal);
+
+                if (_slope > _settings.maxSlope)
+                {
+                    _grounded = false;
+                    return;
+                }
+
                 _grounded = true;
                 return;
             }
@@ -156,7 +174,6 @@ namespace System.Gameplay
 
             var colliders = UnityEngine.Physics.OverlapSphereNonAlloc(pos, radius, _colisions, _settings.colliders);
 
-            var pi = Mathf.PI * 2;
             var newPos = position;
             for (int i = 0; i < colliders; i++)
             {

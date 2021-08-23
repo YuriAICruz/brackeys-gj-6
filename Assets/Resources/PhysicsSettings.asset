@@ -26,3 +26,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   minimumDistance: 0.15
+  rayPrecision: 4
+  maxCollision: 6

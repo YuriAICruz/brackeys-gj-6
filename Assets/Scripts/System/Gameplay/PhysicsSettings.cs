@@ -15,5 +15,6 @@ namespace System.Gameplay
 
         public int rayPrecision = 4;
         public int maxCollision = 3;
+        public float maxSlope = 30;
     }
 }

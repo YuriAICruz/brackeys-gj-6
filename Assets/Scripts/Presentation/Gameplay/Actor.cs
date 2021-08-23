@@ -91,7 +91,8 @@ namespace Presentation.Gameplay
 
             var look = Quaternion.LookRotation(states.direction);
             var fwd = transform.forward;
-            transform.rotation = Quaternion.Lerp(transform.rotation, look, delta * stats.turnSpeed);
+            transform.rotation =
+                Quaternion.Lerp(transform.rotation, look, delta * stats.turnSpeed * (states.running ? 2 : 1));
 
             states.turnAngle = Vector3.Angle(transform.forward, fwd);
         }
@@ -119,14 +120,22 @@ namespace Presentation.Gameplay
                 states.attackStage = 0;
             }
 
-            if (!_physics.Grounded && states.attackStage > 0)
+            if (!_physics.Grounded)
             {
-                _attackQueue.Clear();
-                return;
+                if (states.attackStage > 0)
+                {
+                    _attackQueue.Clear();
+                    return;
+                }
+
+                if (!states.attacking)
+                {
+                    AerialAttack();
+                    return;
+                }
             }
 
             states.attacking = true;
-            var t = Timer.time;
 
             if (_attack != null)
                 _timer.Stop(_attack);
@@ -138,14 +147,8 @@ namespace Presentation.Gameplay
             var dir = GetNormalizedDirection();
             TurnTo(dir);
 
-            _attack = _timer.Wait(() =>
-            {
-                if (!states.attacking)
-                    return true;
-
-                var elapsed = Timer.time - t;
-                return elapsed > stats.attacks[states.attackStage].duration;
-            }, () =>
+            var t = Timer.time;
+            _attack = _timer.Wait(() => { return AttackIsRunning(t, stats.attacks[states.attackStage]); }, () =>
             {
                 _attack = null;
                 states.attackStage = (states.attackStage + 1) % stats.attacks.Length;
@@ -166,6 +169,53 @@ namespace Presentation.Gameplay
 
                 states.attacking = false;
             });
+        }
+
+        private void AerialAttack()
+        {
+            states.attacking = true;
+            if (_attack != null)
+                _timer.Stop(_attack);
+
+            states.attackStage = stats.aerialAttackStage;
+            _signalBus.Fire(new Models.Signals.Actor.Attack(states.attackStage, stats.aerialAttack));
+
+            _attack = _timer.Wait(stats.aerialAttack.delay, () =>
+            {
+                var delta = Timer.time;
+                var t = Timer.time;
+                _attack = _timer.Wait(() =>
+                {
+                    var elapsed = Timer.time - t;
+
+                    transform.position = _physics.Drop(transform.position, Timer.time - delta);
+                    delta = Timer.time;
+
+                    if (_physics.Grounded || elapsed >= stats.aerialAttack.damageDuration)
+                        return true;
+
+                    return false;
+                }, () =>
+                {
+                    _attack = null;
+
+                    states.attackStage = 0;
+                    states.lastAttack = Timer.time;
+
+                    _attackQueue.Clear();
+
+                    states.attacking = false;
+                });
+            });
+        }
+
+        private bool AttackIsRunning(float t, AttackAnimation attack)
+        {
+            if (!states.attacking)
+                return true;
+
+            var elapsed = Timer.time - t;
+            return elapsed > attack.duration;
         }
 
         protected virtual void Dodge()

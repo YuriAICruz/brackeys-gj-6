@@ -13,5 +13,6 @@ namespace System.Gameplay
         
         void Jump(float statsJumpForce);
         void StopJump();
+        Vector3 Drop(Vector3 position, float duration);
     }
 }

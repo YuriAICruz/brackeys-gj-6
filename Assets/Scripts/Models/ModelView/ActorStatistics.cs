@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Models.ModelView
 {
@@ -12,16 +13,24 @@ namespace Models.ModelView
     [Serializable]
     public class ActorStatistics
     {
+        [Header("Locomotion")]
         public float speed = 3;
         public float dodgeSpeed = 4;
         public float runSpeed = 5;
         public float turnSpeed = 2;
-        public float dodgeDuration = 1.4f;
-        public float jumpForce = 2;
+        [Header("Physics")]
         public float height;
         public float radius;
-        public AttackAnimation[] attacks;
-        public float attackInputDelay;
+        [Header("Dodge")]
+        public float dodgeDuration = 1.4f;
+        [Header("Jump")]
+        public float jumpForce = 2;
         public float maxJumpTime;
+        [Header("Attack")]
+        public float attackInputDelay;
+        public AttackAnimation[] attacks;
+        [Space]
+        public AttackAnimation aerialAttack;
+        public int aerialAttackStage;
     }
 }
