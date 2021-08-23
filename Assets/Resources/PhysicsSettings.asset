@@ -28,4 +28,4 @@ MonoBehaviour:
   minimumDistance: 0.15
   rayPrecision: 4
   maxCollision: 6
-  maxSlope: 30
+  maxSlope: 45
