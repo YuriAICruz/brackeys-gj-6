@@ -13,6 +13,7 @@ namespace Models.ModelView
     [Serializable]
     public class ActorStatistics
     {
+        public int maxHp;
         [Header("Locomotion")]
         public float speed = 3;
         public float dodgeSpeed = 4;

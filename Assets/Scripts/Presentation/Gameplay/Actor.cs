@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Gameplay;
 using Graphene.Time;
+using Models.Accessors;
 using Models.Interfaces;
 using Models.ModelView;
 using UnityEngine;
@@ -9,11 +10,14 @@ using Zenject;
 
 namespace Presentation.Gameplay
 {
-    public class Actor : MonoBehaviour, IActor, IDamageable
+    public class Actor : MonoBehaviour, IActor, IActorData, IDamageable
     {
         [Inject] protected IPhysics _physics;
         [Inject] protected SignalBus _signalBus;
         [Inject] protected ITimeManager _timer;
+
+        private Observer<int> _dataHp = new Observer<int>();
+        Observer<int> IActorData.Hp => _dataHp;
 
         public ActorStatistics stats;
         public ActorStates states;
@@ -22,9 +26,9 @@ namespace Presentation.Gameplay
         private protected Queue<float> _attackQueue = new Queue<float>();
         private protected Coroutine _attack;
 
-        [SerializeField] private int maxHp;
         private Coroutine _jumpAnimation;
-        public int Hp { get; private set; }
+
+        public int Hp => _dataHp.GetValue();
 
         public void SetupWeapon(IWeapon weapon)
         {
@@ -35,7 +39,7 @@ namespace Presentation.Gameplay
 
         protected virtual void Awake()
         {
-            Hp = maxHp;
+            _dataHp.Commit(stats.maxHp);
         }
 
         protected virtual void Start()
@@ -170,7 +174,7 @@ namespace Presentation.Gameplay
                 states.attacking = false;
             });
         }
-        
+
         protected virtual void AerialAttack()
         {
             states.attacking = false;
@@ -259,7 +263,10 @@ namespace Presentation.Gameplay
 
         public void Damage(int damage)
         {
-            Hp -= damage;
+            var hp = _dataHp.GetValue();
+            hp -= damage;
+            _dataHp.Commit(hp);
+            
             _signalBus.Fire(new Models.Signals.Actor.Damage(damage, Hp));
         }
     }
