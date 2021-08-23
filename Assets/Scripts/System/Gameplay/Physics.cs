@@ -10,16 +10,19 @@ namespace System.Gameplay
         private int _stepsSinceGrounded;
         private Vector3 _groundNormal;
         private Vector3 _acceleration;
-        private float _radius;
+        private float _radius = 0.5f;
         private bool _useSphere;
         private float _height;
         private Vector3 _lastPosition;
+        private Collider[] _colisions;
 
         public bool Grounded => _grounded;
 
         public Physics(PhysicsSettings settings)
         {
             _settings = settings;
+
+            _colisions = new Collider[_settings.maxCollision];
         }
 
         public void SetSphereRadius(float radius, float height)
@@ -44,6 +47,8 @@ namespace System.Gameplay
 
             pos += (new Vector3(direction.x, 0, direction.y) + _acceleration) * delta;
 
+            CheckCollision(_radius, ref pos, ref _lastPosition);
+
             return pos;
         }
 
@@ -57,7 +62,8 @@ namespace System.Gameplay
             if (_useSphere)
             {
                 CheckGroundSphere(_radius, pos, _lastPosition, _settings.gravity.normalized, out var temp);
-                if ((temp - pos).magnitude > 0.05f)
+                if ((temp - pos).magnitude > 0.05f && Mathf.Abs(pos.x - temp.x) < 0.05f &&
+                    Mathf.Abs(pos.z - temp.z) < 0.05f)
                     pos.y = temp.y;
             }
             else
@@ -71,6 +77,7 @@ namespace System.Gameplay
 
             _stepsSinceGrounded++;
             _lastPosition = pos;
+
             return pos;
         }
 
@@ -121,13 +128,13 @@ namespace System.Gameplay
 
             if (dir.magnitude < 0.05f)
             {
-                dir = Vector3.down * offset;
+                dir = direction * offset;
             }
 
             if (CheckSphere(lastPos, dir, radius, _settings.colliders, out var hit))
             {
-                DrawCross(lastPos, radius, new Color(0.8f, 1f, 0));
-                DrawCross(lastPos + dir, radius, new Color(0.2f, 1f, 0));
+                // DrawCross(lastPos, radius, new Color(0.8f, 1f, 0));
+                // DrawCross(lastPos + dir, radius, new Color(0.2f, 1f, 0));
 
                 hitPosition = hit.point;
                 _groundNormal = hit.normal;
@@ -135,10 +142,46 @@ namespace System.Gameplay
                 return;
             }
 
-            DrawCross(lastPos, radius, new Color(1, 0.4f, 0));
-            DrawCross(lastPos + dir, radius, new Color(1, 0.8f, 0));
+            // DrawCross(lastPos, radius, new Color(1, 0.4f, 0));
+            // DrawCross(lastPos + dir, radius, new Color(1, 0.8f, 0));
 
             _grounded = false;
+        }
+
+        private void CheckCollision(float radius, ref Vector3 position, ref Vector3 lastPosition)
+        {
+            var pos = position + Vector3.up * radius;
+
+            var offset = 0.0f;
+
+            var colliders = UnityEngine.Physics.OverlapSphereNonAlloc(pos, radius, _colisions, _settings.colliders);
+
+            var pi = Mathf.PI * 2;
+            var newPos = position;
+            for (int i = 0; i < colliders; i++)
+            {
+                pos = newPos + Vector3.up * radius;
+                var point = _colisions[i].ClosestPoint(pos);
+
+                if (Mathf.Abs(point.y - pos.y) > 0.1f)
+                {
+                    Debug.DrawLine(pos, point, Color.green);
+                    continue;
+                }
+
+                var dir = pos - point;
+                dir.y = 0;
+
+                Debug.DrawLine(position, new Vector3(point.x, newPos.y, point.z) + dir.normalized * (radius + offset),
+                    Color.red);
+
+                newPos = new Vector3(point.x, position.y, point.z) + dir.normalized * (radius + offset);
+            }
+
+            Debug.DrawLine(position, newPos, Color.magenta);
+
+            position = newPos;
+            lastPosition = position;
         }
 
         private void DrawCross(Vector3 pos, float radius, Color color)
