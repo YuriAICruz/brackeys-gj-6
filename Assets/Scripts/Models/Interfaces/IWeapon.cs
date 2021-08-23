@@ -1,10 +1,9 @@
-﻿namespace System
+﻿namespace Models.Interfaces
 {
     public interface IWeapon
     {
         IActor Owner { get; }
 
-        void Swing(float duration);
         void Discard();
     }
 }

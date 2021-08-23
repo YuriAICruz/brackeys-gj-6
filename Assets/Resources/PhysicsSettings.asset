@@ -16,7 +16,13 @@ MonoBehaviour:
   actors:
     serializedVersion: 2
     m_Bits: 128
+  enemies:
+    serializedVersion: 2
+    m_Bits: 256
   colliders:
     serializedVersion: 2
     m_Bits: 64
+  hittable:
+    serializedVersion: 2
+    m_Bits: 576
   minimumDistance: 0.15

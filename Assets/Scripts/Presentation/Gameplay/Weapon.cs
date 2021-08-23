@@ -1,5 +1,7 @@
 ﻿using System;
 using Graphene.Time;
+using Models.Interfaces;
+using Models.ModelView;
 using UnityEngine;
 using Zenject;
 
@@ -12,12 +14,17 @@ namespace Presentation.Gameplay
         private Rigidbody _rigidBody;
         private Collider _collider;
 
+        public bool fromPlayer;
+
         public IActor Owner { get; private set; }
 
         [Inject] private ITimeManager _timer;
+        [Inject] private SignalBus _signalBus;
         private Coroutine _swingAnimation;
 
-        private void Awake()
+        public WeaponAttributes attributes;
+
+        protected virtual void Awake()
         {
             Owner = transform.GetComponentInParent<IActor>();
 
@@ -26,17 +33,35 @@ namespace Presentation.Gameplay
             _rigidBody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
 
+            _signalBus.Subscribe<Models.Signals.Actor.Attack>(Swing);
             _collider.enabled = false;
         }
 
-        public void Swing(float duration)
+        protected virtual void Swing(Models.Signals.Actor.Attack signal)
         {
             _collider.enabled = true;
 
             if (_swingAnimation != null)
                 _timer.Stop(_swingAnimation);
 
-            _swingAnimation = _timer.Wait(duration, () => { _collider.enabled = false; });
+            var t0 = 0f;
+            _swingAnimation = _timer.Wait(signal.data.delay, () =>
+            {
+                _swingAnimation = _timer.Wait(signal.data.damageDuration, t =>
+                {
+                    SwingUpdate(t, t - t0);
+                    t0 = t;
+                }, SwingEnd);
+            });
+        }
+
+        protected virtual void SwingUpdate(float elapsed, float delta)
+        {
+        }
+
+        protected virtual void SwingEnd()
+        {
+            _collider.enabled = false;
         }
 
         public void Discard()

@@ -99,17 +99,24 @@ namespace System.Gameplay
             _grounded = false;
         }
 
-        private void CheckGroundSphere(float radius, float height, float distance, Vector3 position, Vector3 direction, out Vector3 hitPosition)
+        public bool CheckSphere(Vector3 position, Vector3 direction, float radius, LayerMask mask, out RaycastHit hit)
+        {
+            return UnityEngine.Physics.SphereCast(new Ray(position, direction), radius, out hit, direction.magnitude,
+                mask);
+        }
+
+        private void CheckGroundSphere(float radius, float height, float distance, Vector3 position, Vector3 direction,
+            out Vector3 hitPosition)
         {
             var pos = position + Vector3.up * height;
             hitPosition = position;
-            if (UnityEngine.Physics.SphereCast(new Ray(pos, direction), radius, out var hit, distance, _settings.colliders))
+            if (CheckSphere(pos, direction.normalized*distance, radius, _settings.colliders, out var hit))
             {
                 //DrawCross(pos, radius, Color.green);
                 //DrawCross(pos + direction, radius, Color.green);
-                
+
                 hitPosition = hit.point;
-                
+
                 _grounded = true;
                 _groundNormal = hit.normal;
                 return;

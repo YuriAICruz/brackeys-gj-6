@@ -1,4 +1,5 @@
 ﻿using System;
+using Models.Interfaces;
 using UnityEngine;
 
 namespace Presentation.Effects

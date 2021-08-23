@@ -1,7 +1,14 @@
 ﻿using System;
 
-namespace Presentation.Gameplay
+namespace Models.ModelView
 {
+    [Serializable]
+    public class AttackAnimation
+    {
+        public float duration;
+        public float delay;
+        public float damageDuration;
+    }
     [Serializable]
     public class ActorStatistics
     {
@@ -13,7 +20,7 @@ namespace Presentation.Gameplay
         public float jumpForce = 2;
         public float height;
         public float radius;
-        public float[] attacksDurations;
+        public AttackAnimation[] attacks;
         public float attackInputDelay;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Models.Interfaces;
 using UnityEngine;
 
 // Based on: https://gist.github.com/ditzel/73f4d1c9028cc3477bb921974f84ed56

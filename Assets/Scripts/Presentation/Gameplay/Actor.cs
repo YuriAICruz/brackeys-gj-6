@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Gameplay;
 using Graphene.Time;
+using Models.Interfaces;
+using Models.ModelView;
 using UnityEngine;
 using Zenject;
 
@@ -20,15 +22,19 @@ namespace Presentation.Gameplay
         private Queue<float> _attackQueue = new Queue<float>();
         private Coroutine _attack;
 
+        [SerializeField] private int maxHp;
+        public int Hp { get; private set; }
+
         public void SetupWeapon(IWeapon weapon)
         {
             if (inventory.weapon != null)
                 inventory.weapon.Discard();
             inventory.weapon = weapon;
         }
-        
+
         protected virtual void Awake()
         {
+            Hp = maxHp;
         }
 
         protected virtual void Start()
@@ -95,12 +101,11 @@ namespace Presentation.Gameplay
             if (states.dodging)
                 return;
 
-
             var el = Timer.time - states.lastAttack;
 
             if (states.attacking)
             {
-                if (el > stats.attacksDurations[states.attackStage] * 0.5f)
+                if (el > stats.attacks[states.attackStage].delay + stats.attacks[states.attackStage].damageDuration * 0.6f)
                     _attackQueue.Enqueue(Timer.time);
 
                 if (_attack != null)
@@ -112,28 +117,44 @@ namespace Presentation.Gameplay
                 states.attackStage = 0;
             }
 
+            if (!_physics.Grounded && states.attackStage > 0)
+            {
+                _attackQueue.Clear();
+                return;
+            }
+
             states.attacking = true;
             var t = Timer.time;
 
             if (_attack != null)
                 _timer.Stop(_attack);
-            
-            inventory.weapon?.Swing(stats.attacksDurations[states.attackStage] * 0.6f);
-            
+
+            _signalBus.Fire(new Models.Signals.Actor.Attack(states.attackStage,
+                stats.attacks[states.attackStage]));
+
+            CalculateDirection();
+            var dir = GetNormalizedDirection();
+            TurnTo(dir);
+
             _attack = _timer.Wait(() =>
             {
                 if (!states.attacking)
                     return true;
 
                 var elapsed = Timer.time - t;
-                return elapsed > stats.attacksDurations[states.attackStage];
+                return elapsed > stats.attacks[states.attackStage].duration;
             }, () =>
             {
                 _attack = null;
-                states.attackStage = (states.attackStage + 1) % stats.attacksDurations.Length;
+                states.attackStage = (states.attackStage + 1) % stats.attacks.Length;
                 states.lastAttack = Timer.time;
 
-                if (_attackQueue.Count > 0)
+
+                if (!_physics.Grounded)
+                {
+                    _attackQueue.Clear();
+                }
+                else if (_attackQueue.Count > 0)
                 {
                     var t = _attackQueue.Dequeue();
                     _attackQueue.Clear();
@@ -155,11 +176,8 @@ namespace Presentation.Gameplay
 
             CalculateDirection();
 
-            var dir = states.direction;
-            if (states.direction.sqrMagnitude < 0.1f)
-                dir = new Vector3(transform.forward.x, transform.forward.z);
+            var dir = GetNormalizedDirection();
 
-            dir.Normalize();
             states.turnAngle = Vector3.Angle(transform.forward, new Vector3(dir.x, 0, dir.y));
 
             if (states.turnAngle < 90)
@@ -176,6 +194,16 @@ namespace Presentation.Gameplay
             }, () => { states.dodging = false; });
         }
 
+        private Vector3 GetNormalizedDirection()
+        {
+            var dir = states.direction;
+            if (states.direction.sqrMagnitude < 0.1f)
+                dir = new Vector3(transform.forward.x, transform.forward.z);
+
+            dir.Normalize();
+            return dir;
+        }
+
         protected virtual void Jump()
         {
             _physics.Jump(stats.jumpForce);
@@ -184,6 +212,12 @@ namespace Presentation.Gameplay
         protected virtual void StopJump()
         {
             _physics.StopJump();
+        }
+
+        public void Damage(int damage)
+        {
+            Hp -= damage;
+            _signalBus.Fire(new Models.Signals.Actor.Damage(damage, Hp));
         }
     }
 }

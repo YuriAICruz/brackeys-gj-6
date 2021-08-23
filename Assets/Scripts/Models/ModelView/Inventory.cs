@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Models.Interfaces;
 
-namespace Presentation.Gameplay
+namespace Models.ModelView
 {
     [Serializable]
     public class Inventory

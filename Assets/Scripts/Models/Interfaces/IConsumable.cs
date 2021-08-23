@@ -1,4 +1,4 @@
-﻿namespace System
+﻿namespace Models.Interfaces
 {
     public interface IConsumable
     {

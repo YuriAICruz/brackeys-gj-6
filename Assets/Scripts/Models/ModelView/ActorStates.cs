@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Presentation.Gameplay
+namespace Models.ModelView
 {
     [Serializable]
     public class ActorStates
