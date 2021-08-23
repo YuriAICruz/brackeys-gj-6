@@ -51,7 +51,6 @@ namespace Presentation.Gameplay
                     Dodge();
                     break;
                 case 3:
-                    states.jumping = true;
                     Jump();
                     break;
             }
@@ -65,7 +64,6 @@ namespace Presentation.Gameplay
                     states.running = false;
                     break;
                 case 3:
-                    states.jumping = false;
                     StopJump();
                     break;
             }

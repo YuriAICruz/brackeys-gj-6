@@ -23,6 +23,7 @@ namespace Presentation.Gameplay
         private Coroutine _attack;
 
         [SerializeField] private int maxHp;
+        private Coroutine _jumpAnimation;
         public int Hp { get; private set; }
 
         public void SetupWeapon(IWeapon weapon)
@@ -101,18 +102,19 @@ namespace Presentation.Gameplay
             if (states.dodging)
                 return;
 
-            var el = Timer.time - states.lastAttack;
+            var elapsed = Timer.time - states.lastAttack;
 
             if (states.attacking)
             {
-                if (el > stats.attacks[states.attackStage].delay + stats.attacks[states.attackStage].damageDuration * 0.6f)
+                if (elapsed > stats.attacks[states.attackStage].delay +
+                    stats.attacks[states.attackStage].damageDuration * 0.6f)
                     _attackQueue.Enqueue(Timer.time);
 
                 if (_attack != null)
                     return;
             }
 
-            if (el > stats.attackInputDelay)
+            if (elapsed > stats.attackInputDelay)
             {
                 states.attackStage = 0;
             }
@@ -206,11 +208,34 @@ namespace Presentation.Gameplay
 
         protected virtual void Jump()
         {
+            if (states.jumping) return;
+
+            states.jumping = true;
             _physics.Jump(stats.jumpForce);
+
+
+            var t = Timer.time;
+
+            if (_jumpAnimation != null)
+                _timer.Stop(_jumpAnimation);
+
+            _jumpAnimation = _timer.Wait(() =>
+            {
+                var elapsed = Timer.time - t;
+
+                if (elapsed > stats.maxJumpTime || !states.jumping)
+                    return true;
+
+                return false;
+            }, StopJump);
         }
 
         protected virtual void StopJump()
         {
+            if (_jumpAnimation != null)
+                _timer.Stop(_jumpAnimation);
+
+            states.jumping = false;
             _physics.StopJump();
         }
 

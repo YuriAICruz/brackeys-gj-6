@@ -13,6 +13,7 @@ namespace System.Gameplay
         private float _radius;
         private bool _useSphere;
         private float _height;
+        private Vector3 _lastPosition;
 
         public bool Grounded => _grounded;
 
@@ -48,32 +49,34 @@ namespace System.Gameplay
 
         private Vector3 CalculateAcceleration(Vector3 position, float delta)
         {
-            _acceleration += _settings.gravity * delta;
+            if (!_jumping)
+                _acceleration += _settings.gravity * delta;
 
             var pos = position;
 
             if (_useSphere)
             {
-                CheckGroundSphere(_radius, _height + 0.1f, 0.1f, pos, _acceleration, out var temp);
+                CheckGroundSphere(_radius, pos, _lastPosition, _settings.gravity.normalized, out var temp);
                 if ((temp - pos).magnitude > 0.05f)
-                    pos = temp;
+                    pos.y = temp.y;
             }
             else
-                CheckGroundRay(pos, _acceleration);
+                CheckGroundRay(pos, _settings.gravity.normalized);
 
-            if (_grounded)
+            if (!_jumping && _grounded)
             {
                 _acceleration.y = 0;
                 _stepsSinceGrounded = 0;
             }
 
             _stepsSinceGrounded++;
+            _lastPosition = pos;
             return pos;
         }
 
         public void Jump(float statsJumpForce)
         {
-            if (!_grounded && _stepsSinceGrounded > 4) return;
+            if (!_grounded && _stepsSinceGrounded > 4 || _jumping) return;
 
             _acceleration.y = statsJumpForce;
             _grounded = false;
@@ -105,22 +108,35 @@ namespace System.Gameplay
                 mask);
         }
 
-        private void CheckGroundSphere(float radius, float height, float distance, Vector3 position, Vector3 direction,
+        private void CheckGroundSphere(float radius, Vector3 position, Vector3 lastPosition, Vector3 direction,
             out Vector3 hitPosition)
         {
-            var pos = position + Vector3.up * height;
+            var offset = 0.5f;
+            var pos = position + Vector3.up * (radius + offset * 0.5f);
+            var lastPos = lastPosition + Vector3.up * (radius + offset * 0.5f);
+
+            var dir = new Vector3(0, pos.y, 0) - new Vector3(0, lastPos.y, 0);
+
             hitPosition = position;
-            if (CheckSphere(pos, direction.normalized*distance, radius, _settings.colliders, out var hit))
+
+            if (dir.magnitude < 0.05f)
             {
-                //DrawCross(pos, radius, Color.green);
-                //DrawCross(pos + direction, radius, Color.green);
+                dir = Vector3.down * offset;
+            }
+
+            if (CheckSphere(lastPos, dir, radius, _settings.colliders, out var hit))
+            {
+                DrawCross(lastPos, radius, new Color(0.8f, 1f, 0));
+                DrawCross(lastPos + dir, radius, new Color(0.2f, 1f, 0));
 
                 hitPosition = hit.point;
-
-                _grounded = true;
                 _groundNormal = hit.normal;
+                _grounded = true;
                 return;
             }
+
+            DrawCross(lastPos, radius, new Color(1, 0.4f, 0));
+            DrawCross(lastPos + dir, radius, new Color(1, 0.8f, 0));
 
             _grounded = false;
         }

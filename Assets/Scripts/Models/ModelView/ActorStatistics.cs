@@ -22,5 +22,6 @@ namespace Models.ModelView
         public float radius;
         public AttackAnimation[] attacks;
         public float attackInputDelay;
+        public float maxJumpTime;
     }
 }
