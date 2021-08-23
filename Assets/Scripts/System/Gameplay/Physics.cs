@@ -16,6 +16,7 @@ namespace System.Gameplay
         private Vector3 _lastPosition;
         private Collider[] _colisions;
         private float _slope;
+        private RaycastHit[] _hitCollisions;
 
         public bool Grounded => _grounded;
 
@@ -24,6 +25,7 @@ namespace System.Gameplay
             _settings = settings;
 
             _colisions = new Collider[_settings.maxCollision];
+            _hitCollisions = new RaycastHit[_settings.maxCollision];
         }
 
         public void SetSphereRadius(float radius, float height)
@@ -63,8 +65,8 @@ namespace System.Gameplay
             if (_useSphere)
             {
                 CheckGroundSphere(_radius, pos, _lastPosition, _settings.gravity.normalized, out var temp);
-                if (!_jumping && (temp - pos).magnitude > 0.05f && Mathf.Abs(pos.x - temp.x) < 0.05f &&
-                    Mathf.Abs(pos.z - temp.z) < 0.05f)
+                if (!_jumping && (temp - pos).magnitude > 0.05f && Mathf.Abs(pos.x - temp.x) < 0.25f &&
+                    Mathf.Abs(pos.z - temp.z) < 0.25f)
                     pos.y = temp.y;
             }
             else
@@ -99,7 +101,7 @@ namespace System.Gameplay
         public Vector3 Drop(Vector3 position, float delta)
         {
             _jumping = false;
-            _acceleration.y = Mathf.Min(_acceleration.y,0);
+            _acceleration.y = Mathf.Min(_acceleration.y, 0);
 
             return Evaluate(position, delta);
         }
@@ -124,10 +126,29 @@ namespace System.Gameplay
                 mask);
         }
 
+        public bool CheckSphere(Vector3 position, Vector3 direction, float radius, LayerMask mask, out int hitsCount)
+        {
+            hitsCount = UnityEngine.Physics.SphereCastNonAlloc(new Ray(position, direction), radius, _hitCollisions,
+                direction.magnitude,
+                mask);
+
+            for (int i = 0; i < hitsCount; i++)
+            {
+                var dir = _hitCollisions[i].collider.ClosestPoint(position) - position;
+                if (UnityEngine.Physics.Raycast(new Ray(position, dir), out var hit, dir.magnitude * 5, mask))
+                {
+                    if (hit.collider == _hitCollisions[i].collider)
+                        _hitCollisions[i] = hit;
+                }
+            }
+
+            return hitsCount > 0;
+        }
+
         private void CheckGroundSphere(float radius, Vector3 position, Vector3 lastPosition, Vector3 direction,
             out Vector3 hitPosition)
         {
-            var offset = 0.5f;
+            var offset = 0.25f;
             var pos = position + Vector3.up * (radius + offset * 0.5f);
             var lastPos = lastPosition + Vector3.up * (radius + offset * 0.5f);
 
@@ -140,23 +161,46 @@ namespace System.Gameplay
                 dir = direction * offset;
             }
 
-            if (CheckSphere(lastPos, dir, radius, _settings.colliders, out var hit))
+            if (CheckSphere(lastPos, dir, radius, _settings.colliders, out int hitsCount))
             {
                 // DrawCross(lastPos, radius, new Color(0.8f, 1f, 0));
-                // DrawCross(lastPos + dir, radius, new Color(0.2f, 1f, 0));
+                // DrawCross(lastPos + d
+                // ir, radius, new Color(0.2f, 1f, 0));
 
-                hitPosition = hit.point;
-                _groundNormal = hit.normal;
-
-                _slope = Vector3.Angle(Vector3.up, _groundNormal);
-
-                if (_slope > _settings.maxSlope)
+                _grounded = false;
+                _groundNormal = Vector3.zero;
+                var c = 0;
+                var height = Vector3.zero;
+                
+                for (int i = 0; i < hitsCount; i++)
                 {
-                    _grounded = false;
-                    return;
+                    c++;
+                    var normal = _hitCollisions[i].normal;
+                    _groundNormal += normal;
+
+                    _slope = Vector3.Angle(Vector3.up, normal);
+
+                    if (_slope > _settings.maxSlope)
+                    {
+                        continue;
+                    }
+
+                    if(_hitCollisions[i].point.y > height.y)
+                        height = _hitCollisions[i].point;
+                    _groundNormal = normal;
+
+                    _grounded = true;
+                    //break;
                 }
 
-                _grounded = true;
+                if(!_grounded)
+                    _groundNormal /= c;
+
+
+                hitPosition = height;
+
+                Debug.DrawRay(position, _groundNormal * 5, Color.blue);
+
                 return;
             }
 
@@ -189,9 +233,6 @@ namespace System.Gameplay
                 var dir = pos - point;
                 dir.y = 0;
 
-                Debug.DrawLine(position, new Vector3(point.x, newPos.y, point.z) + dir.normalized * (radius + offset),
-                    Color.red);
-
                 newPos = new Vector3(point.x, position.y, point.z) + dir.normalized * (radius + offset);
             }
 
@@ -211,6 +252,31 @@ namespace System.Gameplay
 
             Debug.DrawRay(pos, Vector3.forward * radius, color);
             Debug.DrawRay(pos, -Vector3.forward * radius, color);
+        }
+
+        private Vector3 RepairHitSurfaceNormal(RaycastHit hit, int layerMask)
+        {
+            if (hit.collider is MeshCollider)
+            {
+                var collider = hit.collider as MeshCollider;
+                var mesh = collider.sharedMesh;
+                var tris = mesh.triangles;
+                var verts = mesh.vertices;
+
+                var v0 = verts[tris[hit.triangleIndex * 3]];
+                var v1 = verts[tris[hit.triangleIndex * 3 + 1]];
+                var v2 = verts[tris[hit.triangleIndex * 3 + 2]];
+
+                var n = Vector3.Cross(v1 - v0, v2 - v1).normalized;
+
+                return hit.transform.TransformDirection(n);
+            }
+            else
+            {
+                var p = hit.point + hit.normal * 0.01f;
+                UnityEngine.Physics.Raycast(p, -hit.normal, out hit, 0.011f, layerMask);
+                return hit.normal;
+            }
         }
     }
 }

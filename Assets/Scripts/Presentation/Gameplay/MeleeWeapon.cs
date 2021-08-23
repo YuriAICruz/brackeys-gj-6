@@ -66,7 +66,7 @@ namespace Presentation.Gameplay
                 Debug.DrawRay(ini, dir, Color.yellow, 1);
                 Debug.DrawRay(transform.TransformPoint(colliderBase), currentDir * step, Color.red, 1);
 
-                if (_physics.CheckSphere(ini, dir, radius, _mask, out var hit))
+                if (_physics.CheckSphere(ini, dir, radius, _mask, out RaycastHit hit))
                 {
                     var damageable = hit.transform.GetComponent<IDamageable>();
 

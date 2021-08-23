@@ -19,8 +19,8 @@ namespace Presentation.Gameplay
         public ActorStates states;
         public Inventory inventory;
 
-        private Queue<float> _attackQueue = new Queue<float>();
-        private Coroutine _attack;
+        private protected Queue<float> _attackQueue = new Queue<float>();
+        private protected Coroutine _attack;
 
         [SerializeField] private int maxHp;
         private Coroutine _jumpAnimation;
@@ -170,43 +170,11 @@ namespace Presentation.Gameplay
                 states.attacking = false;
             });
         }
-
-        private void AerialAttack()
+        
+        protected virtual void AerialAttack()
         {
-            states.attacking = true;
-            if (_attack != null)
-                _timer.Stop(_attack);
-
-            states.attackStage = stats.aerialAttackStage;
-            _signalBus.Fire(new Models.Signals.Actor.Attack(states.attackStage, stats.aerialAttack));
-
-            _attack = _timer.Wait(stats.aerialAttack.delay, () =>
-            {
-                var delta = Timer.time;
-                var t = Timer.time;
-                _attack = _timer.Wait(() =>
-                {
-                    var elapsed = Timer.time - t;
-
-                    transform.position = _physics.Drop(transform.position, Timer.time - delta);
-                    delta = Timer.time;
-
-                    if (_physics.Grounded || elapsed >= stats.aerialAttack.damageDuration)
-                        return true;
-
-                    return false;
-                }, () =>
-                {
-                    _attack = null;
-
-                    states.attackStage = 0;
-                    states.lastAttack = Timer.time;
-
-                    _attackQueue.Clear();
-
-                    states.attacking = false;
-                });
-            });
+            states.attacking = false;
+            _attackQueue.Clear();
         }
 
         private bool AttackIsRunning(float t, AttackAnimation attack)

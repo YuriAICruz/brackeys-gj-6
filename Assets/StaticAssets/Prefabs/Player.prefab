@@ -198,10 +198,12 @@ MonoBehaviour:
     dodgeSpeed: 4
     runSpeed: 6
     turnSpeed: 5
-    dodgeDuration: 0.55
-    jumpForce: 5
     height: 0.5
     radius: 0.5
+    dodgeDuration: 0.55
+    jumpForce: 2.5
+    maxJumpTime: 0.4
+    attackInputDelay: 0.4
     attacks:
     - duration: 1.1
       delay: 0.5
@@ -215,8 +217,11 @@ MonoBehaviour:
     - duration: 1.8
       delay: 0.5
       damageDuration: 0.35
-    attackInputDelay: 0.4
-    maxJumpTime: 0.4
+    aerialAttack:
+      duration: 1.2
+      delay: 0.5
+      damageDuration: 0.6
+    aerialAttackStage: 10
   states:
     currentSpeed: 0
     direction: {x: 0, y: 0, z: 0}
