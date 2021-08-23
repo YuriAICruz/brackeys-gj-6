@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
+    maxHp: 10
     speed: 3
     dodgeSpeed: 4
     runSpeed: 6
@@ -235,7 +236,6 @@ MonoBehaviour:
     lastAttack: 197.92502
   inventory:
     consumablesLimit: 3
-  maxHp: 10
 --- !u!114 &1410502467037378766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2267,10 +2267,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7000199484359615957, guid: a6cd3355c01241141930a683d4e0da49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3bb1e79e144cba24191857a71525f30c, type: 2}
     - target: {fileID: 919132149155446097, guid: a6cd3355c01241141930a683d4e0da49, type: 3}
       propertyPath: m_Name
       value: PUG_prev
       objectReference: {fileID: 0}
+    - target: {fileID: 4916975007403110555, guid: a6cd3355c01241141930a683d4e0da49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5bf3fcb81ed87f148b75cd67ef2fee45, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6cd3355c01241141930a683d4e0da49, type: 3}
 --- !u!4 &4075007608766747628 stripped

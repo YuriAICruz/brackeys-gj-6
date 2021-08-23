@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 574752690519647154}
+  - component: {fileID: 6422654849360095899}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -30,3 +31,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6422654849360095899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473555072566357664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36201873b946f4844bf5d8254aa0dc56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+    maxHp: 100
+    speed: 3
+    dodgeSpeed: 4
+    runSpeed: 5
+    turnSpeed: 2
+    height: 0
+    radius: 0
+    dodgeDuration: 1.4
+    jumpForce: 2
+    maxJumpTime: 0
+    attackInputDelay: 0
+    attacks: []
+    aerialAttack:
+      duration: 0
+      delay: 0
+      damageDuration: 0
+    aerialAttackStage: 0
+  states:
+    currentSpeed: 0
+    direction: {x: 0, y: 0, z: 0}
+    turnAngle: 0
+    grounded: 0
+    running: 0
+    attacking: 0
+    dodging: 0
+    jumping: 0
+    attackStage: 0
+    lastAttack: 0
+  inventory:
+    consumablesLimit: 3

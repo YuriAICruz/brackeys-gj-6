@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44607264, g: 0.4958353, b: 0.5744986, a: 1}
+  m_IndirectSpecularColor: {r: 0.43726674, g: 0.48502713, b: 0.5652984, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -781,13 +781,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827070793}
-  m_LocalRotation: {x: 0.6668431, y: -0.3980084, z: -0.06723888, w: 0.62640923}
+  m_LocalRotation: {x: 0.73631877, y: -0.12621763, z: 0.17209142, w: 0.6420969}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 51.436, y: -109.314, z: -80.62}
+  m_LocalEulerAnglesHint: {x: 81.501, y: -218.171, z: -193.749}
 --- !u!1 &841607984
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,8 +910,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 862023396}
   m_LocalRotation: {x: 0.65328, y: -0.65328187, z: -0.2705991, w: 0.2705999}
-  m_LocalPosition: {x: -2.98, y: -0.05, z: 2.85}
-  m_LocalScale: {x: 10.5274935, y: 0.1, z: 8.2278}
+  m_LocalPosition: {x: -3.88, y: -0.05, z: 2.83}
+  m_LocalScale: {x: 10.5274935, y: 0.1, z: 3.7022634}
   m_Children: []
   m_Father: {fileID: 2112525052}
   m_RootOrder: 11
@@ -2162,6 +2162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ca4dea3f6614349bb0a8c373bbbdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1717172214}
+  boss: {fileID: 6422654849360095899}
 --- !u!114 &1717172214 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1410502467037378762, guid: 5b644f59c3a76df42b8520b670c58d6b, type: 3}
@@ -2336,7 +2338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1956626169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2350,7 +2352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-    maxHp: 0
+    maxHp: 10
     speed: 3
     dodgeSpeed: 4
     runSpeed: 5
@@ -2401,7 +2403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956626168}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 0.383, z: 1.519}
+  m_LocalPosition: {x: 0.01, y: 1.84, z: 1.519}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 953126495}
@@ -2833,7 +2835,11 @@ PrefabInstance:
     - target: {fileID: 268731036230166126, guid: 6f62180f2990c4d4cb2033d9d680a722, type: 3}
       propertyPath: boss
       value: 
-      objectReference: {fileID: 6422654849360095899}
+      objectReference: {fileID: 1956626169}
+    - target: {fileID: 3205525229803132228, guid: 6f62180f2990c4d4cb2033d9d680a722, type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3205525230250718009, guid: 6f62180f2990c4d4cb2033d9d680a722, type: 3}
       propertyPath: m_Name
       value: GameUi
@@ -2985,51 +2991,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
---- !u!1 &6422654849360095898 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2473555072566357664, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
+--- !u!114 &6422654849360095899 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6422654849360095899, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
   m_PrefabInstance: {fileID: 6422654849360095897}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6422654849360095899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6422654849360095898}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36201873b946f4844bf5d8254aa0dc56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats:
-    maxHp: 0
-    speed: 3
-    dodgeSpeed: 4
-    runSpeed: 5
-    turnSpeed: 2
-    height: 0
-    radius: 0
-    dodgeDuration: 1.4
-    jumpForce: 2
-    maxJumpTime: 0
-    attackInputDelay: 0
-    attacks: []
-    aerialAttack:
-      duration: 0
-      delay: 0
-      damageDuration: 0
-    aerialAttackStage: 0
-  states:
-    currentSpeed: 0
-    direction: {x: 0, y: 0, z: 0}
-    turnAngle: 0
-    grounded: 0
-    running: 0
-    attacking: 0
-    dodging: 0
-    jumping: 0
-    attackStage: 0
-    lastAttack: 0
-  inventory:
-    consumablesLimit: 3

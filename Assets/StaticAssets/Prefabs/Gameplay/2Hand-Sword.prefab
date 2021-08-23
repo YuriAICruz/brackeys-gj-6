@@ -159,8 +159,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fromPlayer: 1
   attributes:
-    damage: 0
+    damage: 1
   colliderBase: {x: 0, y: 0, z: 0.78}
   colliderTip: {x: 0, y: 0, z: 1.6}
   radius: 0.18
   collisionPoints: 3
+  _mask:
+    serializedVersion: 2
+    m_Bits: 0
