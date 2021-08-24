@@ -24,6 +24,7 @@ namespace Presentation.Animation
             animator.SetBool("Grounded", _actor.states.grounded);
             animator.SetBool("Jumping", _actor.states.jumping);
             animator.SetInteger("AttackStage", _actor.states.attackStage);
+            animator.SetBool("Damaged", _actor.states.damaged);
         }
     }
 }

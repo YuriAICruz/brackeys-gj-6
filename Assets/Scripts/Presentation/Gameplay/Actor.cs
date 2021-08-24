@@ -265,13 +265,16 @@ namespace Presentation.Gameplay
             _physics.StopJump();
         }
 
-        public void Damage(int damage)
+        public virtual void Damage(int damage)
         {
             var hp = _dataHp.GetValue();
             hp -= damage;
             _dataHp.Commit(hp);
             
             _signalBus.Fire(new Models.Signals.Actor.Damage(damage, Hp));
+
+            states.damaged = true;
+            _timer.Wait(0.2f, () => { states.damaged = false; });
         }
     }
 }

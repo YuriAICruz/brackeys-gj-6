@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Gameplay;
+using Codice.CM.SEIDInfo;
 using Graphene.BehaviourTree;
 using Graphene.BehaviourTree.Actions;
 using Graphene.BehaviourTree.Composites;
@@ -22,7 +23,8 @@ namespace Presentation.Gameplay.Bosses
             PlayerNear = 10,
             Chase = 11,
             Spit = 12,
-            Stag = 13
+            Stag = 13,
+            Anticipate = 14,
         }
 
         private Behaviour _tree;
@@ -30,10 +32,17 @@ namespace Presentation.Gameplay.Bosses
 
         [Inject] private GameManager _gameManager;
 
+        public BossPieces[] _pieces;
+
         protected override void Awake()
         {
             base.Awake();
-            
+
+            for (int i = 0; i < _pieces.Length; i++)
+            {
+                _pieces[i].damaged += Damage;
+            }
+
             _blackboard = new Blackboard();
             _tree = new Behaviour();
 
@@ -49,6 +58,7 @@ namespace Presentation.Gameplay.Bosses
                             new MemorySequence(new List<Node>()
                             {
                                 new CallSystemActionMemory((int) BlackboardIds.PlayerNear),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                                 new CallSystemActionMemory((int) BlackboardIds.Spit),
                                 new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
@@ -72,7 +82,25 @@ namespace Presentation.Gameplay.Bosses
 
         protected override void Update()
         {
+            base.Update();
             _tree.Tick(this.gameObject, _blackboard);
+        }
+
+        public override void Damage(int damage)
+        {
+            base.Damage(damage);
+        }
+
+        protected override void Move(float delta)
+        {
+            if (!bossStates.moving) return;
+
+            transform.position = _physics.Evaluate(
+                states.direction.normalized * (states.running ? stats.runSpeed : stats.speed),
+                transform.position, delta);
+
+            states.currentSpeed = states.direction.magnitude;
+            states.grounded = _physics.Grounded;
         }
 
         private void SetBlackboard()
@@ -87,8 +115,9 @@ namespace Presentation.Gameplay.Bosses
             _blackboard.Set((int) BlackboardIds.Spit, new Behaviour.NodeResponseAction(DoSpit), _tree.id);
             _blackboard.Set((int) BlackboardIds.Chase, new Behaviour.NodeResponseAction(DoChase), _tree.id);
             _blackboard.Set((int) BlackboardIds.Stag, new Behaviour.NodeResponseAction(Stag), _tree.id);
+            _blackboard.Set((int) BlackboardIds.Anticipate, new Behaviour.NodeResponseAction(Anticipate), _tree.id);
         }
-        
+
         private NodeStates InTutorialState()
         {
             if (Hp < stats.maxHp * 0.8f)
@@ -102,7 +131,7 @@ namespace Presentation.Gameplay.Bosses
         {
             if (Hp < stats.maxHp * 0.4f)
                 return NodeStates.Failure;
-            
+
             bossStates.stage = 1;
             return NodeStates.Success;
         }
@@ -113,7 +142,30 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Success;
         }
 
-        
+
+        private NodeStates Anticipate()
+        {
+            if (bossStates.anticipating)
+            {
+                bossStates.anticipatingElapsed += Timer.deltaTime;
+
+                if (bossStates.anticipatingElapsed >= bossStats.anticipationBaseDuration)
+                {
+                    bossStates.anticipating = false;
+                    return NodeStates.Success;
+                }
+
+                return NodeStates.Running;
+            }
+
+            Debug.Log("Anticipate");
+            bossStates.anticipating = true;
+            bossStates.anticipatingElapsed = 0f;
+
+            return NodeStates.Running;
+        }
+
+
         private NodeStates Stag()
         {
             if (bossStates.stagged)
@@ -128,11 +180,11 @@ namespace Presentation.Gameplay.Bosses
 
                 return NodeStates.Running;
             }
-            
+
             Debug.Log("Stag");
             bossStates.stagged = true;
             bossStates.stagElapsed = 0f;
-            
+
             return NodeStates.Running;
         }
 
@@ -140,14 +192,31 @@ namespace Presentation.Gameplay.Bosses
         private NodeStates DoChase()
         {
             var pos = transform.position;
-            var dir = PlayerDistance(pos);
 
-            Debug.DrawRay(pos + dir, Vector3.up * 2, Color.red, 5);
+            if (bossStates.moving)
+            {
+                Debug.DrawRay(bossStates.destination, Vector3.up * 2, Color.red, 5);
 
+                bossStates.movingElapsed += Timer.deltaTime;
+                
+                if (bossStates.movingElapsed > bossStats.movingStepDuration)
+                {
+                    bossStates.moving = false;
+                    states.direction = Vector3.zero;
+                    return NodeStates.Success;
+                }
 
-            return NodeStates.Success;
+                return NodeStates.Running;
+            }
+
+            bossStates.moving = true;
+            bossStates.movingElapsed = 0f;
+            bossStates.playerDirection = PlayerDistance(pos);
+            bossStates.destination = pos + bossStates.playerDirection;
+
+            return NodeStates.Running;
         }
-
+        
         private NodeStates DoSpit()
         {
             if (bossStates.spiting)
@@ -162,11 +231,11 @@ namespace Presentation.Gameplay.Bosses
 
                 return NodeStates.Running;
             }
-            
+
             Debug.Log("Spit");
             bossStates.spiting = true;
             bossStates.spitingElapsed = 0f;
-            
+
             return NodeStates.Running;
         }
 
@@ -174,10 +243,12 @@ namespace Presentation.Gameplay.Bosses
         {
             var dir = PlayerDistance(transform.position);
 
+            states.direction = dir;
+
             Debug.Log(dir.magnitude);
             if (dir.magnitude < bossStats.chaseDistance)
                 return NodeStates.Success;
-            
+
             return NodeStates.Failure;
         }
 

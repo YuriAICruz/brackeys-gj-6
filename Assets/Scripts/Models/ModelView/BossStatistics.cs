@@ -8,5 +8,7 @@ namespace Models.ModelView
         public float chaseDistance;
         public float spitDuration;
         public float stagBaseDuration;
+        public float anticipationBaseDuration;
+        public float movingStepDuration;
     }
 }
