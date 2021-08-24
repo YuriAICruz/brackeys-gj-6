@@ -48,6 +48,24 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.probuilder": {
+      "version": "5.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.settings-manager": "1.0.3",
+        "com.unity.modules.physics": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.settings-manager": {
+      "version": "1.0.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.test-framework": {
       "version": "1.1.27",
       "depth": 0,
@@ -118,6 +136,27 @@
         "midiadub.easyease": "1.0.0",
         "com.unity.textmeshpro": "2.0.1"
       },
+      "url": "http://midiadub.servehttp.com:8090"
+    },
+    "polyperfect.low-poly-ultimate-pack": {
+      "version": "5.2.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "http://midiadub.servehttp.com:8090"
+    },
+    "snaps.prototype-asian-residential": {
+      "version": "1.3.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "http://midiadub.servehttp.com:8090"
+    },
+    "synty.polygon-prototype": {
+      "version": "1.1.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
       "url": "http://midiadub.servehttp.com:8090"
     },
     "zenject": {
