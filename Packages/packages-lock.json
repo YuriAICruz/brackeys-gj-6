@@ -146,7 +146,7 @@
       "url": "http://midiadub.servehttp.com:8090"
     },
     "snaps.prototype-asian-residential": {
-      "version": "1.3.2",
+      "version": "1.3.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 574752690519647154}
-  - component: {fileID: 6422654849360095899}
+  - component: {fileID: 5833296505772538917}
+  - component: {fileID: 1734159064}
+  - component: {fileID: 1734159065}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -32,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6422654849360095899
+--- !u!114 &5833296505772538917
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2473555072566357664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36201873b946f4844bf5d8254aa0dc56, type: 3}
+  m_Script: {fileID: 11500000, guid: 80409c08098f4d2593d477b88415945a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
@@ -75,6 +77,42 @@ MonoBehaviour:
     lastAttack: 0
   inventory:
     consumablesLimit: 3
+  bossStats:
+    chaseDistance: 5
+    spitDuration: 2
+    stagBaseDuration: 0.8
+  bossStates:
+    stage: 0
+    spiting: 0
+    spitingElapsed: 0
+    stagged: 0
+    stagElapsed: 0
+--- !u!114 &1734159064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473555072566357664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ee1b7c122a452cb7a8e82cb9b8e050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 6422654850498340155}
+--- !u!114 &1734159065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473555072566357664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa395e03c5c74b83b529c2c50d60e5b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 6422654850498340155}
 --- !u!1001 &6422654850491032469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -142,6 +180,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9537198, guid: 761c889308c678f48bcf8ce47953a4b0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4d73231100a344444940e2ffac60dad4, type: 2}
     - target: {fileID: 13749656, guid: 761c889308c678f48bcf8ce47953a4b0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -151,5 +193,10 @@ PrefabInstance:
 --- !u!4 &6422654850490941401 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 433228, guid: 761c889308c678f48bcf8ce47953a4b0, type: 3}
+  m_PrefabInstance: {fileID: 6422654850491032469}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6422654850498340155 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9537198, guid: 761c889308c678f48bcf8ce47953a4b0, type: 3}
   m_PrefabInstance: {fileID: 6422654850491032469}
   m_PrefabAsset: {fileID: 0}

@@ -731,7 +731,7 @@ Light:
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
-    m_Resolution: -1
+    m_Resolution: 3
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
@@ -2163,7 +2163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1717172214}
-  boss: {fileID: 6422654849360095899}
+  boss: {fileID: 1734159063}
 --- !u!114 &1717172214 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1410502467037378762, guid: 5b644f59c3a76df42b8520b670c58d6b, type: 3}
@@ -2173,6 +2173,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b91ba2549e848a0b26612c6e598ab20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1734159063 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5833296505772538917, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
+  m_PrefabInstance: {fileID: 6422654849360095897}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80409c08098f4d2593d477b88415945a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1741802450
@@ -2991,14 +3002,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
---- !u!114 &6422654849360095899 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6422654849360095899, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
-  m_PrefabInstance: {fileID: 6422654849360095897}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36201873b946f4844bf5d8254aa0dc56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -17,6 +17,10 @@ namespace Presentation.Gameplay
         [Inject] protected ITimeManager _timer;
 
         private Observer<int> _dataHp = new Observer<int>();
+
+        public Transform Transform => transform;
+        public Vector3 Position => transform.position;
+        
         Observer<int> IActorData.Hp => _dataHp;
 
         public ActorStatistics stats;
