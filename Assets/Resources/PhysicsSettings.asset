@@ -29,3 +29,5 @@ MonoBehaviour:
   rayPrecision: 4
   maxCollision: 6
   maxSlope: 45
+  yDeath: -10
+  yRespawn: 4
