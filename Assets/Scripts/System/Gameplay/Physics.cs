@@ -52,6 +52,9 @@ namespace System.Gameplay
 
             CheckCollision(_radius, ref pos, ref _lastPosition);
 
+            if (pos.y < _settings.yDeath)
+                pos.y = _settings.yRespawn;
+
             return pos;
         }
 
