@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-    maxHp: 3
+    maxHp: 5
     damageStagDuration: 0.3
     damageInvincibilityDuration: 0.7
     speed: 3
@@ -136,6 +136,8 @@ MonoBehaviour:
     damaged: 0
     stag: 0
     attackElapsed: 0
+    onTrigger: {fileID: 0}
+    activating: 0
   inventory:
     consumablesLimit: 3
 --- !u!114 &1410502467037378766

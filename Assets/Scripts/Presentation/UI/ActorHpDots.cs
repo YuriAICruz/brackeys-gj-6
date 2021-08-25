@@ -30,8 +30,6 @@ namespace Presentation.UI
 
         private void UpdateHealth(int hp)
         {
-            Debug.Log($"hp {hp}");
-
             for (int i = 0; i < _actor.MaxHp; i++)
             {
                 _hearts[i].SetValid((i + 1) <= hp);
