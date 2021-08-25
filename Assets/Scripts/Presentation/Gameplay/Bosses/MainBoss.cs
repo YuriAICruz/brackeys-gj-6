@@ -312,9 +312,11 @@ namespace Presentation.Gameplay.Bosses
                     states.attackElapsed < stats.attacks[states.attackStage].delay +
                     stats.attacks[states.attackStage].damageDuration)
                 {
-                    _currentDamageTracker = tailPoints.Select(x => x.position).ToArray();
                     EvaluateHit(tailPoints, ref _currentDamageTracker, bossStats.tailBaseDamage,
                         bossStats.attackRadius);
+                }else if(states.attackElapsed < stats.attacks[states.attackStage].delay)
+                {
+                    _currentDamageTracker = tailPoints.Select(x => x.position).ToArray();
                 }
 
                 if (states.attackElapsed >= stats.attacks[states.attackStage].duration)

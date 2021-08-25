@@ -101,8 +101,8 @@ MonoBehaviour:
       delay: 0
       damageDuration: 0
     - duration: 2
-      delay: 0.5
-      damageDuration: 1
+      delay: 0.8
+      damageDuration: 0.25
     aerialAttack:
       duration: 0
       delay: 0
