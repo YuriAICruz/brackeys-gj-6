@@ -24,7 +24,8 @@ namespace Presentation.Gameplay
             if (main)
                 _camera.ActiveCamera.Commit(_cameraComponent);
             
-            var dir = _gameManager.Player.Center - transform.position;
+            //var dir = _gameManager.Player.Center - transform.position;
+            var dir = transform.forward;
             _direction = Quaternion.LookRotation(dir);
         }
 

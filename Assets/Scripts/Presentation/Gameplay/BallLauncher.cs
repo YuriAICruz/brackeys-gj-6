@@ -39,7 +39,6 @@ namespace Presentation.Gameplay
 
             var fwd = _gameManager.Player.Transform.forward;
             var angle = Vector3.Angle(fwd, dir);
-            Debug.Log(angle);
 
             if (angle > 90)
                 dir = fwd;

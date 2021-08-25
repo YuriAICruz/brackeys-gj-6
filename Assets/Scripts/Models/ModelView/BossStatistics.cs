@@ -6,10 +6,13 @@ namespace Models.ModelView
     public class BossStatistics
     {
         public float chaseDistance;
+        public float backupDistance;
+        
         public float spitDuration;
         public float stagBaseDuration;
         public float[] anticipationBaseDuration;
         public float movingStepDuration;
+        public float backupStepDuration;
         public int sprayCount;
         public float spitBaseSpeed = 3;
         public float spitDelay;

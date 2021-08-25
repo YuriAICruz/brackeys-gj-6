@@ -20,7 +20,7 @@ namespace Presentation.Gameplay.Bosses
     public class MainBoss : Boss
     {
         public override Vector3 Center => mouth.position;
-        
+
         private enum BlackboardIds
         {
             TutorialState = 0,
@@ -33,7 +33,8 @@ namespace Presentation.Gameplay.Bosses
             Stag = 13,
             Anticipate = 14,
             PlayerBehind = 15,
-            TailHit = 16
+            TailHit = 16,
+            Backup = 17
         }
 
         private Behaviour _tree;
@@ -53,6 +54,7 @@ namespace Presentation.Gameplay.Bosses
         [Header("Attack")] public Transform[] tailPoints;
         public Transform[] headPoints;
         private Vector3[] _currentDamageTracker;
+
 
         protected override void Awake()
         {
@@ -74,9 +76,9 @@ namespace Presentation.Gameplay.Bosses
 
             SetBlackboard();
 
-            _tree.root = new Priority(new List<Node>
+            _tree.root = new MemoryPriority(new List<Node>
                 {
-                    new Sequence(new List<Node>() // Tutorial State
+                    new MemorySequence(new List<Node>() // Tutorial State
                     {
                         new CallSystemActionMemory((int) BlackboardIds.TutorialState),
                         new MemoryPriority(new List<Node>
@@ -91,11 +93,18 @@ namespace Presentation.Gameplay.Bosses
                                     new CallSystemActionMemory((int) BlackboardIds.TailHit),
                                     new CallSystemActionMemory((int) BlackboardIds.Stag),
                                 }),
-                                new MemoryPriority(new List<Node>
+                                new MemorySequence(new List<Node>
                                 {
+                                    new CallSystemActionMemory((int) BlackboardIds.Backup),
                                     new CallSystemActionMemory((int) BlackboardIds.Spit),
                                     new CallSystemActionMemory((int) BlackboardIds.Stag),
                                 }),
+                            }),
+                            new MemorySequence(new List<Node>
+                            {
+                                new Chance(0.2f),
+                                new CallSystemActionMemory((int) BlackboardIds.Spit),
+                                new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
                             new MemorySequence(new List<Node>()
                             {
@@ -152,7 +161,9 @@ namespace Presentation.Gameplay.Bosses
         protected override void TurnTo(Vector3 direction, float delta)
         {
             if (!bossStates.moving) return;
-            base.TurnTo(direction, delta);
+
+            //if (!bossStates.backingUp)
+                base.TurnTo(direction, delta);
 
             states.turnAngle = Vector3.Angle(transform.forward, direction);
         }
@@ -174,6 +185,7 @@ namespace Presentation.Gameplay.Bosses
             _blackboard.Set((int) BlackboardIds.PlayerNear, new Behaviour.NodeResponseAction(IsPlayerNear), _tree.id);
             _blackboard.Set((int) BlackboardIds.Spit, new Behaviour.NodeResponseAction(DoSpit), _tree.id);
             _blackboard.Set((int) BlackboardIds.Chase, new Behaviour.NodeResponseAction(DoChase), _tree.id);
+            _blackboard.Set((int) BlackboardIds.Backup, new Behaviour.NodeResponseAction(Backup), _tree.id);
             _blackboard.Set((int) BlackboardIds.Stag, new Behaviour.NodeResponseAction(Stag), _tree.id);
             _blackboard.Set((int) BlackboardIds.Anticipate, new Behaviour.NodeResponseAction(Anticipate), _tree.id);
             _blackboard.Set((int) BlackboardIds.PlayerBehind, new Behaviour.NodeResponseAction(IsPlayerBehind),
@@ -227,7 +239,6 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Running;
         }
 
-
         private NodeStates Stag()
         {
             if (bossStates.stagged)
@@ -277,6 +288,40 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Running;
         }
 
+        private NodeStates Backup()
+        {
+            var pos = transform.position;
+
+            if (bossStates.moving)
+            {
+                Debug.DrawRay(bossStates.destination, Vector3.up * 2, Color.blue, 5);
+
+                bossStates.movingElapsed += Timer.deltaTime;
+
+                if (bossStates.movingElapsed > bossStats.backupStepDuration)
+                {
+                    bossStates.moving = false;
+                    bossStates.backingUp = false;
+                    return NodeStates.Success;
+                }
+
+                return NodeStates.Running;
+            }
+
+            var dir = PlayerDistance(pos);
+
+            if (dir.magnitude > bossStats.backupDistance)
+                return NodeStates.Success;
+            
+            bossStates.moving = true;
+            bossStates.backingUp = true;
+            bossStates.movingElapsed = 0f;
+            bossStates.playerDirection = -dir;
+            bossStates.destination = pos + bossStates.playerDirection;
+
+            return NodeStates.Running;
+        }
+
         private NodeStates DoSpit()
         {
             if (bossStates.spiting)
@@ -317,7 +362,8 @@ namespace Presentation.Gameplay.Bosses
                 {
                     EvaluateHit(tailPoints, ref _currentDamageTracker, bossStats.tailBaseDamage,
                         bossStats.attackRadius);
-                }else if(states.attackElapsed < stats.attacks[states.attackStage].delay)
+                }
+                else if (states.attackElapsed < stats.attacks[states.attackStage].delay)
                 {
                     _currentDamageTracker = tailPoints.Select(x => x.position).ToArray();
                 }
@@ -413,7 +459,7 @@ namespace Presentation.Gameplay.Bosses
                 lastPositions[i] = pos;
             }
         }
-        
+
 
         private void InstantiateSplash(int difficulty)
         {

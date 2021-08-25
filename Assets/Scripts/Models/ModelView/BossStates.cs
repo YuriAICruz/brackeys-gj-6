@@ -18,5 +18,6 @@ namespace Models.ModelView
         public Vector3 destination;
         public float movingElapsed;
         public bool spited;
+        public bool backingUp;
     }
 }

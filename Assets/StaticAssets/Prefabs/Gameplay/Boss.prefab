@@ -127,7 +127,8 @@ MonoBehaviour:
   inventory:
     consumablesLimit: 3
   bossStats:
-    chaseDistance: 4
+    chaseDistance: 5
+    backupDistance: 4
     spitDuration: 0.8
     stagBaseDuration: 1.6
     anticipationBaseDuration:
@@ -135,6 +136,7 @@ MonoBehaviour:
     - 0.4
     - 0.2
     movingStepDuration: 1.2
+    backupStepDuration: 1
     sprayCount: 8
     spitBaseSpeed: 3
     spitDelay: 0.75
@@ -155,6 +157,7 @@ MonoBehaviour:
     destination: {x: 0, y: 0, z: 0}
     movingElapsed: 0
     spited: 0
+    backingUp: 0
   mouth: {fileID: 1123408967}
   _pieces:
   - {fileID: 2692749210286979904}
