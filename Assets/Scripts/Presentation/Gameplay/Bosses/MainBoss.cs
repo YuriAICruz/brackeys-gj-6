@@ -6,6 +6,7 @@ using Graphene.BehaviourTree.Actions;
 using Graphene.BehaviourTree.Composites;
 using Graphene.BehaviourTree.Conditions;
 using Graphene.Time;
+using Presentation.Gameplay.Projectiles;
 using UnityEngine;
 using Zenject;
 using Behaviour = Graphene.BehaviourTree.Behaviour;
@@ -31,12 +32,24 @@ namespace Presentation.Gameplay.Bosses
         private Blackboard _blackboard;
 
         [Inject] private GameManager _gameManager;
+        [Inject] private Spit.Factory _factory;
+
+        [Space] public Transform mouth;
 
         public BossPieces[] _pieces;
+
+        private Spit[] _bullets;
+        private int _currentSpit;
 
         protected override void Awake()
         {
             base.Awake();
+
+            _bullets = new Spit[bossStats.sprayCount * 7];
+            for (int i = 0; i < _bullets.Length; i++)
+            {
+                _bullets[i] = _factory.Create();
+            }
 
             for (int i = 0; i < _pieces.Length; i++)
             {
@@ -65,6 +78,7 @@ namespace Presentation.Gameplay.Bosses
                             new MemorySequence(new List<Node>()
                             {
                                 new CallSystemActionMemory((int) BlackboardIds.Chase),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                             }),
                         })
                     }),
@@ -93,14 +107,33 @@ namespace Presentation.Gameplay.Bosses
 
         protected override void Move(float delta)
         {
-            if (!bossStates.moving) return;
+            if (!bossStates.moving)
+            {
+                states.currentSpeed = Mathf.Max(0,states.currentSpeed - Timer.fixedDeltaTime);
+                states.grounded = _physics.Grounded;
+                return;
+            }
 
-            transform.position = _physics.Evaluate(
-                states.direction.normalized * (states.running ? stats.runSpeed : stats.speed),
-                transform.position, delta);
+            var dir = new Vector2(bossStates.playerDirection.normalized.x, bossStates.playerDirection.normalized.z);
+            transform.position =
+                _physics.Evaluate(
+                    dir * stats.speed,
+                    transform.position, delta);
 
-            states.currentSpeed = states.direction.magnitude;
+            states.currentSpeed = dir.magnitude * stats.speed;
             states.grounded = _physics.Grounded;
+        }
+
+        protected override void TurnTo(Vector2 direction, float delta)
+        {
+            if (!bossStates.moving) return;
+            base.TurnTo(direction, delta);
+        }
+
+        protected override void TurnTo(Vector2 direction)
+        {
+            if (!bossStates.moving) return;
+            base.TurnTo(direction);
         }
 
         private void SetBlackboard()
@@ -120,8 +153,8 @@ namespace Presentation.Gameplay.Bosses
 
         private NodeStates InTutorialState()
         {
-            if (Hp < stats.maxHp * 0.8f)
-                return NodeStates.Failure;
+            // if (Hp < stats.maxHp * 0.8f)
+            //     return NodeStates.Failure;
 
             bossStates.stage = 0;
             return NodeStates.Success;
@@ -149,7 +182,7 @@ namespace Presentation.Gameplay.Bosses
             {
                 bossStates.anticipatingElapsed += Timer.deltaTime;
 
-                if (bossStates.anticipatingElapsed >= bossStats.anticipationBaseDuration)
+                if (bossStates.anticipatingElapsed >= bossStats.anticipationBaseDuration[bossStates.stage])
                 {
                     bossStates.anticipating = false;
                     return NodeStates.Success;
@@ -158,7 +191,6 @@ namespace Presentation.Gameplay.Bosses
                 return NodeStates.Running;
             }
 
-            Debug.Log("Anticipate");
             bossStates.anticipating = true;
             bossStates.anticipatingElapsed = 0f;
 
@@ -181,7 +213,6 @@ namespace Presentation.Gameplay.Bosses
                 return NodeStates.Running;
             }
 
-            Debug.Log("Stag");
             bossStates.stagged = true;
             bossStates.stagElapsed = 0f;
 
@@ -198,11 +229,10 @@ namespace Presentation.Gameplay.Bosses
                 Debug.DrawRay(bossStates.destination, Vector3.up * 2, Color.red, 5);
 
                 bossStates.movingElapsed += Timer.deltaTime;
-                
+
                 if (bossStates.movingElapsed > bossStats.movingStepDuration)
                 {
                     bossStates.moving = false;
-                    states.direction = Vector3.zero;
                     return NodeStates.Success;
                 }
 
@@ -216,12 +246,18 @@ namespace Presentation.Gameplay.Bosses
 
             return NodeStates.Running;
         }
-        
+
         private NodeStates DoSpit()
         {
             if (bossStates.spiting)
             {
                 bossStates.spitingElapsed += Timer.deltaTime;
+
+                if (!bossStates.spited && bossStates.spitingElapsed >= bossStats.spitDelay)
+                {
+                    bossStates.spited = true;
+                    InstantiateSplash(bossStates.stage);
+                }
 
                 if (bossStates.spitingElapsed >= bossStats.spitDuration)
                 {
@@ -232,8 +268,8 @@ namespace Presentation.Gameplay.Bosses
                 return NodeStates.Running;
             }
 
-            Debug.Log("Spit");
             bossStates.spiting = true;
+            bossStates.spited = false;
             bossStates.spitingElapsed = 0f;
 
             return NodeStates.Running;
@@ -243,19 +279,58 @@ namespace Presentation.Gameplay.Bosses
         {
             var dir = PlayerDistance(transform.position);
 
-            states.direction = dir;
-
-            Debug.Log(dir.magnitude);
             if (dir.magnitude < bossStats.chaseDistance)
                 return NodeStates.Success;
 
             return NodeStates.Failure;
         }
 
+        protected override void CalculateDirection()
+        {
+            var dir = PlayerDistance(transform.position);
+            dir.y = dir.z;
+            dir.z = 0;
+            dir.Normalize();
+            states.direction = dir;
+        }
+
 
         private Vector3 PlayerDistance(Vector3 pos)
         {
-            return _gameManager.Player.Position - pos;
+            var d = _gameManager.Player.Position - pos;
+            d.y = 0;
+            return d;
+        }
+
+
+        private void InstantiateSplash(int difficulty)
+        {
+            var pos = new Vector3(mouth.position.x, _gameManager.Player.Center.y, mouth.position.z);
+            for (int i = 0, n = bossStats.sprayCount + bossStats.sprayCount * difficulty * 3; i < n; i++)
+            {
+                var step = (i / (n * 0.5f)) * Mathf.PI * 2f;
+                var dir = new Vector3(Mathf.Sin(step), 0, Mathf.Cos(step));
+
+                dir = mouth.TransformDirection(dir);
+                dir.y = 0;
+                dir.Normalize();
+
+                GetNextSpit();
+                _bullets[_currentSpit].Shoot(pos, dir, bossStats.spitBaseSpeed,
+                    i * bossStats.stagBaseDelay * (1 / ((float) difficulty + 1)));
+                Debug.DrawRay(pos, dir * 5, Color.blue, 2);
+            }
+        }
+
+        private void GetNextSpit()
+        {
+            for (int i = 0; i < bossStats.sprayCount; i++)
+            {
+                _currentSpit = (_currentSpit + 1) % _bullets.Length;
+
+                if (!_bullets[_currentSpit].Running)
+                    break;
+            }
         }
     }
 }

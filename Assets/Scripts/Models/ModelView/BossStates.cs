@@ -17,5 +17,6 @@ namespace Models.ModelView
         public Vector3 playerDirection;
         public Vector3 destination;
         public float movingElapsed;
+        public bool spited;
     }
 }
