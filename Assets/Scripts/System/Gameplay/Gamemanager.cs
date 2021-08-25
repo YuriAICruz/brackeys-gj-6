@@ -1,6 +1,7 @@
 ﻿using Graphene.Time;
 using Models.Accessors;
 using Models.Signals;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace System.Gameplay
@@ -36,7 +37,12 @@ namespace System.Gameplay
         {
             _signalBus.Fire<Game.End>();
 
-            _timer.Wait(_settings.restartDelay, StartGame);
+            _timer.Wait(_settings.restartDelay, ReloadGame);
+        }
+
+        private void ReloadGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         private void StartGame()

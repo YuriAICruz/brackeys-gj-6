@@ -129,10 +129,11 @@ namespace Presentation.Gameplay
         {
             if (_currentCamera == null) return;
 
-            transform.position = _physics.Evaluate(states.direction * (states.running ? stats.runSpeed : stats.speed),
+            var dir = new Vector2(states.direction.x, states.direction.z);
+            transform.position = _physics.Evaluate(dir * (states.running ? stats.runSpeed : stats.speed),
                 transform.position, delta);
 
-            states.currentSpeed = states.direction.magnitude * (states.running ? 2 : 1);
+            states.currentSpeed = dir.magnitude * (states.running ? 2 : 1);
             states.grounded = _physics.Grounded;
         }
     }
