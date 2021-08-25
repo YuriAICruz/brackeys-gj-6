@@ -9,7 +9,7 @@ namespace Presentation.Gameplay
 {
     public class MeleeWeapon : Weapon
     {
-        [Inject] private Physics _physics;
+        [Inject] private IPhysics _physics;
         [Inject] private PhysicsSettings _physicsSettings;
 
         [Space] public Vector3 colliderBase;

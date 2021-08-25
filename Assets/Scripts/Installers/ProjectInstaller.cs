@@ -1,4 +1,5 @@
 using System.Gameplay;
+using System.Input;
 using Graphene.Time;
 using UnityEngine;
 using Zenject;
@@ -10,6 +11,7 @@ namespace Graphene.Installers
     {
         public InputSettings inputSettings;
         public PhysicsSettings physicsSettings;
+        public GameSettings gameSettings;
         
         public override void InstallBindings()
         {
@@ -21,6 +23,7 @@ namespace Graphene.Installers
 
             Container.BindInstance(inputSettings);
             Container.BindInstance(physicsSettings);
+            Container.BindInstance(gameSettings);
 
             Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle().NonLazy();
             

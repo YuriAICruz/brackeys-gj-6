@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using Zenject;
 
-namespace System.Gameplay
+namespace System.Input
 {
     [CreateAssetMenu(fileName = "InputSettings", menuName = "Graphene/Brackeys-GJ/InputSettings")]
     public class InputSettings : ScriptableObject

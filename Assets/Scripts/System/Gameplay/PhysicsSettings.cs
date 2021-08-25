@@ -11,6 +11,7 @@ namespace System.Gameplay
         public LayerMask enemies;
         public LayerMask colliders;
         public LayerMask hittable;
+        public LayerMask player;
         public float minimumDistance = 0.1f;
 
         public int rayPrecision = 4;

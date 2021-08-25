@@ -30,7 +30,9 @@ namespace Graphene.Time
 
         public void Initialize()
         {
-            _timer = new GameObject("TimeManagerBehaviour", new[] {typeof(TimeManagerBehaviour)}).GetComponent<TimeManagerBehaviour>();
+            if (_timer == null)
+                _timer = new GameObject("TimeManagerBehaviour", new[] {typeof(TimeManagerBehaviour)})
+                    .GetComponent<TimeManagerBehaviour>();
         }
 
         public void Pause()
@@ -76,17 +78,20 @@ namespace Graphene.Time
 
         public Coroutine Wait(float f, Action callback)
         {
+            Initialize();
             return _timer.Wait(f, callback);
         }
-        
+
         public Coroutine Wait(float f, Action<float> update, Action onEnd)
         {
+            Initialize();
             return _timer.Wait(f, update, onEnd);
         }
 
         public Coroutine Wait(Timer.Feedback feedback, Action callback)
         {
-            return _timer.Wait(feedback,  callback);
+            Initialize();
+            return _timer.Wait(feedback, callback);
         }
 
         public void Stop(Coroutine routine)

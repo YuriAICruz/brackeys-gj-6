@@ -14,6 +14,8 @@ namespace Models.ModelView
     public class ActorStatistics
     {
         public int maxHp;
+        public float damageStagDuration;
+        public float damageInvincibilityDuration;
         [Header("Locomotion")]
         public float speed = 3;
         public float dodgeSpeed = 4;

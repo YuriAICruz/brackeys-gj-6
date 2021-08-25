@@ -108,12 +108,20 @@ namespace Presentation.Gameplay
             });
         }
 
+        public override void Damage(int damage)
+        {
+            base.Damage(damage);
+            
+            if(Hp <=0)
+                _signalBus.Fire<Models.Signals.Player.Death>();
+        }
+
         protected override void CalculateDirection()
         {
             var dir = _currentCamera.transform.TransformDirection(_direction);
-            dir.y = dir.z;
-            dir.z = 0;
-            dir.Normalize();
+            // dir.y = dir.z;
+            // dir.z = 0;
+            // dir.Normalize();
             states.direction = dir;
         }
 

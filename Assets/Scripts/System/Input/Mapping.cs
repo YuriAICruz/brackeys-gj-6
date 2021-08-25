@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace System.Gameplay
+namespace System.Input
 {
     [Serializable]
     public class Mapping

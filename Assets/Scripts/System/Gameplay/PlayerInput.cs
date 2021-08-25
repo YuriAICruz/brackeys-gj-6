@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Input;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -38,14 +39,14 @@ namespace System.Gameplay
             for (int i = 0, n = _settings.inputMap.inputs.Length; i < n; i++)
             {
                 if (!_buttons[_settings.inputMap.inputs[i].id].down &&
-                    Input.GetKeyDown(_settings.inputMap.inputs[i].key))
+                    UnityEngine.Input.GetKeyDown(_settings.inputMap.inputs[i].key))
                 {
                     _buttons[_settings.inputMap.inputs[i].id].down = true;
                     _buttons[_settings.inputMap.inputs[i].id].time = Time.time;
                     _signalBus.Fire(new InputSignal.Down(_settings.inputMap.inputs[i].id));
                 }
 
-                if (_buttons[_settings.inputMap.inputs[i].id].down && Input.GetKeyUp(_settings.inputMap.inputs[i].key))
+                if (_buttons[_settings.inputMap.inputs[i].id].down && UnityEngine.Input.GetKeyUp(_settings.inputMap.inputs[i].key))
                 {
                     _buttons[_settings.inputMap.inputs[i].id].down = false;
                     _signalBus.Fire(new InputSignal.Up(_settings.inputMap.inputs[i].id,
@@ -58,8 +59,8 @@ namespace System.Gameplay
             {
                 var index = _settings.inputMap.axes[i].id;
 
-                int value = Input.GetKey(_settings.inputMap.axes[i].positive) ? 1 :
-                    Input.GetKey(_settings.inputMap.axes[i].negative) ? -1 : 0;
+                int value = UnityEngine.Input.GetKey(_settings.inputMap.axes[i].positive) ? 1 :
+                    UnityEngine.Input.GetKey(_settings.inputMap.axes[i].negative) ? -1 : 0;
 
                 if (value != 0)
                     _axes.values[index] = value;
@@ -67,7 +68,7 @@ namespace System.Gameplay
 
             for (int i = 0; i < _axesCount; i++)
             {
-                var value = Input.GetAxisRaw($"Axis_{i}");
+                var value = UnityEngine.Input.GetAxisRaw($"Axis_{i}");
 
                 if (value != 0)
                     _axes.values[i] = value;

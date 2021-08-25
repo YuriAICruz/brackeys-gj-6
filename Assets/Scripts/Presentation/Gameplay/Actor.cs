@@ -5,6 +5,7 @@ using Graphene.Time;
 using Models.Accessors;
 using Models.Interfaces;
 using Models.ModelView;
+using Models.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -22,6 +23,8 @@ namespace Presentation.Gameplay
         public Vector3 Position => transform.position;
         public Vector3 Center => transform.position + Vector3.up * stats.radius;
 
+        public int MaxHp => stats.maxHp;
+
         Observer<int> IActorData.Hp => _dataHp;
 
         public ActorStatistics stats;
@@ -32,23 +35,39 @@ namespace Presentation.Gameplay
         private protected Coroutine _attack;
 
         private Coroutine _jumpAnimation;
+        private protected bool _running;
 
         public int Hp => _dataHp.GetValue();
 
         public void SetupWeapon(IWeapon weapon)
         {
-            if (inventory.weapon != null)
-                inventory.weapon.Discard();
+            inventory.weapon?.Discard();
+
             inventory.weapon = weapon;
         }
 
         protected virtual void Awake()
         {
-            _dataHp.Commit(stats.maxHp);
+            DisableActor();
+
+            _signalBus.Subscribe<Game.Start>(SetUpActor);
+            _signalBus.Subscribe<Game.End>(DisableActor);
         }
 
         protected virtual void Start()
         {
+        }
+
+
+        protected virtual void SetUpActor()
+        {
+            _dataHp.Commit(stats.maxHp);
+            _running = true;
+        }
+
+        protected virtual void DisableActor()
+        {
+            _running = false;
         }
 
         protected virtual void OnDestroy()
@@ -57,11 +76,12 @@ namespace Presentation.Gameplay
 
         protected virtual void Update()
         {
+            //if (!_running) return;
         }
 
         protected void FixedUpdate()
         {
-            if (states.attacking || states.dodging) return;
+            if (!_running || states.attacking || states.dodging || states.stag) return;
 
             CalculateDirection();
             Move(Time.fixedDeltaTime);
@@ -86,13 +106,13 @@ namespace Presentation.Gameplay
         }
 
 
-        protected virtual void TurnTo(Vector2 direction, float delta)
+        protected virtual void TurnTo(Vector3 direction, float delta)
         {
-            var dir = new Vector3(direction.x, 0, direction.y);
+            direction.y = 0;
 
-            if (dir.sqrMagnitude > 0.15f)
+            if (direction.sqrMagnitude > 0.15f)
             {
-                states.direction = dir;
+                states.direction = direction;
             }
 
             if (states.direction.sqrMagnitude < 0.15f)
@@ -268,14 +288,22 @@ namespace Presentation.Gameplay
 
         public virtual void Damage(int damage)
         {
+            if (states.damaged || states.dodging) return;
+            
             var hp = _dataHp.GetValue();
+
             hp -= damage;
             _dataHp.Commit(hp);
 
             _signalBus.Fire(new Models.Signals.Actor.Damage(damage, Hp));
 
             states.damaged = true;
-            _timer.Wait(0.2f, () => { states.damaged = false; });
+            states.stag = true;
+            _timer.Wait(stats.damageStagDuration, () =>
+            {
+                states.stag = false;
+                _timer.Wait(stats.damageInvincibilityDuration, () => { states.damaged = false; });
+            });
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Presentation.Gameplay
     {
         public bool main;
         public float speed;
+        public float minDistance;
 
         [Inject] private ICamera _camera;
         [Inject] private GameManager _gameManager;
@@ -31,6 +32,9 @@ namespace Presentation.Gameplay
         {
             var dir = _gameManager.Player.Center - transform.position;
             dir.x = 0;
+
+            if (dir.magnitude < minDistance) return;
+            
             var look = Quaternion.LookRotation(dir);
 
             _direction = Quaternion.Lerp(_direction, look, speed*Time.deltaTime);

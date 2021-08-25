@@ -20,9 +20,14 @@ namespace Presentation.Gameplay.Projectiles
         public float duration = 2;
         private float _time;
         private float _delay;
+        [SerializeField]
+        private float _radius;
+
+        private Collider[] _collision;
 
         private void Awake()
         {
+            _collision = new Collider[1];
             Deactivate();
         }
 
@@ -77,9 +82,20 @@ namespace Presentation.Gameplay.Projectiles
             var dir = pos - _lastPosition;
 
             Debug.DrawRay(_lastPosition, dir, Color.red, duration);
+            
             if (UnityEngine.Physics.Raycast(new Ray(_lastPosition, dir), out var hit, dir.magnitude*2, mask))
             {
                 var damageable = hit.transform.GetComponent<IDamageable>();
+                damageable?.Damage(damage);
+                
+                Deactivate();
+                return;
+            }
+            
+            var hits = UnityEngine.Physics.OverlapSphereNonAlloc(_lastPosition, _radius, _collision, mask);
+            for (int i = 0; i < hits; i++)
+            {
+                var damageable = _collision[i].GetComponent<IDamageable>();
                 damageable?.Damage(damage);
                 
                 Deactivate();

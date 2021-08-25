@@ -25,6 +25,9 @@ MonoBehaviour:
   hittable:
     serializedVersion: 2
     m_Bits: 576
+  player:
+    serializedVersion: 2
+    m_Bits: 1024
   minimumDistance: 0.15
   rayPrecision: 4
   maxCollision: 6

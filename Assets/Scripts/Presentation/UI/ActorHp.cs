@@ -3,6 +3,7 @@ using System.Gameplay;
 using Models.Accessors;
 using Presentation.Gameplay;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Presentation.UI
@@ -13,15 +14,20 @@ namespace Presentation.UI
 
         [Inject] private GameManager _gameManager;
 
+        public Image fill;
+        private IActorData _actor;
+
         private void Awake()
         {
-            var actor = isPlayer ? _gameManager.Player : _gameManager.Boss;
-            actor.Hp.AddListener(UpdateHealth);
+            _actor = isPlayer ? _gameManager.Player : _gameManager.Boss;
+            _actor.Hp.AddListener(UpdateHealth);
         }
 
         private void UpdateHealth(int hp)
         {
             Debug.Log($"hp {hp}");
+
+            fill.fillAmount = hp / (float) _actor.MaxHp;
         }
     }
 }
