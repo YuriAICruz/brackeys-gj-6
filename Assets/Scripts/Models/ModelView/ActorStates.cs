@@ -16,5 +16,6 @@ namespace Models.ModelView
         public bool jumping;
         public int attackStage;
         public float lastAttack;
+        public bool damaged;
     }
 }

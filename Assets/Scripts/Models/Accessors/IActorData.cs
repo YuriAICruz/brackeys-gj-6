@@ -8,7 +8,8 @@ namespace Models.Accessors
     {
         Transform Transform { get; }
         Vector3 Position { get; }
-        
+        Vector3 Center { get; }
+
         Observer<int> Hp { get; }
     }
 }

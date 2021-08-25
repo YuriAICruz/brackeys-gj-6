@@ -20,7 +20,8 @@ namespace Presentation.Gameplay
 
         public Transform Transform => transform;
         public Vector3 Position => transform.position;
-        
+        public Vector3 Center => transform.position + Vector3.up * stats.radius;
+
         Observer<int> IActorData.Hp => _dataHp;
 
         public ActorStatistics stats;
@@ -113,7 +114,7 @@ namespace Presentation.Gameplay
 
             var elapsed = Timer.time - states.lastAttack;
 
-            if (states.attacking)
+            if (states.attacking && _physics.Grounded)
             {
                 if (elapsed > stats.attacks[states.attackStage].delay +
                     stats.attacks[states.attackStage].damageDuration * 0.6f)
@@ -265,13 +266,16 @@ namespace Presentation.Gameplay
             _physics.StopJump();
         }
 
-        public void Damage(int damage)
+        public virtual void Damage(int damage)
         {
             var hp = _dataHp.GetValue();
             hp -= damage;
             _dataHp.Commit(hp);
-            
+
             _signalBus.Fire(new Models.Signals.Actor.Damage(damage, Hp));
+
+            states.damaged = true;
+            _timer.Wait(0.2f, () => { states.damaged = false; });
         }
     }
 }
