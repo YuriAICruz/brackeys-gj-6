@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: c4aed484f267f7c46be504722128ecf9, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -3111,14 +3111,6 @@ PrefabInstance:
     - target: {fileID: 2473555072566357664, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
       propertyPath: m_Name
       value: Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 5833296505772538917, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
-      propertyPath: stats.attacks.Array.data[2].delay
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5833296505772538917, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}
-      propertyPath: stats.attacks.Array.data[2].damageDuration
-      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ff0564ecc8848a47999ba780311d255, type: 3}

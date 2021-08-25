@@ -13,7 +13,8 @@ namespace System.Gameplay
         private readonly GameSettings _settings;
         private IActorData player;
         private IActorData boss;
-        
+        private bool _gamerunning;
+
         public IActorData Player => (IActorData) player;
         public IActorData Boss => (IActorData) boss;
 
@@ -35,6 +36,8 @@ namespace System.Gameplay
 
         private void EndGame()
         {
+            if(!_gamerunning) return;
+            _gamerunning = false;
             _signalBus.Fire<Game.End>();
 
             _timer.Wait(_settings.restartDelay, ReloadGame);
@@ -47,6 +50,9 @@ namespace System.Gameplay
 
         private void StartGame()
         {
+            if(_gamerunning) return;
+
+            _gamerunning = true;
             _signalBus.Fire<Models.Signals.Game.Start>();
         }
 
