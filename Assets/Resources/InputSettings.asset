@@ -16,16 +16,28 @@ MonoBehaviour:
     inputs:
     - key: 304
       id: 0
+    - key: 332
+      id: 0
+    - key: 334
+      id: 0
     - key: 323
+      id: 1
+    - key: 101
+      id: 1
+    - key: 333
       id: 1
     - key: 324
       id: 2
-    - key: 101
-      id: 1
-    - key: 32
-      id: 3
     - key: 113
       id: 2
+    - key: 331
+      id: 2
+    - key: 335
+      id: 2
+    - key: 32
+      id: 3
+    - key: 330
+      id: 3
     axes:
     - positive: 119
       negative: 115
