@@ -77,17 +77,6 @@ namespace Presentation.Gameplay
             }
         }
 
-        private void DisableActivation()
-        {
-            states.activating = false;
-            
-            if (!states.onTrigger) return;
-
-            var interactable = states.onTrigger.GetComponent<IInteractable>();
-
-            interactable?.Cancel();
-        }
-
         private void OnInputEvent(InputSignal.Up data)
         {
             switch (data.id)

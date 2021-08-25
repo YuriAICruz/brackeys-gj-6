@@ -303,6 +303,9 @@ namespace Presentation.Gameplay
 
         public virtual void Damage(int damage)
         {
+            if (states.activating)
+                DisableActivation();
+            
             if (states.damaged || states.dodging) return;
 
             var hp = _dataHp.GetValue();
@@ -324,6 +327,17 @@ namespace Presentation.Gameplay
         private void Heal()
         {
             _dataHp.Commit(stats.maxHp);
+        }
+
+        protected void DisableActivation()
+        {
+            states.activating = false;
+            
+            if (!states.onTrigger) return;
+
+            var interactable = states.onTrigger.GetComponent<IInteractable>();
+
+            interactable?.Cancel();
         }
 
         protected void ActivationEffect(InteractionType type)
