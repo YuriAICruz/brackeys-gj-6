@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Gameplay;
 using Graphene.Time;
 using Models.Interfaces;
@@ -10,8 +11,29 @@ namespace Presentation.Gameplay.Projectiles
 {
     public class Bullet : MonoBehaviour
     {
+        public class Factory : PlaceholderFactory<Bullet>
+        {
+            private readonly DiContainer _container;
+
+            public Factory(DiContainer container)
+            {
+                _container = container;
+            }
+            
+            public override Bullet Create()
+            {
+                return base.Create();
+            }
+            public Bullet Create(Bullet prefab)
+            {
+                var instance = _container.InstantiatePrefab(prefab).GetComponent<Bullet>();
+                
+                return instance;
+            }
+        }
+
         [Inject] private SignalBus _signalBus;
-        
+
         public bool Running { get; private set; }
 
         private Vector3 _direction;
@@ -23,8 +45,7 @@ namespace Presentation.Gameplay.Projectiles
         public float duration = 2;
         private float _time;
         private float _delay;
-        [SerializeField]
-        private float _radius;
+        [SerializeField] private float _radius;
 
         private Collider[] _collision;
 
@@ -65,40 +86,40 @@ namespace Presentation.Gameplay.Projectiles
 
         protected virtual void FixedUpdate()
         {
-            if(!Running) return;
-            
-            if(Timer.time - _time > duration+_delay)
+            if (!Running) return;
+
+            if (Timer.time - _time > duration + _delay)
             {
                 Deactivate();
                 return;
             }
-            
-            if(Timer.time - _time < _delay)
+
+            if (Timer.time - _time < _delay)
             {
                 return;
             }
-            
+
             var pos = _lastPosition;
 
             pos += _direction * (_speed * Timer.fixedDeltaTime);
-            
+
             var dir = pos - _lastPosition;
 
             Debug.DrawRay(_lastPosition, dir, Color.red, duration);
-            
-            if (UnityEngine.Physics.Raycast(new Ray(_lastPosition, dir), out var hit, dir.magnitude*2, mask))
+
+            if (UnityEngine.Physics.Raycast(new Ray(_lastPosition, dir), out var hit, dir.magnitude * 2, mask))
             {
                 var damageable = hit.transform.GetComponent<IDamageable>();
-                if(damageable!=null)
+                if (damageable != null)
                 {
                     _signalBus.Fire(new FX.Hit(hit.point));
                     damageable.Damage(damage);
                 }
-                
+
                 Deactivate();
                 return;
             }
-            
+
             var hits = UnityEngine.Physics.OverlapSphereNonAlloc(_lastPosition, _radius, _collision, mask);
             for (int i = 0; i < hits; i++)
             {

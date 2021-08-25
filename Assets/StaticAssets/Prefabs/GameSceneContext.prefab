@@ -79,4 +79,5 @@ MonoBehaviour:
   player: {fileID: 0}
   boss: {fileID: 0}
   bossSpit: {fileID: 5275560318408282100, guid: 8d37d26991c22b947a6a9bb096e088ec, type: 3}
+  genericBullet: {fileID: 5275560318408282100, guid: 8d37d26991c22b947a6a9bb096e088ec, type: 3}
   heart: {fileID: -5439312554065778249, guid: cf77218de45869147b31d9bd462f9653, type: 3}

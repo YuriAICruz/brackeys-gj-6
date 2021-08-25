@@ -13,6 +13,7 @@ public class StageInstaller : MonoInstaller
     public Actor boss;
 
     public Spit bossSpit;
+    public Bullet genericBullet;
     public Heart heart;
 
     public override void InstallBindings()
@@ -23,6 +24,7 @@ public class StageInstaller : MonoInstaller
             .OnInstantiated<GameManager>(OnGameManagerInstantiated);
 
         Container.BindFactory<Spit, Spit.Factory>().FromComponentInNewPrefab(bossSpit);
+        Container.BindFactory<Bullet, Bullet.Factory>().FromComponentInNewPrefab(genericBullet);
         Container.BindFactory<Heart, Heart.Factory>().FromComponentInNewPrefab(heart);
 
         Container.DeclareSignal<Models.Signals.Player.Death>();

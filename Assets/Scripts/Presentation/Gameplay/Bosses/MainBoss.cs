@@ -19,6 +19,8 @@ namespace Presentation.Gameplay.Bosses
 {
     public class MainBoss : Boss
     {
+        public override Vector3 Center => mouth.position;
+        
         private enum BlackboardIds
         {
             TutorialState = 0,
