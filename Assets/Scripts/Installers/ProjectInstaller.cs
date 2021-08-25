@@ -12,6 +12,7 @@ namespace Graphene.Installers
         public InputSettings inputSettings;
         public PhysicsSettings physicsSettings;
         public GameSettings gameSettings;
+        public FxSettings fxSettings;
         
         public override void InstallBindings()
         {
@@ -24,6 +25,7 @@ namespace Graphene.Installers
             Container.BindInstance(inputSettings);
             Container.BindInstance(physicsSettings);
             Container.BindInstance(gameSettings);
+            Container.BindInstance(fxSettings);
 
             Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle().NonLazy();
             

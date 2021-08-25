@@ -2,6 +2,7 @@
 using System.Gameplay;
 using Graphene.Time;
 using Models.Interfaces;
+using Models.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,8 @@ namespace Presentation.Gameplay.Projectiles
 {
     public class Bullet : MonoBehaviour
     {
+        [Inject] private SignalBus _signalBus;
+        
         public bool Running { get; private set; }
 
         private Vector3 _direction;
@@ -86,7 +89,11 @@ namespace Presentation.Gameplay.Projectiles
             if (UnityEngine.Physics.Raycast(new Ray(_lastPosition, dir), out var hit, dir.magnitude*2, mask))
             {
                 var damageable = hit.transform.GetComponent<IDamageable>();
-                damageable?.Damage(damage);
+                if(damageable!=null)
+                {
+                    _signalBus.Fire(new FX.Hit(hit.point));
+                    damageable.Damage(damage);
+                }
                 
                 Deactivate();
                 return;
@@ -96,8 +103,12 @@ namespace Presentation.Gameplay.Projectiles
             for (int i = 0; i < hits; i++)
             {
                 var damageable = _collision[i].GetComponent<IDamageable>();
-                damageable?.Damage(damage);
-                
+                if (damageable != null)
+                {
+                    _signalBus.Fire(new FX.Hit(_collision[i].ClosestPoint(transform.position)));
+                    damageable.Damage(damage);
+                }
+
                 Deactivate();
                 return;
             }

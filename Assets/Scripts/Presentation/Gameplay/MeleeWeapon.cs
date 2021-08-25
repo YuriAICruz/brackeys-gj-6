@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Gameplay;
 using Models.Interfaces;
+using Models.Signals;
 using UnityEngine;
 using Zenject;
 using Physics = System.Gameplay.Physics;
@@ -11,6 +12,7 @@ namespace Presentation.Gameplay
     {
         [Inject] private IPhysics _physics;
         [Inject] private PhysicsSettings _physicsSettings;
+        [Inject] private SignalBus _signalBus;
 
         [Space] public Vector3 colliderBase;
         public Vector3 colliderTip;
@@ -72,6 +74,7 @@ namespace Presentation.Gameplay
 
                     if (damageable != null)
                     {
+                        _signalBus.Fire(new FX.Slash(hit.point));
                         damageable.Damage(attributes.damage);
                         break;
                     }
@@ -79,6 +82,7 @@ namespace Presentation.Gameplay
                     var breakable = hit.transform.GetComponent<IBreakable>();
                     if (breakable != null) 
                     {
+                        _signalBus.Fire(new FX.Hit(hit.point));
                         breakable.Break();
                         continue;
                     }

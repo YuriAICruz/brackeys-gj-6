@@ -8,6 +8,7 @@ using Graphene.BehaviourTree.Composites;
 using Graphene.BehaviourTree.Conditions;
 using Graphene.Time;
 using Models.Interfaces;
+using Models.Signals;
 using Presentation.Gameplay.Projectiles;
 using UnityEngine;
 using Zenject;
@@ -335,44 +336,6 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Running;
         }
 
-        private void EvaluateHit(Transform[] points, ref Vector3[] lastPositions, int damage, float radius)
-        {
-            if (_currentDamageTracker == null || points.Length != _currentDamageTracker.Length)
-            {
-                _currentDamageTracker = new Vector3[points.Length];
-            }
-
-            for (int i = 0, n = points.Length; i < n; i++)
-            {
-                var pos = points[i].position;
-                var ini = lastPositions[i];
-                var dir = pos - ini;
-
-                Debug.DrawRay(ini, dir, Color.yellow, 1);
-
-                if (_physics.CheckSphere(ini, dir, radius, _physicsSettings.player | _physicsSettings.hittable,
-                    out RaycastHit hit))
-                {
-                    var damageable = hit.transform.GetComponent<IDamageable>();
-
-                    if (damageable != null)
-                    {
-                        damageable.Damage(damage);
-                        break;
-                    }
-
-                    var breakable = hit.transform.GetComponent<IBreakable>();
-                    if (breakable != null)
-                    {
-                        breakable.Break();
-                        continue;
-                    }
-                }
-
-                lastPositions[i] = pos;
-            }
-        }
-
         private NodeStates IsPlayerNear()
         {
             var dir = PlayerDistance(transform.position);
@@ -408,6 +371,47 @@ namespace Presentation.Gameplay.Bosses
             return d;
         }
 
+
+        private void EvaluateHit(Transform[] points, ref Vector3[] lastPositions, int damage, float radius)
+        {
+            if (_currentDamageTracker == null || points.Length != _currentDamageTracker.Length)
+            {
+                _currentDamageTracker = new Vector3[points.Length];
+            }
+
+            for (int i = 0, n = points.Length; i < n; i++)
+            {
+                var pos = points[i].position;
+                var ini = lastPositions[i];
+                var dir = pos - ini;
+
+                Debug.DrawRay(ini, dir, Color.yellow, 1);
+
+                if (_physics.CheckSphere(ini, dir, radius, _physicsSettings.player | _physicsSettings.hittable,
+                    out RaycastHit hit))
+                {
+                    var damageable = hit.transform.GetComponent<IDamageable>();
+
+                    if (damageable != null)
+                    {
+                        _signalBus.Fire(new FX.Hit(hit.point));
+                        damageable.Damage(damage);
+                        break;
+                    }
+
+                    var breakable = hit.transform.GetComponent<IBreakable>();
+                    if (breakable != null)
+                    {
+                        _signalBus.Fire(new FX.Hit(hit.point));
+                        breakable.Break();
+                        continue;
+                    }
+                }
+
+                lastPositions[i] = pos;
+            }
+        }
+        
 
         private void InstantiateSplash(int difficulty)
         {

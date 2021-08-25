@@ -19,5 +19,7 @@ namespace Models.ModelView
         public bool damaged;
         public bool stag;
         public float attackElapsed;
+        public Collider onTrigger;
+        public bool activating;
     }
 }

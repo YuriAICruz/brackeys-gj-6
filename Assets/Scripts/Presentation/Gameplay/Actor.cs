@@ -8,6 +8,7 @@ using Models.ModelView;
 using Models.Signals;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Presentation.Gameplay
 {
@@ -39,6 +40,7 @@ namespace Presentation.Gameplay
 
         public int Hp => _dataHp.GetValue();
 
+
         public void SetupWeapon(IWeapon weapon)
         {
             inventory.weapon?.Discard();
@@ -56,6 +58,17 @@ namespace Presentation.Gameplay
 
         protected virtual void Start()
         {
+        }
+
+
+        protected virtual void OnTriggerEnter(Collider other)
+        {
+            states.onTrigger = other;
+        }
+
+        protected virtual void OnTriggerExit(Collider other)
+        {
+            states.onTrigger = null;
         }
 
 
@@ -81,7 +94,7 @@ namespace Presentation.Gameplay
 
         protected void FixedUpdate()
         {
-            if (!_running || states.attacking || states.dodging || states.stag) return;
+            if (!_running || states.attacking || states.dodging || states.stag || states.activating) return;
 
             CalculateDirection();
             Move(Time.fixedDeltaTime);
@@ -257,9 +270,11 @@ namespace Presentation.Gameplay
         {
             if (states.jumping) return;
 
+            if (_physics.Grounded)
+                _signalBus.Fire(new FX.Puff(transform.position));
+
             states.jumping = true;
             _physics.Jump(stats.jumpForce);
-
 
             var t = Timer.time;
 
@@ -289,7 +304,7 @@ namespace Presentation.Gameplay
         public virtual void Damage(int damage)
         {
             if (states.damaged || states.dodging) return;
-            
+
             var hp = _dataHp.GetValue();
 
             hp -= damage;
@@ -304,6 +319,23 @@ namespace Presentation.Gameplay
                 states.stag = false;
                 _timer.Wait(stats.damageInvincibilityDuration, () => { states.damaged = false; });
             });
+        }
+
+        private void Heal()
+        {
+            _dataHp.Commit(stats.maxHp);
+        }
+
+        protected void ActivationEffect(InteractionType type)
+        {
+            switch (type)
+            {
+                case InteractionType.Heal:
+                    Heal();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
     }
 }

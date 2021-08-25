@@ -1,6 +1,8 @@
-﻿using System.Gameplay;
+﻿using System;
+using System.Gameplay;
 using Graphene.Time;
 using Models.Accessors;
+using Models.Interfaces;
 using ModestTree;
 using UnityEngine;
 using Zenject;
@@ -23,7 +25,7 @@ namespace Presentation.Gameplay
             _signalBus.Subscribe<InputSignal.Up>(OnInputEvent);
             _signalBus.Subscribe<InputSignal.Down>(OnInputEvent);
             _signalBus.Subscribe<InputSignal.Axes>(UpdateAxis);
-            
+
             _physics.SetSphereRadius(stats.radius, stats.height);
         }
 
@@ -46,15 +48,44 @@ namespace Presentation.Gameplay
                     states.running = true;
                     break;
                 case 1:
-                    Attack();
+                    if (states.onTrigger)
+                    {
+                        var interactable = states.onTrigger.GetComponent<IInteractable>();
+                        if (interactable.CanActivate)
+                        {
+                            states.activating = true;
+                            interactable.Activate(() =>
+                            {
+                                states.activating = false;
+                                ActivationEffect(interactable.EffectType);
+                            });
+                            break;
+                        }
+                    }
+
+                    if (!states.activating)
+                        Attack();
                     break;
                 case 2:
+                    DisableActivation();
                     Dodge();
                     break;
                 case 3:
+                    DisableActivation();
                     Jump();
                     break;
             }
+        }
+
+        private void DisableActivation()
+        {
+            states.activating = false;
+            
+            if (!states.onTrigger) return;
+
+            var interactable = states.onTrigger.GetComponent<IInteractable>();
+
+            interactable?.Cancel();
         }
 
         private void OnInputEvent(InputSignal.Up data)
@@ -111,8 +142,8 @@ namespace Presentation.Gameplay
         public override void Damage(int damage)
         {
             base.Damage(damage);
-            
-            if(Hp <=0)
+
+            if (Hp <= 0)
                 _signalBus.Fire<Models.Signals.Player.Death>();
         }
 

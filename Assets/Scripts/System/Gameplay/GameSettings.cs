@@ -7,5 +7,7 @@ namespace System.Gameplay
     {
         public float restartDelay;
         public float startDelay;
+
+        public float healDuration;
     }
 }

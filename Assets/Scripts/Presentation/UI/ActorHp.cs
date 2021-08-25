@@ -25,8 +25,6 @@ namespace Presentation.UI
 
         private void UpdateHealth(int hp)
         {
-            Debug.Log($"hp {hp}");
-
             fill.fillAmount = hp / (float) _actor.MaxHp;
         }
     }

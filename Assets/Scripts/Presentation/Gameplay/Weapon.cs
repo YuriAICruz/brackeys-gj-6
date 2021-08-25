@@ -37,6 +37,11 @@ namespace Presentation.Gameplay
             _collider.enabled = false;
         }
 
+        protected virtual void OnDestroy()
+        {
+            _signalBus.Unsubscribe<Models.Signals.Actor.Attack>(Swing);
+        }
+
         protected virtual void Swing(Models.Signals.Actor.Attack signal)
         {
             _collider.enabled = true;

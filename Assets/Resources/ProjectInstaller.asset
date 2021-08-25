@@ -15,3 +15,4 @@ MonoBehaviour:
   inputSettings: {fileID: 11400000, guid: 65b2bb3ea46028c4a9de6137017fbe31, type: 2}
   physicsSettings: {fileID: 11400000, guid: 642380edd27dc2f46b1ed187ecb99e4a, type: 2}
   gameSettings: {fileID: 11400000, guid: b09eee2975bf6df49b119345b8d72dda, type: 2}
+  fxSettings: {fileID: 11400000, guid: b1d5cd98756001a41844c02754d9c317, type: 2}
