@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Gameplay;
 using System.Linq;
-using Codice.CM.SEIDInfo;
 using Graphene.BehaviourTree;
 using Graphene.BehaviourTree.Actions;
 using Graphene.BehaviourTree.Composites;
@@ -13,7 +12,6 @@ using Presentation.Gameplay.Projectiles;
 using UnityEngine;
 using Zenject;
 using Behaviour = Graphene.BehaviourTree.Behaviour;
-using Physics = System.Gameplay.Physics;
 
 namespace Presentation.Gameplay.Bosses
 {

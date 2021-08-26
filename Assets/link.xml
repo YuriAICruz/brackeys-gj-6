@@ -1,0 +1,3 @@
+<linker>
+    <assembly fullname="Graphene.BehaviourTree" preserve="all"/>
+</linker>
