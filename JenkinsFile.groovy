@@ -28,7 +28,7 @@ pipeline{
                     
                     mkdir Builds
                     
-                    %UNITY_19_4% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildWindows
+                    %UNITY_20_3% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildWindows
                     
                     type log.txt
                 '''
@@ -56,7 +56,7 @@ pipeline{
                     
                     mkdir Builds
                     
-                    %UNITY_19_4% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildMac
+                    %UNITY_20_3% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildMac
                     
                     type log.txt
                 '''
@@ -84,7 +84,7 @@ pipeline{
                     
                     mkdir Builds
                     
-                    %UNITY_19_4% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildWeb
+                    %UNITY_20_3% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildWeb
                     
                     type log.txt
                 '''
