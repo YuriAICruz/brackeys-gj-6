@@ -96,7 +96,7 @@ pipeline{
             }
             steps {
                 bat '''
-                    %Butler% push Builds/WebGL/brackeys-gj-6_Web/ graphene-ai/brackeys-gj-6:'web-beta'
+                    %Butler% push Builds/WebGL/pug-action-game_Web/ graphene-ai/pug-action-game:'web-beta'
                 '''
             }
         }
