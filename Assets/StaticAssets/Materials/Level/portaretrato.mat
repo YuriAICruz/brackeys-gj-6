@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: glass
+  m_Name: portaretrato
   m_Shader: {fileID: 4800000, guid: df96712bd1128ce41be43d6a349940bd, type: 3}
   m_ShaderKeywords: SPECULAR_DEF_OFF
   m_LightmapFlags: 4
@@ -81,10 +81,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.8746885, g: 0.89791256, b: 0.9811321, a: 1}
+    - _Color: {r: 0.254717, g: 0.11182805, b: 0.051664297, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 0.7075472, g: 0.6190789, b: 0.5840602, a: 1}
-    - _RimColor: {r: 0.7146226, g: 0.9528302, b: 0.9477475, a: 1}
+    - _RimColor: {r: 0.4528302, g: 0.20565592, b: 0.10893556, a: 1}
     - _SColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _SpecColor: {r: 0.735849, g: 0.5490192, b: 0.47552508, a: 1}
   m_BuildTextureStacks: []
