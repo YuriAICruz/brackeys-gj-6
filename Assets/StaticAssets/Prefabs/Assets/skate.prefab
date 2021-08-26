@@ -69,49 +69,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.35
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.24
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.009182745
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.012419801
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5944413
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.80399066
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 287.044
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -1.77
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664001242, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 924587701664428282, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
       propertyPath: m_Name
       value: skateboard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2792285467881825444, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2334fad76b4ce2945a59d5c9011dda41, type: 3}
 --- !u!1 &497713357798317357 stripped
 GameObject:
