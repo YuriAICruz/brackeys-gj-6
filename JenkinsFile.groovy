@@ -13,7 +13,7 @@ pipeline{
     stages { 
         stage('Checkout') {
             steps {
-                //checkout([$class: 'GitSCM', branches: [[name: "*/${env.BRANCH_NAME}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth: 1, noTags: false, reference: '', shallow: true, timeout: 45]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b24266f2-2db3-4d10-a622-bbaefafca6cf', url: 'git@github.com:YuriAICruz/shmup-steam.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: "*/${env.BRANCH_NAME}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth: 1, noTags: false, reference: '', shallow: true, timeout: 45]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b24266f2-2db3-4d10-a622-bbaefafca6cf', url: 'git@github.com:YuriAICruz/brackeys-gj-6.git']]])
             }
         }
         stage('Build Windows') {
