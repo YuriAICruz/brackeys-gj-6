@@ -15,6 +15,8 @@ namespace Presentation.Gameplay
         [Inject] private GameSettings _gameSettings;
         private Coroutine _animation;
 
+        private int _used;
+
         public GameObject full, destroyed;
 
         public InteractionType type;
@@ -37,8 +39,17 @@ namespace Presentation.Gameplay
 
             _animation = _timeManager.Wait(_gameSettings.healDuration, () =>
             {
-                full.SetActive(false);
-                destroyed.SetActive(true);
+                _used++;
+                if (_used == 1)
+                {
+                    full.SetActive(false);
+                    destroyed.SetActive(true);
+                    CanActivate = true;
+                }else if (_used > 1)
+                {
+                    full.SetActive(false);
+                    destroyed.SetActive(false);
+                }
                 onEnd?.Invoke();
             });
         }
@@ -47,6 +58,9 @@ namespace Presentation.Gameplay
         {
             if (_animation != null)
                 _timeManager.Stop(_animation);
+            
+            if(_used < 2)
+                CanActivate = true;
         }
     }
 }
