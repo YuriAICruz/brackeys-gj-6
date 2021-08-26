@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: lustre
+  m_Name: lustre 1
   m_Shader: {fileID: 4800000, guid: df96712bd1128ce41be43d6a349940bd, type: 3}
-  m_ShaderKeywords: SPECULAR_DEF_OFF
+  m_ShaderKeywords: SPECULAR_DEF_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - SPECULAR_DEF: 0
+    - SPECULAR_DEF: 1
     - _BumpScale: 1
     - _CullMode: 2
     - _Cutoff: 0.5
@@ -71,20 +71,20 @@ Material:
     - _Parallax: 0.02
     - _RampSmooth: 0.1
     - _RampThreshold: 0.5
-    - _RimSmooth: 0.1
-    - _RimThreshold: 0.445
-    - _Shininess: 1.46
+    - _RimSmooth: 0.256
+    - _RimThreshold: 0.044
+    - _Shininess: 0.07
     - _SmoothnessTextureChannel: 0
-    - _SpecSmooth: 0
+    - _SpecSmooth: 0.301
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.6603774, g: 0.6136526, b: 0.6136526, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 0.7075472, g: 0.6190789, b: 0.5840602, a: 1}
-    - _RimColor: {r: 0.4528302, g: 0.20565592, b: 0.10893556, a: 1}
+    - _RimColor: {r: 0.8962264, g: 0.8013267, b: 0.76517445, a: 1}
     - _SColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _SpecColor: {r: 0.735849, g: 0.5490192, b: 0.47552508, a: 1}
+    - _SpecColor: {r: 0.7169812, g: 0.6336976, b: 0.5783197, a: 1}
   m_BuildTextureStacks: []

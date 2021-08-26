@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -664,9 +664,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2589290677211010449, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2709098219830584844, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
       propertyPath: m_Name
       value: StaticLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399626688498519508, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399626688973418247, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399626689084170829, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399626689092969569, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399626689539551350, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399626689603055419, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605802651908020588, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5674567783158562817, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
       propertyPath: m_RootOrder
