@@ -65,6 +65,11 @@ namespace System.Gameplay
 
             var pos = position;
 
+            if (CheckUpCollision(pos, _radius))
+            {
+                _acceleration.y = Mathf.Min(0, _acceleration.y);
+            }
+
             if (_useSphere)
             {
                 CheckGroundSphere(_radius, pos, _lastPosition, _settings.gravity.normalized, out var temp);
@@ -85,6 +90,12 @@ namespace System.Gameplay
             _lastPosition = pos;
 
             return pos;
+        }
+
+        private bool CheckUpCollision(Vector3 position, float radius)
+        {
+            Debug.DrawLine(position + Vector3.up * radius, Vector3.up * radius, Color.blue, 1);
+            return UnityEngine.Physics.Raycast(new Ray(position + Vector3.up * radius, Vector3.up * radius));
         }
 
         public void Jump(float statsJumpForce)
@@ -174,9 +185,18 @@ namespace System.Gameplay
                 _groundNormal = Vector3.zero;
                 var c = 0;
                 var height = Vector3.zero;
-                
+
                 for (int i = 0; i < hitsCount; i++)
                 {
+                    var hitDirection = _hitCollisions[i].point - lastPos;
+
+                    if (_hitCollisions[i].point.magnitude == 0) continue;
+
+                    // if (_hitCollisions[i].point.magnitude == 0)
+                    //     hitDirection = _hitCollisions[i].collider.ClosestPoint(lastPos) - lastPos;
+
+                    if (hitDirection.y > 0) continue;
+
                     c++;
                     var normal = _hitCollisions[i].normal;
                     _groundNormal += normal;
@@ -188,7 +208,7 @@ namespace System.Gameplay
                         continue;
                     }
 
-                    if(_hitCollisions[i].point.y > height.y)
+                    if (_hitCollisions[i].point.y > height.y)
                         height = _hitCollisions[i].point;
                     _groundNormal = normal;
 
@@ -196,13 +216,13 @@ namespace System.Gameplay
                     //break;
                 }
 
-                if(!_grounded)
+                if (!_grounded)
                     _groundNormal /= c;
 
 
                 hitPosition = height;
 
-                Debug.DrawRay(position, _groundNormal * 5, Color.blue);
+                //Debug.DrawRay(position, _groundNormal * 5, Color.blue);
 
                 return;
             }
