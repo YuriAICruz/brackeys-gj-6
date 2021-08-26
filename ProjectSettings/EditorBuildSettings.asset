@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/StaticAssets/Scenes/Splash.unity
     guid: ccf97272403b17546b721b574e854375
   - enabled: 1
-    path: Assets/StaticAssets/Scenes/temp/gameplay.unity
-    guid: 0a269f9ff09c93548bb5e6f2246e629f
+    path: Assets/StaticAssets/Scenes/BossLevel.unity
+    guid: 74df1cf70fe053943b9ebc3f23cd7200
   m_configObjects: {}
