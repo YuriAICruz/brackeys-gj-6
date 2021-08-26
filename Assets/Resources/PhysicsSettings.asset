@@ -28,6 +28,9 @@ MonoBehaviour:
   player:
     serializedVersion: 2
     m_Bits: 1024
+  movementBlockers:
+    serializedVersion: 2
+    m_Bits: 2112
   minimumDistance: 0.15
   rayPrecision: 4
   maxCollision: 6

@@ -267,6 +267,12 @@ namespace Presentation.Gameplay.Bosses
 
             if (bossStates.moving)
             {
+                if(!CanMoveTo(bossStates.playerDirection))
+                {
+                    bossStates.moving = false;
+                    return NodeStates.Failure;
+                }
+                
                 Debug.DrawRay(bossStates.destination, Vector3.up * 2, Color.red, 5);
 
                 bossStates.movingElapsed += Timer.deltaTime;
@@ -284,6 +290,12 @@ namespace Presentation.Gameplay.Bosses
             bossStates.movingElapsed = 0f;
             bossStates.playerDirection = PlayerDistance(pos);
             bossStates.destination = pos + bossStates.playerDirection;
+            
+            if(!CanMoveTo(bossStates.playerDirection))
+            {
+                bossStates.moving = false;
+                return NodeStates.Failure;
+            }
 
             return NodeStates.Running;
         }
@@ -384,15 +396,10 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Running;
         }
 
+        
         private NodeStates IsPlayerNear()
         {
             var dir = PlayerDistance(transform.position);
-
-            if (!Physics.Raycast(new Ray(transform.position, dir), dir.magnitude * 2, _physicsSettings.player | _physicsSettings.movementBlockers))
-            {
-                return NodeStates.Failure;
-            }
-            
 
             if (dir.magnitude < bossStats.chaseDistance)
                 return NodeStates.Success;
@@ -496,6 +503,21 @@ namespace Presentation.Gameplay.Bosses
                 if (!_bullets[_currentSpit].Running)
                     break;
             }
+        }
+        
+        private bool CanMoveTo(Vector3 direction){
+            if (Physics.Raycast(new Ray(transform.position, direction), out var hit, direction.magnitude * 2, _physicsSettings.player | _physicsSettings.movementBlockers))
+            {
+                if(hit.transform.GetComponent<IActor>() == null)
+                {
+                    Debug.DrawLine(transform.position, hit.point, Color.magenta, 1);
+                    return false;
+                }
+                Debug.DrawLine(transform.position, hit.point, Color.blue, 1);
+            }else
+                Debug.DrawRay(transform.position, direction, Color.green, 1);
+            
+            return true;
         }
     }
 }

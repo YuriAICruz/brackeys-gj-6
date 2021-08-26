@@ -58,7 +58,7 @@ Material:
     m_Floats:
     - SPECULAR_DEF: 0
     - _BumpScale: 1
-    - _CullMode: 2
+    - _CullMode: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -81,10 +81,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.8746885, g: 0.89791256, b: 0.9811321, a: 1}
+    - _Color: {r: 0.43596476, g: 0.5508238, b: 0.9528302, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HColor: {r: 0.7075472, g: 0.6190789, b: 0.5840602, a: 1}
-    - _RimColor: {r: 0.7146226, g: 0.9528302, b: 0.9477475, a: 1}
-    - _SColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _SpecColor: {r: 0.735849, g: 0.5490192, b: 0.47552508, a: 1}
+    - _HColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
+    - _SColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+    - _SpecColor: {r: 0.7445265, g: 0.8514261, b: 0.9339623, a: 1}
   m_BuildTextureStacks: []

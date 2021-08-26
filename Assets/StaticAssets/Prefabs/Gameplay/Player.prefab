@@ -101,8 +101,8 @@ MonoBehaviour:
     height: 0.5
     radius: 0.5
     dodgeDuration: 0.55
-    jumpForce: 2.5
-    maxJumpTime: 0.4
+    jumpForce: 2
+    maxJumpTime: 0.2
     attackInputDelay: 0.4
     attacks:
     - duration: 1.1
