@@ -93,7 +93,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1087910323514300631, guid: 07057acbe49496345866e485c63cb8dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: 1087910323514300631, guid: 07057acbe49496345866e485c63cb8dc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -101,7 +101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1087910323514300631, guid: 07057acbe49496345866e485c63cb8dc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1087910323514300631, guid: 07057acbe49496345866e485c63cb8dc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -139,7 +139,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 5b494164863cabe47bc9418b3e48e65c, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 565079257094207740, guid: 07057acbe49496345866e485c63cb8dc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 07057acbe49496345866e485c63cb8dc, type: 3}
 --- !u!1 &3815513887842444491 stripped
 GameObject:

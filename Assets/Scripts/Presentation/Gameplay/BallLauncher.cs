@@ -47,7 +47,8 @@ namespace Presentation.Gameplay
             
             gameObject.SetActive(false);
             
-            stand.Break();
+            if(stand)
+                stand.Break();
         }
     }
 }
