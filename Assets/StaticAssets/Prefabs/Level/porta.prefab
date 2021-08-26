@@ -38,6 +38,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3948648861340626532}
     m_Modifications:
+    - target: {fileID: 3950793444574389831, guid: 457836b555b03e243ab0015237da9b90, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6dac9d2ff2f7dbb498b645ade8513e94, type: 2}
+    - target: {fileID: 3950793444574389831, guid: 457836b555b03e243ab0015237da9b90, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce71d4c0ae9888b4e8ab798334322aa8, type: 2}
+    - target: {fileID: 5076182397437423077, guid: 457836b555b03e243ab0015237da9b90, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6dac9d2ff2f7dbb498b645ade8513e94, type: 2}
     - target: {fileID: 7987719938067051082, guid: 457836b555b03e243ab0015237da9b90, type: 3}
       propertyPath: m_Name
       value: Door_C_snaps004
@@ -56,15 +68,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7987719938067213930, guid: 457836b555b03e243ab0015237da9b90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.47
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7987719938067213930, guid: 457836b555b03e243ab0015237da9b90, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.02678442
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7987719938067213930, guid: 457836b555b03e243ab0015237da9b90, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.4799843
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7987719938067213930, guid: 457836b555b03e243ab0015237da9b90, type: 3}
       propertyPath: m_LocalRotation.w

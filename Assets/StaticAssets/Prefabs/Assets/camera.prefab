@@ -31,19 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5943346451808095143
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8480283018163531035}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.26839226, y: 0.28582084, z: 0.6236686}
-  m_Center: {x: -0.013461284, y: 0.1279706, z: 0.085210405}
 --- !u!54 &7216146512317743037
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -60,6 +47,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5943346451808095143
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8480283018163531035}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.26839226, y: 0.28582084, z: 0.6236686}
+  m_Center: {x: -0.013461284, y: 0.1279706, z: 0.085210405}
 --- !u!1001 &5943346451808095144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67,6 +67,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4026488353205419640}
     m_Modifications:
+    - target: {fileID: 2867392608568686707, guid: c2a13ed99a40a944892fc941ea2c9fcb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 734991017beb940459ad127f009fa4ae, type: 2}
+    - target: {fileID: 2867392608568686707, guid: c2a13ed99a40a944892fc941ea2c9fcb, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0f2126c4b09894440994d9f7b7dd07d0, type: 2}
+    - target: {fileID: 2867392608568686707, guid: c2a13ed99a40a944892fc941ea2c9fcb, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0cbe32b7c700ac24aa192e8c0f59a9a4, type: 2}
     - target: {fileID: 2867392608570943155, guid: c2a13ed99a40a944892fc941ea2c9fcb, type: 3}
       propertyPath: m_Name
       value: tv-camera

@@ -67,6 +67,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6727069378598025633}
     m_Modifications:
+    - target: {fileID: 8801905781898909494, guid: 719c603ca3687ab4a80e7a52006dd71b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 376f0820100b75948ac9bd08bf766b16, type: 2}
     - target: {fileID: 8801905781900839414, guid: 719c603ca3687ab4a80e7a52006dd71b, type: 3}
       propertyPath: m_Name
       value: egypt-amphora-simple
@@ -81,11 +85,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8801905781901333974, guid: 719c603ca3687ab4a80e7a52006dd71b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8801905781901333974, guid: 719c603ca3687ab4a80e7a52006dd71b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8801905781901333974, guid: 719c603ca3687ab4a80e7a52006dd71b, type: 3}
       propertyPath: m_LocalPosition.z
