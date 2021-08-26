@@ -12,6 +12,7 @@ using Presentation.Gameplay.Projectiles;
 using UnityEngine;
 using Zenject;
 using Behaviour = Graphene.BehaviourTree.Behaviour;
+using Physics = UnityEngine.Physics;
 
 namespace Presentation.Gameplay.Bosses
 {
@@ -191,6 +192,7 @@ namespace Presentation.Gameplay.Bosses
             _blackboard.Set((int) BlackboardIds.TailHit, new Behaviour.NodeResponseAction(DoTailHit), _tree.id);
         }
 
+        
         private NodeStates InTutorialState()
         {
             // if (Hp < stats.maxHp * 0.8f)
@@ -386,6 +388,12 @@ namespace Presentation.Gameplay.Bosses
         {
             var dir = PlayerDistance(transform.position);
 
+            if (!Physics.Raycast(new Ray(transform.position, dir), dir.magnitude * 2, _physicsSettings.player | _physicsSettings.movementBlockers))
+            {
+                return NodeStates.Failure;
+            }
+            
+
             if (dir.magnitude < bossStats.chaseDistance)
                 return NodeStates.Success;
 
@@ -402,6 +410,7 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Failure;
         }
 
+        
         protected override void CalculateDirection()
         {
             var dir = PlayerDistance(mouth.position);

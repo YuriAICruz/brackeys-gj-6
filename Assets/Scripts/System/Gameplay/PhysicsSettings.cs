@@ -12,6 +12,7 @@ namespace System.Gameplay
         public LayerMask colliders;
         public LayerMask hittable;
         public LayerMask player;
+        public LayerMask movementBlockers;
         public float minimumDistance = 0.1f;
 
         public int rayPrecision = 4;
