@@ -40,7 +40,7 @@ pipeline{
             }
             steps {
                 bat '''
-                    %Butler% push Builds/StandaloneWindows64/ graphene-ai/shmup:windows-beta
+                    %Butler% push Builds/StandaloneWindows64/ graphene-ai/pug-action-game:windows-beta
                 '''
             }
         }
@@ -68,7 +68,7 @@ pipeline{
             }
             steps {
                 bat '''
-                    %Butler% push Builds/StandaloneOSX/ graphene-ai/shmup:osx-beta
+                    %Butler% push Builds/StandaloneOSX/ graphene-ai/pug-action-game:osx-beta
                 '''
             }
         }
