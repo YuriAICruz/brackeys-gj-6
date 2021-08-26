@@ -45,6 +45,9 @@ pipeline{
             }
         }
         stage('Build Mac') {
+            agent {
+                label "macos"
+            }
             when {
                 expression { env.Mac == 'true' }
             }
@@ -63,6 +66,9 @@ pipeline{
             }
         }
         stage('Upload Mac') {
+            agent {
+                label "macos"
+            }
             when {
                 expression { env.Mac == 'true' }
             }
