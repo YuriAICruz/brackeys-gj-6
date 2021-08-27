@@ -13,19 +13,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.009807853, y: 0.0014786813, z: 0.009807853}
   m_Center: {x: 0, y: 0.01, z: 0}
---- !u!65 &6361957047268048243
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8639351993413112451}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.008599997, y: 0.02, z: 0.008599997}
-  m_Center: {x: 0, y: 0.01, z: 0}
 --- !u!1 &6649809377391407100
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,7 +22,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3781551666072928256}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: banqueta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,6 +44,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6361957047268048243
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8639351993413112451}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.008599997, y: 0.02, z: 0.008599997}
+  m_Center: {x: 0, y: 0.01, z: 0}
 --- !u!1001 &1839093904649675018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128,10 +128,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: banqueta
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dd23c0c7e5d981b47abc96711ce7bd60, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4531912228224351498, guid: dd23c0c7e5d981b47abc96711ce7bd60, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 77aa4e40572071d49bccbb18324991e5, type: 2}
+    - target: {fileID: 7953606483559150473, guid: dd23c0c7e5d981b47abc96711ce7bd60, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd23c0c7e5d981b47abc96711ce7bd60, type: 3}
 --- !u!1 &1532543254698384475 stripped

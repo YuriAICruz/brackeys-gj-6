@@ -189,7 +189,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   duration: 10
-  speed: 10
   _radius: 0.2
 --- !u!1 &4664958697139216900
 GameObject:

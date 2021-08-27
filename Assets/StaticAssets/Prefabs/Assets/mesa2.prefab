@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5265606532591947512}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: mesa2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 6307919534910776064}
   - component: {fileID: 2049904274277238468}
   - component: {fileID: 2093848137859298763}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,6 +217,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c5bf847debfae544ea56d1a70a513e51, type: 3}
       propertyPath: m_Name
       value: mesa2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c5bf847debfae544ea56d1a70a513e51, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7292691408731085203, guid: c5bf847debfae544ea56d1a70a513e51, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7292691408731085203, guid: c5bf847debfae544ea56d1a70a513e51, type: 3}
       propertyPath: m_IsActive
