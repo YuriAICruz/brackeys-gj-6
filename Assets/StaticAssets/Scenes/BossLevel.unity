@@ -312,10 +312,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4142406363028971869, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
-      propertyPath: stats.damageInvincibilityDuration
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 5863718124247497681, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
       propertyPath: m_Name
       value: Characters

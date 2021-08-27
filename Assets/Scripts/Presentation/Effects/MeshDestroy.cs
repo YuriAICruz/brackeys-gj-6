@@ -19,6 +19,7 @@ namespace Presentation.Effects
 
         [Header("Cut")] public bool overrideDirection;
         public Vector3 cutDirection;
+        private bool _destroyed;
 
         private void Awake()
         {
@@ -27,6 +28,8 @@ namespace Presentation.Effects
 
         public void Break()
         {
+            if(_destroyed) return;
+            _destroyed = true;
             CreateParts(_parts, false);
             Destroy(gameObject);
         }
