@@ -163,7 +163,7 @@ MonoBehaviour:
     damage: 4
   colliderBase: {x: 0, y: 0, z: 0.78}
   colliderTip: {x: 0, y: 0, z: 1.6}
-  radius: 0.18
+  radius: 0.25
   collisionPoints: 3
   _mask:
     serializedVersion: 2
@@ -247,13 +247,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: weapons_game
       objectReference: {fileID: 0}
+    - target: {fileID: 922939993986803924, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2958308164946802660, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3350934436062993536, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.021
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350934436062993536, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.239
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350934436062993536, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350934436062993536, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.00000035762787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350934436062993536, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.000000059604645
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350934436062993536, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350934436062993536, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000000059604645
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350934436062993536, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 7531053441410198133, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
       propertyPath: m_Materials.Array.data[0]

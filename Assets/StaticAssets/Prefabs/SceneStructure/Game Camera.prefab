@@ -97,5 +97,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: 1
-  speed: 0
-  minDistance: 0
+  speed: 0.6
+  rotationSpeed: 3
+  minDistance: 0.5
+  playerDistance: -0.2
+  playerOffset: {x: 0, y: -8, z: 0}
+  zoomMultiplier: 200

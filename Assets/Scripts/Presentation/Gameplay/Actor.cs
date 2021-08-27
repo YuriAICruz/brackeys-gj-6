@@ -232,7 +232,7 @@ namespace Presentation.Gameplay
 
         protected virtual void Dodge()
         {
-            if (states.dodging)
+            if (states.dodging || !_physics.Grounded)
                 return;
 
             states.attacking = false;

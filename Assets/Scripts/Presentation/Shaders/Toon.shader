@@ -31,6 +31,7 @@ Shader "Unlit/Toon"
         
         [Enum(UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode Enum", Float) = 2
         [Enum(UnityEngine.Rendering.CullMode)] _CullModeBlack("Cull Black", Float) = 1
+        _CullModeBlackColor ("Color", Color) = (0, 0, 0, 1)
     }
     
     SubShader
@@ -157,20 +158,22 @@ Shader "Unlit/Toon"
                 float4 vertex : SV_POSITION;
             };
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
+            float4 _CullModeBlackColor;
             
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv = v.uv;
                 return o;
             }
             
             fixed4 frag (v2f i) : SV_Target
             {
-                return 0;
+                if(_CullModeBlackColor.a<0.2)
+                    discard;
+                    
+                return _CullModeBlackColor;
             }
             ENDCG
         }
