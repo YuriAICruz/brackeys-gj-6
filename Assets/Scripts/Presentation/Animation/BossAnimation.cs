@@ -19,6 +19,7 @@ namespace Presentation.Animation
         {
             animator.SetBool("Spiting", _actor.bossStates.spiting);
             animator.SetBool("Stagged", _actor.bossStates.stagged);
+            animator.SetBool("Dashing", _actor.bossStates.dashing);
         }
     }
 }

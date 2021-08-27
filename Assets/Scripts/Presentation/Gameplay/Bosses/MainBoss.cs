@@ -33,7 +33,11 @@ namespace Presentation.Gameplay.Bosses
             Anticipate = 14,
             PlayerBehind = 15,
             TailHit = 16,
-            Backup = 17
+            Backup = 17,
+
+            BreakTable = 20,
+            Bite = 21,
+            DashBite = 22
         }
 
         private Behaviour _tree;
@@ -52,6 +56,9 @@ namespace Presentation.Gameplay.Bosses
 
         [Header("Attack")] public Transform[] tailPoints;
         public Transform[] headPoints;
+
+        [Header("Events")] public Table table;
+
         private Vector3[] _currentDamageTracker;
 
 
@@ -94,14 +101,14 @@ namespace Presentation.Gameplay.Bosses
                                 }),
                                 new MemorySequence(new List<Node>
                                 {
-                                    new CallSystemActionMemory((int) BlackboardIds.Backup),
+                                    //new CallSystemActionMemory((int) BlackboardIds.Backup),
                                     new CallSystemActionMemory((int) BlackboardIds.Spit),
                                     new CallSystemActionMemory((int) BlackboardIds.Stag),
                                 }),
                             }),
                             new MemorySequence(new List<Node>
                             {
-                                new Chance(0.2f),
+                                new Chance(bossStats.spitProbability[0]),
                                 new CallSystemActionMemory((int) BlackboardIds.Spit),
                                 new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
@@ -112,13 +119,83 @@ namespace Presentation.Gameplay.Bosses
                             }),
                         })
                     }),
-                    new Sequence(new List<Node>() // Challenge State
+                    new MemorySequence(new List<Node>() // Challenge State
                     {
                         new CallSystemActionMemory((int) BlackboardIds.ChallengeState),
+                        new MemoryPriority(new List<Node>
+                        {
+                            new CallSystemActionMemory((int) BlackboardIds.BreakTable),
+                            new MemorySequence(new List<Node>()
+                            {
+                                new CallSystemActionMemory((int) BlackboardIds.PlayerNear),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
+                                new MemoryPriority(new List<Node>
+                                {
+                                    new CallSystemActionMemory((int) BlackboardIds.PlayerBehind),
+                                    new CallSystemActionMemory((int) BlackboardIds.TailHit),
+                                    new CallSystemActionMemory((int) BlackboardIds.Stag),
+                                }),
+                                new MemoryPriority(new List<Node>
+                                {
+                                    new CallSystemActionMemory((int) BlackboardIds.Bite),
+                                    new CallSystemActionMemory((int) BlackboardIds.Stag),
+                                }),
+                            }),
+                            new MemorySequence(new List<Node>
+                            {
+                                new Chance(bossStats.spitProbability[1]),
+                                new CallSystemActionMemory((int) BlackboardIds.Spit),
+                                new CallSystemActionMemory((int) BlackboardIds.Stag),
+                            }),
+                            new MemorySequence(new List<Node>
+                            {
+                                new Chance(bossStats.dashBiteProbability[1]),
+                                new CallSystemActionMemory((int) BlackboardIds.DashBite),
+                                new CallSystemActionMemory((int) BlackboardIds.Stag),
+                            }),
+                            new MemorySequence(new List<Node>()
+                            {
+                                new CallSystemActionMemory((int) BlackboardIds.Chase),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
+                            }),
+                        }),
                     }),
-                    new Sequence(new List<Node>() // Final State
+                    new MemorySequence(new List<Node>() // Final State
                     {
                         new CallSystemActionMemory((int) BlackboardIds.FinalState),
+                        new MemorySequence(new List<Node>()
+                        {
+                            new CallSystemActionMemory((int) BlackboardIds.PlayerNear),
+                            new CallSystemActionMemory((int) BlackboardIds.Anticipate),
+                            new MemoryPriority(new List<Node>
+                            {
+                                new CallSystemActionMemory((int) BlackboardIds.PlayerBehind),
+                                new CallSystemActionMemory((int) BlackboardIds.TailHit),
+                                new CallSystemActionMemory((int) BlackboardIds.Stag),
+                            }),
+                            new MemoryPriority(new List<Node>
+                            {
+                                new CallSystemActionMemory((int) BlackboardIds.Bite),
+                                new CallSystemActionMemory((int) BlackboardIds.Stag),
+                            }),
+                        }),
+                        new MemorySequence(new List<Node>
+                        {
+                            new Chance(bossStats.spitProbability[1]),
+                            new CallSystemActionMemory((int) BlackboardIds.Spit),
+                            new CallSystemActionMemory((int) BlackboardIds.Stag),
+                        }),
+                        new MemorySequence(new List<Node>
+                        {
+                            new Chance(bossStats.dashBiteProbability[1]),
+                            new CallSystemActionMemory((int) BlackboardIds.DashBite),
+                            new CallSystemActionMemory((int) BlackboardIds.Stag),
+                        }),
+                        new MemorySequence(new List<Node>()
+                        {
+                            new CallSystemActionMemory((int) BlackboardIds.Chase),
+                            new CallSystemActionMemory((int) BlackboardIds.Anticipate),
+                        }),
                     })
                 }
             );
@@ -148,10 +225,7 @@ namespace Presentation.Gameplay.Bosses
             }
 
             var dir = new Vector2(bossStates.playerDirection.normalized.x, bossStates.playerDirection.normalized.z);
-            transform.position =
-                _physics.Evaluate(
-                    dir * stats.speed,
-                    transform.position, delta);
+            transform.position = _physics.Evaluate(dir * stats.speed, transform.position, delta);
 
             states.currentSpeed = dir.magnitude * stats.speed;
             states.grounded = _physics.Grounded;
@@ -162,7 +236,7 @@ namespace Presentation.Gameplay.Bosses
             if (!bossStates.moving) return;
 
             //if (!bossStates.backingUp)
-                base.TurnTo(direction, delta);
+            base.TurnTo(direction, delta);
 
             states.turnAngle = Vector3.Angle(transform.forward, direction);
         }
@@ -190,13 +264,18 @@ namespace Presentation.Gameplay.Bosses
             _blackboard.Set((int) BlackboardIds.PlayerBehind, new Behaviour.NodeResponseAction(IsPlayerBehind),
                 _tree.id);
             _blackboard.Set((int) BlackboardIds.TailHit, new Behaviour.NodeResponseAction(DoTailHit), _tree.id);
+
+
+            _blackboard.Set((int) BlackboardIds.BreakTable, new Behaviour.NodeResponseAction(DoBreakTable), _tree.id);
+            _blackboard.Set((int) BlackboardIds.Bite, new Behaviour.NodeResponseAction(DoBite), _tree.id);
+            _blackboard.Set((int) BlackboardIds.DashBite, new Behaviour.NodeResponseAction(DashBite), _tree.id);
         }
 
-        
+
         private NodeStates InTutorialState()
         {
-            // if (Hp < stats.maxHp * 0.8f)
-            //     return NodeStates.Failure;
+            if (Hp < stats.maxHp * bossStats.stageLife[0])
+                return NodeStates.Failure;
 
             bossStates.stage = 0;
             return NodeStates.Success;
@@ -204,8 +283,15 @@ namespace Presentation.Gameplay.Bosses
 
         private NodeStates InChallengeState()
         {
-            if (Hp < stats.maxHp * 0.4f)
+            if (Hp >= stats.maxHp * bossStats.stageLife[0])
                 return NodeStates.Failure;
+            if (Hp < stats.maxHp * bossStats.stageLife[1])
+                return NodeStates.Failure;
+
+            if (bossStates.stage < 1)
+            {
+                OnStateChanged(1);
+            }
 
             bossStates.stage = 1;
             return NodeStates.Success;
@@ -213,10 +299,17 @@ namespace Presentation.Gameplay.Bosses
 
         private NodeStates InFinalState()
         {
+            if (Hp >= stats.maxHp * bossStats.stageLife[1])
+                return NodeStates.Failure;
+
+            if (bossStates.stage < 2)
+            {
+                OnStateChanged(2);
+            }
+
             bossStates.stage = 2;
             return NodeStates.Success;
         }
-
 
         private NodeStates Anticipate()
         {
@@ -267,12 +360,12 @@ namespace Presentation.Gameplay.Bosses
 
             if (bossStates.moving)
             {
-                if(!CanMoveTo(bossStates.playerDirection))
+                if (!CanMoveTo(bossStates.playerDirection))
                 {
                     bossStates.moving = false;
                     return NodeStates.Failure;
                 }
-                
+
                 Debug.DrawRay(bossStates.destination, Vector3.up * 2, Color.red, 5);
 
                 bossStates.movingElapsed += Timer.deltaTime;
@@ -290,8 +383,8 @@ namespace Presentation.Gameplay.Bosses
             bossStates.movingElapsed = 0f;
             bossStates.playerDirection = PlayerDistance(pos);
             bossStates.destination = pos + bossStates.playerDirection;
-            
-            if(!CanMoveTo(bossStates.playerDirection))
+
+            if (!CanMoveTo(bossStates.playerDirection))
             {
                 bossStates.moving = false;
                 return NodeStates.Failure;
@@ -324,7 +417,7 @@ namespace Presentation.Gameplay.Bosses
 
             if (dir.magnitude > bossStats.backupDistance)
                 return NodeStates.Success;
-            
+
             bossStates.moving = true;
             bossStates.backingUp = true;
             bossStates.movingElapsed = 0f;
@@ -396,7 +489,90 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Running;
         }
 
-        
+
+        private NodeStates DashBite()
+        {
+            if (bossStates.dashing)
+            {
+                states.attackElapsed += Timer.deltaTime;
+
+                base.TurnTo(bossStates.playerDirection.normalized, Timer.deltaTime * bossStats.dashTurnSpeed);
+
+                Debug.DrawRay(transform.position, bossStates.playerDirection, Color.magenta);
+
+                if (states.attackElapsed > stats.attacks[states.attackStage].delay &&
+                    states.attackElapsed < stats.attacks[states.attackStage].delay +
+                    stats.attacks[states.attackStage].damageDuration)
+                {
+                    states.attacking = true;
+                    var dir = bossStates.playerDirection.normalized;
+                    transform.position = _physics.Evaluate(new Vector2(dir.x,dir.z) * bossStats.dashSpeed,
+                        transform.position, Timer.deltaTime);
+                    EvaluateHit(headPoints, ref _currentDamageTracker, bossStats.tailBaseDamage,
+                        bossStats.dashAttackRadius);
+                }
+                else if (states.attackElapsed < stats.attacks[states.attackStage].delay)
+                {
+                    _currentDamageTracker = headPoints.Select(x => x.position).ToArray();
+                }
+
+                if (states.attackElapsed >= stats.attacks[states.attackStage].duration)
+                {
+                    states.attacking = false;
+                    bossStates.moving = false;
+                    bossStates.dashing = false;
+                    return NodeStates.Success;
+                }
+
+                return NodeStates.Running;
+            }
+
+            bossStates.dashing = true;
+            //bossStates.moving = true;
+            states.attackStage = 1;
+            states.attackElapsed = 0f;
+            bossStates.playerDirection = PlayerDistance(mouth.position);
+
+            return NodeStates.Running;
+        }
+
+        private NodeStates DoBite()
+        {
+            if (states.attacking)
+            {
+                states.attackElapsed += Timer.deltaTime;
+                
+                base.TurnTo(bossStates.playerDirection.normalized, Timer.deltaTime * bossStats.dashTurnSpeed);
+
+                if (states.attackElapsed > stats.attacks[states.attackStage].delay &&
+                    states.attackElapsed < stats.attacks[states.attackStage].delay +
+                    stats.attacks[states.attackStage].damageDuration)
+                {
+                    EvaluateHit(headPoints, ref _currentDamageTracker, bossStats.tailBaseDamage,
+                        bossStats.attackRadius);
+                }
+                else if (states.attackElapsed < stats.attacks[states.attackStage].delay)
+                {
+                    _currentDamageTracker = headPoints.Select(x => x.position).ToArray();
+                }
+
+                if (states.attackElapsed >= stats.attacks[states.attackStage].duration)
+                {
+                    states.attacking = false;
+                    return NodeStates.Success;
+                }
+
+                return NodeStates.Running;
+            }
+
+            states.attacking = true;
+            states.attackStage = 0;
+            states.attackElapsed = 0f;
+
+            return NodeStates.Running;
+        }
+
+
         private NodeStates IsPlayerNear()
         {
             var dir = PlayerDistance(transform.position);
@@ -417,7 +593,36 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Failure;
         }
 
-        
+
+        private NodeStates DoBreakTable()
+        {
+            if (table == null) return NodeStates.Failure;
+
+            var dir = table.transform.position - transform.position;
+            dir.y = 0;
+
+            if (dir.magnitude < bossStats.tableDistance)
+            {
+                if (DoBite() == NodeStates.Running)
+                    return NodeStates.Running;
+
+                table.Break(() => { table = null; });
+
+                table = null;
+
+                bossStates.moving = false;
+                return NodeStates.Success;
+            }
+
+            TurnTo(dir.normalized, Timer.deltaTime);
+            transform.position = _physics.Evaluate(new Vector2(dir.x,dir.z)  * stats.speed, transform.position, Timer.deltaTime);
+
+            bossStates.moving = true;
+
+            return NodeStates.Running;
+        }
+
+
         protected override void CalculateDirection()
         {
             var dir = PlayerDistance(mouth.position);
@@ -504,20 +709,24 @@ namespace Presentation.Gameplay.Bosses
                     break;
             }
         }
-        
-        private bool CanMoveTo(Vector3 direction){
-            if (Physics.Raycast(new Ray(transform.position, direction), out var hit, direction.magnitude * 2, _physicsSettings.player | _physicsSettings.movementBlockers))
+
+        private bool CanMoveTo(Vector3 direction)
+        {
+            if (Physics.Raycast(new Ray(transform.position, direction), out var hit, direction.magnitude * 2,
+                _physicsSettings.player | _physicsSettings.movementBlockers))
             {
-                if(hit.transform.GetComponent<IActor>() == null)
+                if (hit.transform.GetComponent<IActor>() == null)
                 {
-                    Debug.DrawLine(transform.position, hit.point, Color.magenta, 1);
                     return false;
                 }
-                Debug.DrawLine(transform.position, hit.point, Color.blue, 1);
-            }else
-                Debug.DrawRay(transform.position, direction, Color.green, 1);
-            
+            }
+
             return true;
+        }
+
+        private void OnStateChanged(int currentState)
+        {
+            Debug.Log($"State Changed: {currentState}");
         }
     }
 }

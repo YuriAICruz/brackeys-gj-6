@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Models.ModelView
 {
@@ -7,7 +8,13 @@ namespace Models.ModelView
     {
         public float chaseDistance;
         public float backupDistance;
+        public float tableDistance;
+
+        [Header("Dash")]
+        public float dashSpeed;
+        public float dashTurnSpeed;
         
+        [Space]
         public float spitDuration;
         public float stagBaseDuration;
         public float[] anticipationBaseDuration;
@@ -19,6 +26,18 @@ namespace Models.ModelView
         public float stagBaseDelay;
         public float backAttackAngle = 90;
         public int tailBaseDamage;
+        
+        [Space]
+        public float dashAttackRadius;
         public float attackRadius;
+        
+        [Range(0,1)]
+        public float[] spitProbability;
+
+        [Range(0,1)]
+        public float[] dashBiteProbability;
+
+        [Range(0,1)]
+        public float[] stageLife;
     }
 }

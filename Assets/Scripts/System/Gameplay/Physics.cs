@@ -94,7 +94,6 @@ namespace System.Gameplay
 
         private bool CheckUpCollision(Vector3 position, float radius)
         {
-            Debug.DrawLine(position + Vector3.up * radius, Vector3.up * radius, Color.blue, 1);
             return UnityEngine.Physics.Raycast(new Ray(position + Vector3.up * radius, Vector3.up * radius));
         }
 

@@ -123,6 +123,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &924670184 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8936992290640538936, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+  m_PrefabInstance: {fileID: 825755415782212467}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &967007290 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8936992290022829667, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+  m_PrefabInstance: {fileID: 825755415782212467}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1638725329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -188,6 +198,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04cf658c40cb9674fa689ab441cdc831, type: 3}
+--- !u!4 &1720513778 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8936992289449938197, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+  m_PrefabInstance: {fileID: 825755415782212467}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1754558604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -312,9 +327,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4142406363028971871, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5863718124247497681, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
       propertyPath: m_Name
       value: Characters
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: table
+      value: 
+      objectReference: {fileID: 5626386196968122970}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: bossStats.dashSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: headPoints.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: bossStats.dashTurnSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: bossStats.tableDistance
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: headPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 924670184}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: headPoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 1720513778}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: headPoints.Array.data[4]
+      value: 
+      objectReference: {fileID: 967007290}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: stats.attacks.Array.data[1].duration
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: stats.attacks.Array.data[2].duration
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
+      propertyPath: bossStats.dashBiteProbability.Array.data[1]
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
@@ -515,7 +578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5321504728899893858, guid: 43cba496e65098d499ff1a5848ea6926, type: 3}
       propertyPath: minDistance
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5321504728899893858, guid: 43cba496e65098d499ff1a5848ea6926, type: 3}
       propertyPath: rotationSpeed
@@ -527,7 +590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5321504728899893858, guid: 43cba496e65098d499ff1a5848ea6926, type: 3}
       propertyPath: playerOffset.y
-      value: -6
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 5321504728899893858, guid: 43cba496e65098d499ff1a5848ea6926, type: 3}
       propertyPath: zoomMultiplier
@@ -697,6 +760,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+--- !u!114 &5626386196968122970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5150127728059298759, guid: 4b635a4965186ce4584893e1b72cca43, type: 3}
+  m_PrefabInstance: {fileID: 5626386196968122969}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1fd39711894494b9e4e752baf01dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6615254086591238126
 PrefabInstance:
   m_ObjectHideFlags: 0

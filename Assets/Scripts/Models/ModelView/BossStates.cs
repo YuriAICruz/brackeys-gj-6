@@ -19,5 +19,6 @@ namespace Models.ModelView
         public float movingElapsed;
         public bool spited;
         public bool backingUp;
+        public bool dashing;
     }
 }
