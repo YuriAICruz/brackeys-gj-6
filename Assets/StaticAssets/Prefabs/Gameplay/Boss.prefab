@@ -145,6 +145,7 @@ MonoBehaviour:
     spitBaseSpeed: 4
     spitDelay: 0.75
     stagBaseDelay: 0.05
+    frontAttackAngle: 40
     backAttackAngle: 90
     tailBaseDamage: 1
     dashAttackRadius: 1

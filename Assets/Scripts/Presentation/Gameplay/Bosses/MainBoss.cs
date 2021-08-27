@@ -37,7 +37,8 @@ namespace Presentation.Gameplay.Bosses
 
             BreakTable = 20,
             Bite = 21,
-            DashBite = 22
+            DashBite = 22,
+            PlayerFront = 23
         }
 
         private Behaviour _tree;
@@ -137,7 +138,13 @@ namespace Presentation.Gameplay.Bosses
                                 }),
                                 new MemoryPriority(new List<Node>
                                 {
+                                    new CallSystemActionMemory((int) BlackboardIds.PlayerFront),
                                     new CallSystemActionMemory((int) BlackboardIds.Bite),
+                                    new CallSystemActionMemory((int) BlackboardIds.Stag),
+                                }),
+                                new MemorySequence(new List<Node>
+                                {
+                                    new CallSystemActionMemory((int) BlackboardIds.Spit),
                                     new CallSystemActionMemory((int) BlackboardIds.Stag),
                                 }),
                             }),
@@ -175,19 +182,25 @@ namespace Presentation.Gameplay.Bosses
                             }),
                             new MemoryPriority(new List<Node>
                             {
+                                new CallSystemActionMemory((int) BlackboardIds.PlayerFront),
                                 new CallSystemActionMemory((int) BlackboardIds.Bite),
+                                new CallSystemActionMemory((int) BlackboardIds.Stag),
+                            }),
+                            new MemorySequence(new List<Node>
+                            {
+                                new CallSystemActionMemory((int) BlackboardIds.Spit),
                                 new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
                         }),
                         new MemorySequence(new List<Node>
                         {
-                            new Chance(bossStats.spitProbability[1]),
+                            new Chance(bossStats.spitProbability[2]),
                             new CallSystemActionMemory((int) BlackboardIds.Spit),
                             new CallSystemActionMemory((int) BlackboardIds.Stag),
                         }),
                         new MemorySequence(new List<Node>
                         {
-                            new Chance(bossStats.dashBiteProbability[1]),
+                            new Chance(bossStats.dashBiteProbability[2]),
                             new CallSystemActionMemory((int) BlackboardIds.DashBite),
                             new CallSystemActionMemory((int) BlackboardIds.Stag),
                         }),
@@ -269,6 +282,7 @@ namespace Presentation.Gameplay.Bosses
             _blackboard.Set((int) BlackboardIds.BreakTable, new Behaviour.NodeResponseAction(DoBreakTable), _tree.id);
             _blackboard.Set((int) BlackboardIds.Bite, new Behaviour.NodeResponseAction(DoBite), _tree.id);
             _blackboard.Set((int) BlackboardIds.DashBite, new Behaviour.NodeResponseAction(DashBite), _tree.id);
+            _blackboard.Set((int) BlackboardIds.PlayerFront, new Behaviour.NodeResponseAction(IsPlayerFront), _tree.id);
         }
 
 
@@ -506,7 +520,7 @@ namespace Presentation.Gameplay.Bosses
                 {
                     states.attacking = true;
                     var dir = bossStates.playerDirection.normalized;
-                    transform.position = _physics.Evaluate(new Vector2(dir.x,dir.z) * bossStats.dashSpeed,
+                    transform.position = _physics.Evaluate(new Vector2(dir.x, dir.z) * bossStats.dashSpeed,
                         transform.position, Timer.deltaTime);
                     EvaluateHit(headPoints, ref _currentDamageTracker, bossStats.tailBaseDamage,
                         bossStats.dashAttackRadius);
@@ -541,7 +555,7 @@ namespace Presentation.Gameplay.Bosses
             if (states.attacking)
             {
                 states.attackElapsed += Timer.deltaTime;
-                
+
                 base.TurnTo(bossStates.playerDirection.normalized, Timer.deltaTime * bossStats.dashTurnSpeed);
 
                 if (states.attackElapsed > stats.attacks[states.attackStage].delay &&
@@ -583,6 +597,16 @@ namespace Presentation.Gameplay.Bosses
             return NodeStates.Failure;
         }
 
+        private NodeStates IsPlayerFront()
+        {
+            var dir = PlayerDistance(transform.position);
+
+            if (Vector3.Angle(transform.forward, dir) > bossStats.frontAttackAngle)
+                return NodeStates.Success;
+
+            return NodeStates.Failure;
+        }
+
         private NodeStates IsPlayerBehind()
         {
             var dir = PlayerDistance(transform.position);
@@ -615,7 +639,8 @@ namespace Presentation.Gameplay.Bosses
             }
 
             TurnTo(dir.normalized, Timer.deltaTime);
-            transform.position = _physics.Evaluate(new Vector2(dir.x,dir.z)  * stats.speed, transform.position, Timer.deltaTime);
+            transform.position = _physics.Evaluate(new Vector2(dir.x, dir.z) * stats.speed, transform.position,
+                Timer.deltaTime);
 
             bossStates.moving = true;
 
@@ -683,11 +708,15 @@ namespace Presentation.Gameplay.Bosses
         private void InstantiateSplash(int difficulty)
         {
             var pos = new Vector3(mouth.position.x, _gameManager.Player.Center.y, mouth.position.z);
+
+            var playerDir = PlayerDistance(pos);
+            
             for (int i = 0, n = bossStats.sprayCount + bossStats.sprayCount * difficulty * 3; i < n; i++)
             {
                 var step = (i / (n * 0.5f)) * Mathf.PI * 2f;
                 var dir = new Vector3(Mathf.Sin(step), 0, Mathf.Cos(step));
 
+                mouth.LookAt(playerDir);
                 dir = mouth.TransformDirection(dir);
                 dir.y = 0;
                 dir.Normalize();

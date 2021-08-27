@@ -24,6 +24,7 @@ namespace Models.ModelView
         public float spitBaseSpeed = 3;
         public float spitDelay;
         public float stagBaseDelay;
+        public float frontAttackAngle = 90;
         public float backAttackAngle = 90;
         public int tailBaseDamage;
         
