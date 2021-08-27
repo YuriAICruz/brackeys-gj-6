@@ -143,8 +143,7 @@ namespace System.Gameplay
         public bool CheckSphere(Vector3 position, Vector3 direction, float radius, LayerMask mask, out int hitsCount)
         {
             hitsCount = UnityEngine.Physics.SphereCastNonAlloc(new Ray(position, direction), radius, _hitCollisions,
-                direction.magnitude,
-                mask);
+                direction.magnitude, mask);
 
             for (int i = 0; i < hitsCount; i++)
             {
@@ -175,7 +174,7 @@ namespace System.Gameplay
                 dir = direction * offset;
             }
 
-            if (CheckSphere(lastPos, dir, radius, _settings.colliders, out int hitsCount))
+            if (CheckSphere(lastPos, dir, radius, _settings.colliders | _settings.hittable, out int hitsCount))
             {
                 // DrawCross(lastPos, radius, new Color(0.8f, 1f, 0));
                 // DrawCross(lastPos + d

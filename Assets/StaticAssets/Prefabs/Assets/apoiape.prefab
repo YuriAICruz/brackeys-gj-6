@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 10766969985954850}
   - component: {fileID: 8397300653814310522}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2554204589100335181}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: apoiape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.012, z: 0.02}
+  m_Size: {x: 0.02, y: 0.005, z: 0.02}
   m_Center: {x: 0, y: 0.008, z: -0.0003910102}
 --- !u!1 &5027860673175845015
 GameObject:
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 97621162620163465}
   - component: {fileID: 3525471472366533868}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3749243976725437592}
   - component: {fileID: 2085342888130241820}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5485743876331391689}
   - component: {fileID: 3246174748946344682}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4172c8174f6063f4f933c8fb35d31229, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4172c8174f6063f4f933c8fb35d31229, type: 3}
