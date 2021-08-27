@@ -23,6 +23,7 @@ namespace Presentation.Gameplay
         public Transform Transform => transform;
         public Vector3 Position => transform.position;
         public virtual Vector3 Center => transform.position + Vector3.up * stats.radius;
+        public virtual Vector3 Direction => states.direction;
 
         public int MaxHp => stats.maxHp;
 

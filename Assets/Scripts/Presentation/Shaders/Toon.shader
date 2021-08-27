@@ -2,6 +2,9 @@ Shader "Unlit/Toon"
 {
     Properties
     {
+        [KeywordEnum(OFF, ON)] CUT ("Cut", float) = 0
+        _Cutout ("Cutout", Range(0, 1)) = 0.1
+        
         // Colors
         _Color ("Color", Color) = (1, 1, 1, 1)
         _HColor ("Highlight Color", Color) = (0.8, 0.8, 0.8, 1.0)
@@ -39,6 +42,7 @@ Shader "Unlit/Toon"
         
         
         #pragma multi_compile SPECULAR_DEF_ON SPECULAR_DEF_OFF
+        #pragma multi_compile CUT_ON CUT_OFF
         
         #pragma surface surf Toon addshadow fullforwardshadows exclude_path:deferred exclude_path:prepass
         #pragma target 3.0
@@ -58,6 +62,8 @@ Shader "Unlit/Toon"
         fixed4 _RimColor;
         fixed _RimThreshold;
         float _RimSmooth;
+        
+        float _Cutout;
         
         struct Input
         {
@@ -109,6 +115,11 @@ Shader "Unlit/Toon"
             o.Albedo = mainTex.rgb * _Color.rgb;
           
             o.Alpha = mainTex.a * _Color.a;
+            
+            #if CUT_ON
+                if(o.Alpha < _Cutout)
+                    discard;
+            #endif
             
             #if SPECULAR_DEF_ON
                 o.Specular =_Shininess;

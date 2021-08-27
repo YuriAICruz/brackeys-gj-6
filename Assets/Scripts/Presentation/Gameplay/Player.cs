@@ -140,8 +140,8 @@ namespace Presentation.Gameplay
         {
             var dir = _currentCamera.transform.TransformDirection(_direction);
             // dir.y = dir.z;
-            // dir.z = 0;
-            // dir.Normalize();
+            dir.y = 0;
+            dir.Normalize();
             states.direction = dir;
         }
 

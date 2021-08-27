@@ -9,6 +9,7 @@ namespace Models.Accessors
         Transform Transform { get; }
         Vector3 Position { get; }
         Vector3 Center { get; }
+        Vector3 Direction { get; }
         
         int MaxHp { get; }
 
