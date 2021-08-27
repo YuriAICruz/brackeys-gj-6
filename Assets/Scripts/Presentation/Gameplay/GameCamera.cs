@@ -3,6 +3,7 @@ using System.Gameplay;
 using Models.Accessors;
 using UnityEngine;
 using Zenject;
+using Physics = UnityEngine.Physics;
 
 namespace Presentation.Gameplay
 {
@@ -19,6 +20,7 @@ namespace Presentation.Gameplay
 
         [Inject] private ICamera _camera;
         [Inject] private GameManager _gameManager;
+        [Inject] private PhysicsSettings _physicsSettings;
         private Camera _cameraComponent;
         private Quaternion _direction;
         private Vector3 _lastPosition;
@@ -67,9 +69,18 @@ namespace Presentation.Gameplay
 
             var playerBosDir = _gameManager.Boss.Position - _gameManager.Player.Center;
 
-            var pos = _gameManager.Player.Center +
-                      (playerBosDir + playerOffset + Vector3.forward * (screenDistance * zoomMultiplier)) *
-                      playerDistance;
+            var offset = (playerBosDir + playerOffset + Vector3.forward * (screenDistance * zoomMultiplier)) *
+                         playerDistance;
+
+            var pos = _gameManager.Player.Center + offset;
+            
+            Debug.DrawRay(_gameManager.Player.Center, offset, Color.red);
+            if (Physics.Raycast(new Ray(_gameManager.Player.Center, offset), out var hit, offset.magnitude,
+                _physicsSettings.hittable | _physicsSettings.movementBlockers))
+            {
+                pos = hit.point - offset.normalized * 0.1f;
+            }
+
 
             if ((pos - _lastPosition).magnitude < minDistance)
             {

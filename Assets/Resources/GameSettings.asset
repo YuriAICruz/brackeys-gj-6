@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c12f6b49a847fdb73dd9403c8c15f6, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  restartDelay: 1
-  startDelay: 1
-  healDuration: 2
+  restartDelay: 2
+  startDelay: 0.4
+  healDuration: 0.8

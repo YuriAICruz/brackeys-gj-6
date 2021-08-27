@@ -26,6 +26,7 @@ namespace Presentation.Animation
             animator.SetInteger("AttackStage", _actor.states.attackStage);
             animator.SetBool("Damaged", _actor.states.damaged);
             animator.SetBool("Stag", _actor.states.stag);
+            animator.SetBool("Dead", _actor.states.dead);
         }
     }
 }

@@ -95,7 +95,8 @@ namespace Presentation.Gameplay
 
         protected void FixedUpdate()
         {
-            if (!_running || states.attacking || states.dodging || states.stag || states.activating) return;
+            if (!_running || states.attacking || states.dodging || states.stag || states.activating ||
+                states.dead) return;
 
             CalculateDirection();
             Move(Time.fixedDeltaTime);
@@ -306,7 +307,7 @@ namespace Presentation.Gameplay
         {
             if (states.activating)
                 DisableActivation();
-            
+
             if (states.damaged || states.dodging) return;
 
             var hp = _dataHp.GetValue();
@@ -318,6 +319,9 @@ namespace Presentation.Gameplay
 
             states.damaged = true;
             states.stag = true;
+
+            states.dead = hp <= 0;
+
             _timer.Wait(stats.damageStagDuration, () =>
             {
                 states.stag = false;
@@ -333,7 +337,7 @@ namespace Presentation.Gameplay
         protected void DisableActivation()
         {
             states.activating = false;
-            
+
             if (!states.onTrigger) return;
 
             var interactable = states.onTrigger.GetComponent<IInteractable>();

@@ -21,5 +21,6 @@ namespace Models.ModelView
         public float attackElapsed;
         public Collider onTrigger;
         public bool activating;
+        public bool dead;
     }
 }

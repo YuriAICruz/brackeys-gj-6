@@ -37,12 +37,13 @@ namespace Presentation.Gameplay.Projectiles
         public bool Running { get; private set; }
 
         private Vector3 _direction;
-        private float _speed;
         private Vector3 _lastPosition;
 
         public int damage = 1;
         public LayerMask mask;
         public float duration = 2;
+        private float _speed;
+        
         private float _time;
         private float _delay;
         [SerializeField] private float _radius;
@@ -72,7 +73,7 @@ namespace Presentation.Gameplay.Projectiles
             MoveAway();
             Running = true;
             _direction = dir;
-            _speed = speed;
+            this._speed = speed;
             _delay = delay;
 
             _lastPosition = position;

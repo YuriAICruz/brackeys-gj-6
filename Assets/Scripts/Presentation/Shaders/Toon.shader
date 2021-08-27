@@ -30,6 +30,7 @@ Shader "Unlit/Toon"
         _RimSmooth ("Rim Smooth", Range(0, 1)) = 0.1
         
         [Enum(UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode Enum", Float) = 2
+        [Enum(UnityEngine.Rendering.CullMode)] _CullModeBlack("Cull Black", Float) = 1
     }
     
     SubShader
@@ -43,6 +44,7 @@ Shader "Unlit/Toon"
         
         #pragma multi_compile SPECULAR_DEF_ON SPECULAR_DEF_OFF
         #pragma multi_compile CUT_ON CUT_OFF
+        #pragma multi_compile BACK_BLACK_ON BACK_BLACK_OFF
         
         #pragma surface surf Toon addshadow fullforwardshadows exclude_path:deferred exclude_path:prepass
         #pragma target 3.0
@@ -131,6 +133,47 @@ Shader "Unlit/Toon"
         
         ENDCG
         
+        Pass
+        {
+            Tags { "RenderType" = "Opaque" }
+                    
+            Cull [_CullModeBlack]
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            
+            #include "UnityCG.cginc"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+            };
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                float4 vertex : SV_POSITION;
+            };
+
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+            
+            v2f vert (appdata v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                return o;
+            }
+            
+            fixed4 frag (v2f i) : SV_Target
+            {
+                return 0;
+            }
+            ENDCG
+        }
     }
     FallBack "Diffuse"
 }

@@ -93,7 +93,7 @@ MonoBehaviour:
   stats:
     maxHp: 5
     damageStagDuration: 0.3
-    damageInvincibilityDuration: 0.7
+    damageInvincibilityDuration: 0.4
     speed: 3
     dodgeSpeed: 4
     runSpeed: 6
@@ -105,17 +105,17 @@ MonoBehaviour:
     maxJumpTime: 0.2
     attackInputDelay: 0.4
     attacks:
-    - duration: 1.1
-      delay: 0.5
+    - duration: 0.8
+      delay: 0.3
       damageDuration: 0.15
-    - duration: 1.1
-      delay: 0.62
+    - duration: 0.8
+      delay: 0.45
       damageDuration: 0.32
-    - duration: 1.2
-      delay: 0.42
-      damageDuration: 0.4
-    - duration: 1.8
-      delay: 0.5
+    - duration: 0.8
+      delay: 0.3
+      damageDuration: 0.35
+    - duration: 1
+      delay: 0.4
       damageDuration: 0.35
     aerialAttack:
       duration: 1.2
@@ -126,18 +126,19 @@ MonoBehaviour:
     currentSpeed: 0
     direction: {x: 0, y: 0, z: 0}
     turnAngle: 0
-    grounded: 0
+    grounded: 1
     running: 0
     attacking: 0
     dodging: 0
     jumping: 0
     attackStage: 0
-    lastAttack: 197.92502
+    lastAttack: 0
     damaged: 0
     stag: 0
     attackElapsed: 0
     onTrigger: {fileID: 0}
     activating: 0
+    dead: 0
   inventory:
     consumablesLimit: 3
 --- !u!114 &1410502467037378766
