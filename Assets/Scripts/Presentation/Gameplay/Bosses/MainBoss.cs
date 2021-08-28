@@ -611,7 +611,7 @@ namespace Presentation.Gameplay.Bosses
         {
             var dir = PlayerDistance(transform.position);
 
-            if (Vector3.Angle(transform.forward, dir) < bossStats.backAttackAngle)
+            if (Vector3.Angle(transform.forward, dir) < bossStats.backAttackAngle || dir.magnitude < bossStats.backDistance)
                 return NodeStates.Success;
 
             return NodeStates.Failure;
@@ -709,12 +709,13 @@ namespace Presentation.Gameplay.Bosses
         {
             var pos = new Vector3(mouth.position.x, _gameManager.Player.Center.y, mouth.position.z);
 
-            var playerDir = PlayerDistance(pos);
             
             for (int i = 0, n = bossStats.sprayCount + bossStats.sprayCount * difficulty * 3; i < n; i++)
             {
+                var playerDir = PlayerDistance(pos);
+                
                 var step = (i / (n * 0.5f)) * Mathf.PI * 2f;
-                var dir = new Vector3(Mathf.Sin(step), 0, Mathf.Cos(step));
+                var dir = new Vector3(Mathf.Sin(step + Random.value * bossStats.spitRandomMultiplier), 0, Mathf.Cos(step+ Random.value * bossStats.spitRandomMultiplier));
 
                 mouth.LookAt(playerDir);
                 dir = mouth.TransformDirection(dir);

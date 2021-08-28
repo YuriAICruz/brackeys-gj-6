@@ -69,8 +69,9 @@ namespace Presentation.Gameplay
 
             var playerBosDir = _gameManager.Boss.Position - _gameManager.Player.Center;
 
-            var offset = (playerBosDir + playerOffset + Vector3.forward * (screenDistance * zoomMultiplier)) *
-                         playerDistance;
+            var po = transform.TransformDirection(playerOffset);
+            var fwd = playerBosDir.normalized;// _gameManager.Player.Transform.forward;
+            var offset = (playerBosDir + po + fwd * (screenDistance * zoomMultiplier)) * playerDistance;
 
             var pos = _gameManager.Player.Center + offset;
             

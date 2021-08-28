@@ -9,6 +9,7 @@ namespace Models.ModelView
         public float chaseDistance;
         public float backupDistance;
         public float tableDistance;
+        public float backDistance;
 
         [Header("Dash")]
         public float dashSpeed;
@@ -27,6 +28,8 @@ namespace Models.ModelView
         public float frontAttackAngle = 90;
         public float backAttackAngle = 90;
         public int tailBaseDamage;
+
+        public float spitRandomMultiplier;
         
         [Space]
         public float dashAttackRadius;
