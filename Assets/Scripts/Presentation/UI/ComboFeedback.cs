@@ -14,6 +14,7 @@ namespace Presentation.UI
             base.Awake();
             
             _combo.Combo.AddListener(CheckFeedback);
+            SetText("");
         }
 
         private void CheckFeedback(int combo)
@@ -22,7 +23,7 @@ namespace Presentation.UI
             {
                 if (combo > _gameSettings.comboFeedbacks[i].mark)
                 {
-                    SetText(_gameSettings.comboFeedbacks[i].feedback);
+                    AnimateTextChangeText(_gameSettings.comboFeedbacks[i].feedback);
                     return;
                 }
             }

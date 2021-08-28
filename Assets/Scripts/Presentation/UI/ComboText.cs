@@ -21,6 +21,11 @@ namespace Presentation.UI
 
         private void UpdateCombo(int combo)
         {
+            if (combo == 0)
+            {
+                SetText("");
+                return;
+            }
             AnimateTextChangeText(combo.ToString("00"));
         }
     }

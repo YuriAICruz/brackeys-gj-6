@@ -16,7 +16,8 @@ namespace Models.Signals
             Swing = 7,
             StepL = 8,
             StepR = 9,
-            Jump = 10
+            Jump = 10,
+            Dodge = 11
         }
         public class Play
         {

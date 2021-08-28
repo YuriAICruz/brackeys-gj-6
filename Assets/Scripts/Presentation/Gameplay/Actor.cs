@@ -250,16 +250,17 @@ namespace Presentation.Gameplay
 
             states.turnAngle = Vector3.Angle(transform.forward, new Vector3(dir.x, 0, dir.y));
 
+            var dir2d = new Vector2(dir.x, dir.z);
             if (states.turnAngle < 90)
-                TurnTo(dir);
+                TurnTo(dir2d);
             else
-                TurnTo(-dir);
+                TurnTo(-dir2d);
 
             var t0 = 0f;
 
             _timer.Wait(stats.dodgeDuration, (t) =>
             {
-                transform.position = _physics.Evaluate(dir * stats.dodgeSpeed, transform.position, t - t0);
+                transform.position = _physics.Evaluate(dir2d  * stats.dodgeSpeed, transform.position, t - t0);
                 t0 = t;
             }, () =>
             {
