@@ -10,7 +10,7 @@ using Zenject;
 
 namespace Presentation.Gameplay
 {
-    public class Player : Actor
+    public class Player : Actor, IPlayer
     {
         private Vector2 _direction;
 

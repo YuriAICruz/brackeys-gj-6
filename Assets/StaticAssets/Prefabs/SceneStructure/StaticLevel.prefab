@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 398284721}
   - component: {fileID: 398284722}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1705543547}
   - component: {fileID: 1705543548}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Collider (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1721434206}
   - component: {fileID: 1721434207}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Collider (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2139763573}
   - component: {fileID: 2139763574}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Collider (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,8 +187,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 0.06842693}
-  m_Center: {x: 0, y: 1.9914858e-12, z: -0.034213465}
+  m_Size: {x: 2, y: 2, z: 1}
+  m_Center: {x: 0, y: 1.9914858e-12, z: -0.5}
 --- !u!65 &1623240863
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1301,7 +1301,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 9aa2a31ea3dcc42418e3632cd14992ce, type: 2}
     - target: {fileID: 2550463727306718371, guid: 47bc57171f4df4343b0b033a8469599b, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8247994413960396516, guid: 47bc57171f4df4343b0b033a8469599b, type: 3}
       propertyPath: m_Materials.Array.data[0]
