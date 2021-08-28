@@ -15,7 +15,7 @@ MonoBehaviour:
   restartDelay: 2
   startDelay: 0.4
   healDuration: 0.8
-  comboDelay: 2
+  comboDelay: 4
   scoreBase: 1
   comboMultiplier: 2
   comboFeedbacks:
