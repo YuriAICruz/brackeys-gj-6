@@ -10,5 +10,7 @@ namespace System.Gameplay
 
         public float healDuration;
         public float comboDelay;
+        public int scoreBase;
+        public float comboMultiplier;
     }
 }

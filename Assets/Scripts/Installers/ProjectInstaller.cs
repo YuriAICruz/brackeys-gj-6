@@ -30,6 +30,11 @@ namespace Graphene.Installers
             Container.Bind<SfxManager>().AsSingle().WithArguments(Instantiate(sfx)).NonLazy();
             Container.Bind<HighScoreManager>().AsSingle().NonLazy();
 
+        
+            Container.DeclareSignal<Models.Signals.Score.ComboChange>();
+            Container.DeclareSignal<Models.Signals.Score.ComboUpdate>();
+            Container.DeclareSignal<Models.Signals.Score.ScoreChange>();
+            
             Container.DeclareSignal<Bgm.Play>();
             Container.DeclareSignal<Bgm.Stop>();
             

@@ -14,6 +14,7 @@ namespace System
         private readonly GameSettings _gameSettings;
         private int _currentCombo;
         private Coroutine _comboDelayAnimation;
+        private int _score;
 
         public ScoreManager(SignalBus signalBus, HighScoreManager highScoreManager, ITimeManager timer,
             GameSettings gameSettings)
@@ -29,7 +30,11 @@ namespace System
         private void AddCombo(Player.HitEnemy data)
         {
             _currentCombo++;
+            
+            _score += (int) (_gameSettings.scoreBase * (_currentCombo * _gameSettings.comboMultiplier));
+            
             _signalBus.Fire(new Score.ComboChange(_currentCombo));
+            _signalBus.Fire(new Score.ScoreChange(_score));
 
             if (_comboDelayAnimation != null)
                 _timer.Stop(_comboDelayAnimation);
@@ -47,10 +52,22 @@ namespace System
     public class HighScoreManager
     {
         private readonly SignalBus _signalBus;
+        private int _currentScore;
+        private int _highScore;
 
         public HighScoreManager(SignalBus signalBus)
         {
             _signalBus = signalBus;
+            
+            _signalBus.Subscribe<Score.ScoreChange>(SetScore);
+        }
+
+        private void SetScore(Score.ScoreChange data)
+        {
+            _currentScore = data.score;
+            
+            if (_currentScore > _highScore)
+                _highScore = _currentScore;
         }
     }
 }
