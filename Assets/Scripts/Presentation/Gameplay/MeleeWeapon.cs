@@ -22,7 +22,7 @@ namespace Presentation.Gameplay
         private Vector3 _initialDirection;
         private Vector3 _initialPoint;
 
-        public LayerMask _mask;
+        private LayerMask _mask;
 
         public GameObject[] weapons;
         private bool _doDamage;

@@ -33,7 +33,8 @@ namespace System
 
         private void OnObjectHit(Score.OnHitObject data)
         {
-            ComboDelay();
+            if (Combo.GetValue() > 0)
+                ComboDelay();
         }
 
         private void ResetComboEvt(Player.Hitted data)
@@ -49,7 +50,7 @@ namespace System
             Combo.Commit(0);
 
             _signalBus.Fire(
-                new Score.ComboUpdate(1,  _gameSettings.comboDelay, 0));
+                new Score.ComboUpdate(1, _gameSettings.comboDelay, 0));
         }
 
         private void CheckTargetHit(Score.OnHit data)
@@ -92,7 +93,7 @@ namespace System
         {
             if (_comboDelayAnimation != null)
                 _timer.Stop(_comboDelayAnimation);
-            
+
             _comboDelayAnimation = _timer.Wait(_gameSettings.comboDelay,
                 t =>
                 {
