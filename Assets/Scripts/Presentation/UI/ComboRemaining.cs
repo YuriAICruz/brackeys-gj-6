@@ -12,6 +12,7 @@ namespace Presentation.UI
         public Image image;
         private void Awake()
         {
+            image.fillAmount = 0;
             _signalBus.Subscribe<Score.ComboUpdate>(UpdateFill);
         }
 
