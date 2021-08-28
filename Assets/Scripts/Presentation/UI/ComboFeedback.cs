@@ -1,4 +1,5 @@
-﻿using Models.Accessors;
+﻿using System.Gameplay;
+using Models.Accessors;
 using Zenject;
 
 namespace Presentation.UI
@@ -6,6 +7,7 @@ namespace Presentation.UI
     public class ComboFeedback : TextViewer
     {
         [Inject] private ICombo _combo;
+        [Inject] private GameSettings _gameSettings;
         
         protected override void Awake()
         {
@@ -16,9 +18,13 @@ namespace Presentation.UI
 
         private void CheckFeedback(int combo)
         {
-            if (combo > 5)
+            for (int i = _gameSettings.comboFeedbacks.Length-1; i >= 0 ; i--)
             {
-                SetText("GREAT!");
+                if (combo > _gameSettings.comboFeedbacks[i].mark)
+                {
+                    SetText(_gameSettings.comboFeedbacks[i].feedback);
+                    return;
+                }
             }
 
             SetText("");

@@ -1,4 +1,6 @@
-﻿namespace Models.Signals
+﻿using UnityEngine;
+
+namespace Models.Signals
 {
     public class Score
     {
@@ -34,6 +36,20 @@
             {
                 this.score = score;
             }
+        }
+
+        public class OnHit
+        {
+            public readonly GameObject gameObject;
+
+            public OnHit(GameObject gameObject)
+            {
+                this.gameObject = gameObject;
+            }
+        }
+
+        public class OnHitObject
+        {
         }
     }
 }

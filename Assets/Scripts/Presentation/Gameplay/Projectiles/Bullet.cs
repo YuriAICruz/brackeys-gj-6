@@ -114,6 +114,7 @@ namespace Presentation.Gameplay.Projectiles
                 if (damageable != null)
                 {
                     _signalBus.Fire(new FX.Hit(hit.point));
+                    _signalBus.Fire(new Score.OnHit(hit.transform.gameObject));
                     damageable.Damage(damage);
                 }
 

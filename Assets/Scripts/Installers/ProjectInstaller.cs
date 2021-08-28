@@ -34,6 +34,8 @@ namespace Graphene.Installers
             Container.DeclareSignal<Models.Signals.Score.ComboChange>();
             Container.DeclareSignal<Models.Signals.Score.ComboUpdate>();
             Container.DeclareSignal<Models.Signals.Score.ScoreChange>();
+            Container.DeclareSignal<Models.Signals.Score.OnHit>();
+            Container.DeclareSignal<Models.Signals.Score.OnHitObject>();
             
             Container.DeclareSignal<Bgm.Play>();
             Container.DeclareSignal<Bgm.Stop>();

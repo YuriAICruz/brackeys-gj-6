@@ -2,6 +2,13 @@
 
 namespace System.Gameplay
 {
+    [Serializable]
+    public class ComboFeedback
+    {
+        public string feedback;
+        public int mark;
+    }
+    
     [CreateAssetMenu(fileName = "GameSettings", menuName = "Graphene/Brackeys-GJ/GameSettings")]
     public class GameSettings : ScriptableObject
     {
@@ -12,5 +19,6 @@ namespace System.Gameplay
         public float comboDelay;
         public int scoreBase;
         public float comboMultiplier;
+        public ComboFeedback[] comboFeedbacks;
     }
 }

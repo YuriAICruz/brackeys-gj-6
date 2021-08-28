@@ -21,19 +21,20 @@ namespace Presentation.Gameplay
 
         private Vector3 _initialDirection;
         private Vector3 _initialPoint;
-        
+
         public LayerMask _mask;
 
         public GameObject[] weapons;
+        private bool _doDamage;
 
         protected override void Awake()
         {
             base.Awake();
-            
+
             _signalBus.Subscribe<Models.Signals.Player.SwitchWeapon>(SwitchWeapon);
 
             //_mask =  (1 << _physicsSettings.hittable) | (1 << _physicsSettings.enemies);
-            _mask =  _physicsSettings.hittable | _physicsSettings.enemies;
+            _mask = _physicsSettings.hittable | _physicsSettings.enemies;
         }
 
         private void SwitchWeapon(Models.Signals.Player.SwitchWeapon data)
@@ -59,7 +60,9 @@ namespace Presentation.Gameplay
         protected override void Swing(Models.Signals.Actor.Attack signal)
         {
             base.Swing(signal);
-            
+
+            _doDamage = true;
+
             _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Swing, transform.position, signal.data.delay));
 
             _initialPoint = transform.TransformPoint(colliderBase);
@@ -86,23 +89,26 @@ namespace Presentation.Gameplay
                 {
                     var damageable = hit.transform.GetComponent<IDamageable>();
 
-                    if (damageable != null)
+                    if (_doDamage && damageable != null)
                     {
                         _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Slash, hit.point));
                         _signalBus.Fire(new FX.Slash(hit.point));
                         _signalBus.Fire(new Models.Signals.Player.HitEnemy(attributes.damage));
                         damageable.Damage(attributes.damage);
+                        _doDamage = false;
                         break;
                     }
-                    
+
                     var breakable = hit.transform.GetComponent<IBreakable>();
-                    if (breakable != null) 
+                    if (breakable != null)
                     {
                         _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Hit, hit.point));
                         _signalBus.Fire(new FX.Hit(hit.point));
                         breakable.Break();
                         continue;
                     }
+
+                    _signalBus.Fire(new Models.Signals.Score.OnHitObject());
                 }
             }
 
