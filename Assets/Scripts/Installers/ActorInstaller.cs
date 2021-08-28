@@ -9,11 +9,6 @@ namespace Graphene.Installers
         {
             Container.DeclareSignal<Actor.Attack>();
             Container.DeclareSignal<Actor.Damage>();
-
-            Container.DeclareSignal<Bgm.Play>();
-            Container.DeclareSignal<Bgm.Stop>();
-            
-            Container.DeclareSignal<SFX.Play>();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Gameplay;
 using Graphene.Time;
 using Models.Accessors;
 using Models.Interfaces;
+using Models.Signals;
 using ModestTree;
 using UnityEngine;
 using Zenject;
@@ -15,6 +16,7 @@ namespace Presentation.Gameplay
 
         [Inject] private ICamera _camera;
         private Camera _currentCamera;
+        private int _currentWeapon;
 
         protected override void Awake()
         {
@@ -27,6 +29,12 @@ namespace Presentation.Gameplay
             _signalBus.Subscribe<InputSignal.Axes>(UpdateAxis);
 
             _physics.SetSphereRadius(stats.radius, stats.height);
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            _signalBus.Fire(new Models.Signals.Player.SwitchWeapon(_currentWeapon));
         }
 
         private void SetCamera(Camera camera)
@@ -73,6 +81,10 @@ namespace Presentation.Gameplay
                 case 3:
                     DisableActivation();
                     Jump();
+                    break;
+                case 4:
+                    _currentWeapon = (_currentWeapon + 1) % 3; 
+                    _signalBus.Fire(new Models.Signals.Player.SwitchWeapon(_currentWeapon));
                     break;
             }
         }
@@ -131,6 +143,9 @@ namespace Presentation.Gameplay
         public override void Damage(int damage)
         {
             base.Damage(damage);
+            
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.PlayerHit, Center));
+            _signalBus.Fire(new Models.Signals.Player.Hitted(damage));
 
             if (Hp <= 0)
                 _signalBus.Fire<Models.Signals.Player.Death>();

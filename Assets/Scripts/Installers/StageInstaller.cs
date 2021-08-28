@@ -1,5 +1,6 @@
 using System;
 using System.Gameplay;
+using System.Sound;
 using Presentation.Effects;
 using Presentation.Gameplay;
 using Presentation.Gameplay.Projectiles;
@@ -19,6 +20,7 @@ public class StageInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindInterfacesAndSelfTo<SceneData>().AsSingle();
+        Container.Bind<ScoreManager>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<ParticlesManager>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<GameManager>().AsSingle()
             .OnInstantiated<GameManager>(OnGameManagerInstantiated);
@@ -28,6 +30,11 @@ public class StageInstaller : MonoInstaller
         Container.BindFactory<Heart, Heart.Factory>().FromComponentInNewPrefab(heart);
 
         Container.DeclareSignal<Models.Signals.Player.Death>();
+        Container.DeclareSignal<Models.Signals.Player.SwitchWeapon>();
+        Container.DeclareSignal<Models.Signals.Player.Hitted>();
+        Container.DeclareSignal<Models.Signals.Player.HitEnemy>();
+        
+        Container.DeclareSignal<Models.Signals.Boss.Death>();
 
         Container.DeclareSignal<Models.Signals.Game.Start>();
         Container.DeclareSignal<Models.Signals.Game.End>();

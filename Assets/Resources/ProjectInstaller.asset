@@ -16,3 +16,7 @@ MonoBehaviour:
   physicsSettings: {fileID: 11400000, guid: 642380edd27dc2f46b1ed187ecb99e4a, type: 2}
   gameSettings: {fileID: 11400000, guid: b09eee2975bf6df49b119345b8d72dda, type: 2}
   fxSettings: {fileID: 11400000, guid: b1d5cd98756001a41844c02754d9c317, type: 2}
+  bgmSettings: {fileID: 11400000, guid: f55a524f53f4dd14fb21064168eae3f9, type: 2}
+  sfxSettings: {fileID: 11400000, guid: 5a0f9486c6cb61e4e988720e546024f3, type: 2}
+  bgm: {fileID: 5725060765052583449, guid: 5fc11b3d0b3da5841865bf7d9188b01e, type: 3}
+  sfx: {fileID: 709201590084567066, guid: 8260684cf07950d45aff7321f9084ee6, type: 3}

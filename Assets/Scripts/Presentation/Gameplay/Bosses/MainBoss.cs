@@ -226,6 +226,8 @@ namespace Presentation.Gameplay.Bosses
         {
             states.damaged = false;
             base.Damage(damage);
+            if (Hp <= 0)
+                _signalBus.Fire<Models.Signals.Boss.Death>();
         }
 
         protected override void Move(float delta)
@@ -465,6 +467,8 @@ namespace Presentation.Gameplay.Bosses
             bossStates.spiting = true;
             bossStates.spited = false;
             bossStates.spitingElapsed = 0f;
+            
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Anticipation, Center));
 
             return NodeStates.Running;
         }
@@ -546,6 +550,9 @@ namespace Presentation.Gameplay.Bosses
             states.attackStage = 1;
             states.attackElapsed = 0f;
             bossStates.playerDirection = PlayerDistance(mouth.position);
+            
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Anticipation, Center));
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Bite, Center, stats.attacks[states.attackStage].delay));
 
             return NodeStates.Running;
         }
@@ -578,10 +585,14 @@ namespace Presentation.Gameplay.Bosses
 
                 return NodeStates.Running;
             }
-
+            
             states.attacking = true;
             states.attackStage = 0;
             states.attackElapsed = 0f;
+            
+            
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Anticipation, Center));
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Bite, Center, stats.attacks[states.attackStage].delay));
 
             return NodeStates.Running;
         }
@@ -663,7 +674,6 @@ namespace Presentation.Gameplay.Bosses
             return d;
         }
 
-
         private void EvaluateHit(Transform[] points, ref Vector3[] lastPositions, int damage, float radius)
         {
             if (_currentDamageTracker == null || points.Length != _currentDamageTracker.Length)
@@ -704,20 +714,21 @@ namespace Presentation.Gameplay.Bosses
             }
         }
 
-
         private void InstantiateSplash(int difficulty)
         {
             var pos = new Vector3(mouth.position.x, _gameManager.Player.Center.y, mouth.position.z);
-
             
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Spit, Center));
+
             for (int i = 0, n = bossStats.sprayCount + bossStats.sprayCount * difficulty * 3; i < n; i++)
             {
                 var playerDir = PlayerDistance(pos);
+                playerDir.y = mouth.hierarchyCapacity;
                 
                 var step = (i / (n * 0.5f)) * Mathf.PI * 2f;
                 var dir = new Vector3(Mathf.Sin(step + Random.value * bossStats.spitRandomMultiplier), 0, Mathf.Cos(step+ Random.value * bossStats.spitRandomMultiplier));
 
-                mouth.LookAt(playerDir);
+                mouth.rotation = Quaternion.LookRotation(playerDir);
                 dir = mouth.TransformDirection(dir);
                 dir.y = 0;
                 dir.Normalize();

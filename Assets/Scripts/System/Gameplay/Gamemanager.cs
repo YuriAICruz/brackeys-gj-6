@@ -25,12 +25,21 @@ namespace System.Gameplay
             _settings = settings;
 
             _signalBus.Subscribe<Models.Signals.Player.Death>(OnPlayerDeath);
+            _signalBus.Subscribe<Models.Signals.Boss.Death>(OnBossDeath);
 
+            _signalBus.Fire(new Bgm.Play(Bgm.Clips.MainBoss));
             _timer.Wait(_settings.startDelay, StartGame);
+        }
+
+        private void OnBossDeath(Boss.Death data)
+        {
+            _signalBus.Fire(new Bgm.Stop());
+            EndGame();
         }
 
         private void OnPlayerDeath(Player.Death data)
         {
+            _signalBus.Fire(new Bgm.Stop());
             EndGame();
         }
 

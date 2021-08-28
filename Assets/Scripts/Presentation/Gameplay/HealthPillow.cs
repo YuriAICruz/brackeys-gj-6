@@ -36,6 +36,7 @@ namespace Presentation.Gameplay
             CanActivate = false;
 
             _signalBus.Fire(new FX.Smoke(transform.position));
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.EatPillow, transform.position));
 
             _animation = _timeManager.Wait(_gameSettings.healDuration, () =>
             {

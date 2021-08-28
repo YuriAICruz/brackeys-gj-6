@@ -9,5 +9,6 @@ namespace System.Gameplay
         public float startDelay;
 
         public float healDuration;
+        public float comboDelay;
     }
 }

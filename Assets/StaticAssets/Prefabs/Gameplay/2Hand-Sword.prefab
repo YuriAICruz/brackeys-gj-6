@@ -168,6 +168,10 @@ MonoBehaviour:
   _mask:
     serializedVersion: 2
     m_Bits: 0
+  weapons:
+  - {fileID: 6700791744140088335}
+  - {fileID: 5687700392636443363}
+  - {fileID: 7646461734319335667}
 --- !u!1001 &4764865956329833015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -300,5 +304,20 @@ PrefabInstance:
 --- !u!4 &5019979950344185308 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+  m_PrefabInstance: {fileID: 4764865956329833015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6700791744140088335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6999215314274396616, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+  m_PrefabInstance: {fileID: 4764865956329833015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5687700392636443363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 922939993986803924, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
+  m_PrefabInstance: {fileID: 4764865956329833015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7646461734319335667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6323752922217911612, guid: ddcb55270af260d4ca9f60af5b17bfaf, type: 3}
   m_PrefabInstance: {fileID: 4764865956329833015}
   m_PrefabAsset: {fileID: 0}

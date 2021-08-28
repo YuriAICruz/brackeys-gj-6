@@ -24,12 +24,24 @@ namespace Presentation.Gameplay
         
         public LayerMask _mask;
 
+        public GameObject[] weapons;
+
         protected override void Awake()
         {
             base.Awake();
+            
+            _signalBus.Subscribe<Models.Signals.Player.SwitchWeapon>(SwitchWeapon);
 
             //_mask =  (1 << _physicsSettings.hittable) | (1 << _physicsSettings.enemies);
             _mask =  _physicsSettings.hittable | _physicsSettings.enemies;
+        }
+
+        private void SwitchWeapon(Models.Signals.Player.SwitchWeapon data)
+        {
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                weapons[i].SetActive(data.index == i);
+            }
         }
 
         private void OnDrawGizmosSelected()
@@ -47,6 +59,8 @@ namespace Presentation.Gameplay
         protected override void Swing(Models.Signals.Actor.Attack signal)
         {
             base.Swing(signal);
+            
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Swing, transform.position, signal.data.delay));
 
             _initialPoint = transform.TransformPoint(colliderBase);
             _initialDirection = transform.TransformDirection(colliderTip - colliderBase);
@@ -74,7 +88,9 @@ namespace Presentation.Gameplay
 
                     if (damageable != null)
                     {
+                        _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Slash, hit.point));
                         _signalBus.Fire(new FX.Slash(hit.point));
+                        _signalBus.Fire(new Models.Signals.Player.HitEnemy(attributes.damage));
                         damageable.Damage(attributes.damage);
                         break;
                     }
@@ -82,6 +98,7 @@ namespace Presentation.Gameplay
                     var breakable = hit.transform.GetComponent<IBreakable>();
                     if (breakable != null) 
                     {
+                        _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Hit, hit.point));
                         _signalBus.Fire(new FX.Hit(hit.point));
                         breakable.Break();
                         continue;

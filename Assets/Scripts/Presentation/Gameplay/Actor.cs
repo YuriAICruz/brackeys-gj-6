@@ -20,6 +20,8 @@ namespace Presentation.Gameplay
 
         private Observer<int> _dataHp = new Observer<int>();
 
+        private Collider _collider;
+
         public Transform Transform => transform;
         public Vector3 Position => transform.position;
         public virtual Vector3 Center => transform.position + Vector3.up * stats.radius;
@@ -52,6 +54,8 @@ namespace Presentation.Gameplay
         protected virtual void Awake()
         {
             DisableActor();
+
+            _collider = GetComponent<Collider>();
 
             _signalBus.Subscribe<Game.Start>(SetUpActor);
             _signalBus.Subscribe<Game.End>(DisableActor);
@@ -236,7 +240,9 @@ namespace Presentation.Gameplay
                 return;
 
             states.attacking = false;
+
             states.dodging = true;
+            SetCollider(!states.dodging);
 
             CalculateDirection();
 
@@ -255,7 +261,18 @@ namespace Presentation.Gameplay
             {
                 transform.position = _physics.Evaluate(dir * stats.dodgeSpeed, transform.position, t - t0);
                 t0 = t;
-            }, () => { states.dodging = false; });
+            }, () =>
+            {
+                states.dodging = false;
+
+                SetCollider(!states.dodging);
+            });
+        }
+
+        private void SetCollider(bool active)
+        {
+            if (_collider)
+                _collider.enabled = active;
         }
 
         private Vector3 GetNormalizedDirection()
@@ -273,7 +290,10 @@ namespace Presentation.Gameplay
             if (states.jumping) return;
 
             if (_physics.Grounded)
+            {
                 _signalBus.Fire(new FX.Puff(transform.position));
+                _signalBus.Fire(new SFX.Play(SFX.Clips.Jump, transform.position));
+            }
 
             states.jumping = true;
             _physics.Jump(stats.jumpForce);
@@ -310,6 +330,8 @@ namespace Presentation.Gameplay
 
             if (states.damaged || states.dodging) return;
 
+            SetCollider(false);
+
             var hp = _dataHp.GetValue();
 
             hp -= damage;
@@ -325,7 +347,13 @@ namespace Presentation.Gameplay
             _timer.Wait(stats.damageStagDuration, () =>
             {
                 states.stag = false;
-                _timer.Wait(stats.damageInvincibilityDuration, () => { states.damaged = false; });
+                _timer.Wait(stats.damageInvincibilityDuration, () =>
+                {
+                    states.damaged = false;
+
+
+                    SetCollider(true);
+                });
             });
         }
 
