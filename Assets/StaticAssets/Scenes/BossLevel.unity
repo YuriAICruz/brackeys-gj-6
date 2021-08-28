@@ -503,33 +503,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 157991144, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
+    - target: {fileID: 404884085, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 157991144, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 157991144, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 11.34
+      value: -6.44
       objectReference: {fileID: 0}
     - target: {fileID: 404884085, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.47
+      value: -12.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 404884086, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404884086, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
+      propertyPath: m_Color.g
+      value: 0.19339621
+      objectReference: {fileID: 0}
+    - target: {fileID: 404884086, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
+      propertyPath: m_Color.r
+      value: 0.54734886
       objectReference: {fileID: 0}
     - target: {fileID: 1025852216, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 1025852216, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -12.63
-      objectReference: {fileID: 0}
-    - target: {fileID: 1573360409, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.06
+      value: 6.43
       objectReference: {fileID: 0}
     - target: {fileID: 1707296354937992102, guid: 00313b01a43bbff4686de70332092f6b, type: 3}
       propertyPath: m_RootOrder
