@@ -20,7 +20,7 @@ public class StageInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindInterfacesAndSelfTo<SceneData>().AsSingle();
-        Container.Bind<ScoreManager>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<ScoreManager>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<ParticlesManager>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<GameManager>().AsSingle()
             .OnInstantiated<GameManager>(OnGameManagerInstantiated);

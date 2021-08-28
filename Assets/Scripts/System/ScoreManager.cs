@@ -1,26 +1,26 @@
 ﻿using System.Gameplay;
 using Graphene.Time;
+using Models.Accessors;
 using Models.Signals;
 using UnityEngine;
 using Zenject;
 
 namespace System
 {
-    public class ScoreManager
+    public class ScoreManager : IScore, ICombo
     {
+        public Observer<int> Score { get; }= new Observer<int>();
+        public Observer<int> Combo { get; }= new Observer<int>();
+        
         private readonly SignalBus _signalBus;
-        private readonly HighScoreManager _highScoreManager;
         private readonly ITimeManager _timer;
         private readonly GameSettings _gameSettings;
-        private int _currentCombo;
         private Coroutine _comboDelayAnimation;
-        private int _score;
 
-        public ScoreManager(SignalBus signalBus, HighScoreManager highScoreManager, ITimeManager timer,
+        public ScoreManager(SignalBus signalBus, ITimeManager timer,
             GameSettings gameSettings)
         {
             _signalBus = signalBus;
-            _highScoreManager = highScoreManager;
             _timer = timer;
             _gameSettings = gameSettings;
 
@@ -29,45 +29,28 @@ namespace System
 
         private void AddCombo(Player.HitEnemy data)
         {
-            _currentCombo++;
+            var currentCombo = Combo.GetValue();
+            currentCombo++;
             
-            _score += (int) (_gameSettings.scoreBase * (_currentCombo * _gameSettings.comboMultiplier));
+            Score.Commit(Score.GetValue() +  (int) (_gameSettings.scoreBase * (currentCombo * _gameSettings.comboMultiplier)));
             
-            _signalBus.Fire(new Score.ComboChange(_currentCombo));
-            _signalBus.Fire(new Score.ScoreChange(_score));
+            _signalBus.Fire(new Score.ComboChange(currentCombo));
+            _signalBus.Fire(new Score.ScoreChange(Score.GetValue()));
 
             if (_comboDelayAnimation != null)
                 _timer.Stop(_comboDelayAnimation);
 
+            Combo.Commit(currentCombo);
             _comboDelayAnimation = _timer.Wait(_gameSettings.comboDelay,
                 t =>
                 {
                     _signalBus.Fire(
                         new Score.ComboUpdate(t / _gameSettings.comboDelay, t, _gameSettings.comboDelay - t));
-                }, () => { _currentCombo = 0; }
+                }, () =>
+                {
+                    Combo.Commit(0);
+                }
             );
-        }
-    }
-
-    public class HighScoreManager
-    {
-        private readonly SignalBus _signalBus;
-        private int _currentScore;
-        private int _highScore;
-
-        public HighScoreManager(SignalBus signalBus)
-        {
-            _signalBus = signalBus;
-            
-            _signalBus.Subscribe<Score.ScoreChange>(SetScore);
-        }
-
-        private void SetScore(Score.ScoreChange data)
-        {
-            _currentScore = data.score;
-            
-            if (_currentScore > _highScore)
-                _highScore = _currentScore;
         }
     }
 }

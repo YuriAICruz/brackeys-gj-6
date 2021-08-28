@@ -28,7 +28,7 @@ namespace Graphene.Installers
             Container.Bind<BgmManager>().AsSingle().WithArguments(Instantiate(bgm)).NonLazy();
             
             Container.Bind<SfxManager>().AsSingle().WithArguments(Instantiate(sfx)).NonLazy();
-            Container.Bind<HighScoreManager>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<HighScoreManager>().AsSingle().NonLazy();
 
         
             Container.DeclareSignal<Models.Signals.Score.ComboChange>();
