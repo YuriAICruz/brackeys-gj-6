@@ -249,6 +249,7 @@ namespace Presentation.Gameplay
             var dir = GetNormalizedDirection();
 
             states.turnAngle = Vector3.Angle(transform.forward, new Vector3(dir.x, 0, dir.y));
+            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Dodge, Center));
 
             var dir2d = new Vector2(dir.x, dir.z);
             if (states.turnAngle < 90)
