@@ -653,6 +653,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2093251342303343763, guid: 9e0584e1c6e029a469773f76ffec4cd7, type: 3}
+      propertyPath: m_UseGraphicAlpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2093251342303343763, guid: 9e0584e1c6e029a469773f76ffec4cd7, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2093251342303343763, guid: 9e0584e1c6e029a469773f76ffec4cd7, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4654111824686825691, guid: 9e0584e1c6e029a469773f76ffec4cd7, type: 3}
       propertyPath: m_Name
       value: Game Canvas
