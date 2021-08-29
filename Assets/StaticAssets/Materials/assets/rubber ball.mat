@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: vasoplanta 4
+  m_Name: rubber ball
   m_Shader: {fileID: 4800000, guid: df96712bd1128ce41be43d6a349940bd, type: 3}
   m_ShaderKeywords: SPECULAR_DEF_OFF
   m_LightmapFlags: 4
@@ -64,8 +64,8 @@ Material:
     - SPECULAR_DEF: 0
     - USE_SUB: 0
     - _BumpScale: 1
-    - _CullMode: 0
-    - _CullModeBlack: 0
+    - _CullMode: 2
+    - _CullModeBlack: 1
     - _Cutoff: 0.5
     - _Cutout: 0.1
     - _DetailNormalMapScale: 1
@@ -89,11 +89,11 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.33388984, g: 0.5058824, b: 0.28627452, a: 1}
-    - _CullModeBlackColor: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 0.66297144, g: 0.22801706, b: 0.7924528, a: 1}
+    - _CullModeBlackColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _RimColor: {r: 0.7075472, g: 0.6707827, b: 0.6574849, a: 1}
-    - _SColor: {r: 0.36850303, g: 0.46226418, b: 0.38298652, a: 1}
-    - _SpecColor: {r: 0.6320754, g: 0.6043902, b: 0.5933161, a: 1}
+    - _HColor: {r: 0.77597004, g: 0.1514774, b: 0.8679245, a: 1}
+    - _RimColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
+    - _SColor: {r: 0.22544217, g: 0.058561757, b: 0.26415092, a: 1}
+    - _SpecColor: {r: 0.8207547, g: 0.62382907, b: 0.5458793, a: 1}
   m_BuildTextureStacks: []
