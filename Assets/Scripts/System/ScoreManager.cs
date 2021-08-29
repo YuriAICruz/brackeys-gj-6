@@ -8,23 +8,23 @@ using Zenject;
 
 namespace System
 {
-    public class ScoreManager : IScore, ICombo
+    public class ScoreManager  
     {
-        public Observer<int> Score { get; } = new Observer<int>();
-        public Observer<int> Combo { get; } = new Observer<int>();
-        public Observer<int> MaxCombo { get; } = new Observer<int>();
-
         private readonly SignalBus _signalBus;
         private readonly ITimeManager _timer;
         private readonly IGameData _gameData;
+        private readonly IScore _score;
+        private readonly ICombo _combo;
         private readonly GameSettings _gameSettings;
         private Coroutine _comboDelayAnimation;
 
-        public ScoreManager(SignalBus signalBus, ITimeManager timer, IGameData gameData, GameSettings gameSettings)
+        public ScoreManager(SignalBus signalBus, ITimeManager timer, IGameData gameData, IScore score, ICombo combo, GameSettings gameSettings)
         {
             _signalBus = signalBus;
             _timer = timer;
             _gameData = gameData;
+            _score = score;
+            _combo = combo;
             _gameSettings = gameSettings;
 
             _signalBus.Subscribe<Player.HitEnemy>(AddComboEvt);
@@ -35,7 +35,7 @@ namespace System
 
         private void OnObjectHit(Score.OnHitObject data)
         {
-            if (Combo.GetValue() > 0)
+            if (_combo.Combo.GetValue() > 0)
                 ComboDelay();
         }
 
@@ -51,7 +51,7 @@ namespace System
             if (_comboDelayAnimation != null)
                 _timer.Stop(_comboDelayAnimation);
 
-            Combo.Commit(0);
+            _combo.Combo.Commit(0);
 
             _signalBus.Fire(
                 new Score.ComboUpdate(1, _gameSettings.comboDelay, 0));
@@ -79,21 +79,21 @@ namespace System
 
         private void AddCombo()
         {
-            var currentCombo = Combo.GetValue();
+            var currentCombo = _combo.Combo.GetValue();
             currentCombo++;
             
             _gameData.Hits.Commit(_gameData.Hits.GetValue()+1);
 
-            Score.Commit(Score.GetValue() +
-                         (int) (_gameSettings.scoreBase * (currentCombo * _gameSettings.comboMultiplier)));
+            _score.Score.Commit(_score.Score.GetValue() +
+                                (int) (_gameSettings.scoreBase * (currentCombo * _gameSettings.comboMultiplier)));
 
             _signalBus.Fire(new Score.ComboChange(currentCombo));
-            _signalBus.Fire(new Score.ScoreChange(Score.GetValue()));
+            _signalBus.Fire(new Score.ScoreChange(_score.Score.GetValue()));
 
-            if(currentCombo > MaxCombo.GetValue())
-                MaxCombo.Commit(currentCombo);
+            if(currentCombo > _combo.MaxCombo.GetValue())
+                _combo.MaxCombo.Commit(currentCombo);
             
-            Combo.Commit(currentCombo);
+            _combo.Combo.Commit(currentCombo);
             ComboDelay();
         }
 
@@ -112,7 +112,7 @@ namespace System
                 {
                     _signalBus.Fire(
                         new Score.ComboUpdate(1, _gameSettings.comboDelay, 0));
-                    Combo.Commit(0);
+                    _combo.Combo.Commit(0);
                 }
             );
         }

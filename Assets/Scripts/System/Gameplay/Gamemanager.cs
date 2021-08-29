@@ -24,6 +24,7 @@ namespace System.Gameplay
         private IActorData boss;
         private bool _gamerunning;
         private float _time;
+        private bool _interacted;
 
         public IActorData Player => (IActorData) player;
         public IActorData Boss => (IActorData) boss;
@@ -37,9 +38,15 @@ namespace System.Gameplay
 
             _signalBus.Subscribe<Models.Signals.Player.Death>(OnPlayerDeath);
             _signalBus.Subscribe<Models.Signals.Boss.Death>(OnBossDeath);
+            _signalBus.Subscribe<InputSignal.Down>(OnInputEvent);
 
             _signalBus.Fire(new Bgm.Play(Bgm.Clips.MainBoss));
             _timer.Wait(_settings.startDelay, StartGame);
+        }
+
+        private void OnInputEvent(InputSignal.Down data)
+        {
+            _interacted = true;
         }
 
         private void OnBossDeath(Boss.Death data)
@@ -67,14 +74,23 @@ namespace System.Gameplay
 
             CalculateRank();
 
-            _timer.Wait(_settings.restartDelay, ReloadGame);
+            var t = Timer.time;
+            _interacted = false;
+            _timer.Wait(() =>
+            {
+                var e = Timer.time - t;
+                if (_interacted && e > _settings.restartDelay)
+                    return true;
+                
+                return false;
+            }, ReloadGame);
         }
 
         private void CalculateRank()
         {
             var grade = _settings.grades.Length/2;
 
-            grade -= Deaths.GetValue();
+            grade -= Deaths.GetValue() * 2;
 
             grade -= Mathf.FloorToInt(Damages.GetValue() / (float)_settings.gradeDamageCap);
             

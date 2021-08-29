@@ -10,6 +10,7 @@ namespace Presentation.UI
         protected override void Awake()
         {
             base.Awake();
+            SetText("");
             _combo.Combo.AddListener(UpdateCombo);
         }
 
