@@ -18,8 +18,8 @@ MonoBehaviour:
       id: 0
     - key: 332
       id: 0
-    - key: 334
-      id: 0
+    - key: 335
+      id: 1
     - key: 323
       id: 1
     - key: 101
@@ -32,13 +32,13 @@ MonoBehaviour:
       id: 2
     - key: 331
       id: 2
-    - key: 335
-      id: 2
     - key: 32
       id: 3
     - key: 330
       id: 3
     - key: 114
+      id: 4
+    - key: 334
       id: 4
     - key: 338
       id: 4
@@ -55,3 +55,5 @@ MonoBehaviour:
     - positive: 275
       negative: 276
       id: 3
+    rtId: 2
+    ltId: 0

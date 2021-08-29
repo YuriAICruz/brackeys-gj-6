@@ -5,5 +5,9 @@
     {
         public Mapping[] inputs;
         public Axis[] axes;
+
+        public int rtId;
+        
+        public int ltId;
     }
 }
