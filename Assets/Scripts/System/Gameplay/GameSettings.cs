@@ -8,7 +8,7 @@ namespace System.Gameplay
         public string feedback;
         public int mark;
     }
-    
+
     [CreateAssetMenu(fileName = "GameSettings", menuName = "Graphene/Brackeys-GJ/GameSettings")]
     public class GameSettings : ScriptableObject
     {
@@ -20,5 +20,10 @@ namespace System.Gameplay
         public int scoreBase;
         public float comboMultiplier;
         public ComboFeedback[] comboFeedbacks;
+
+        [Header("Grade")] public string[] grades;
+        public int gradeDamageCap;
+        public int gradeHitsCap;
+        public int comboHitsCap;
     }
 }

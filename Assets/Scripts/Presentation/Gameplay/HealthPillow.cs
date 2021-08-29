@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Gameplay;
 using Graphene.Time;
+using Models.Accessors;
 using Models.Interfaces;
 using Models.Signals;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Presentation.Gameplay
         [Inject] private SignalBus _signalBus;
         [Inject] private ITimeManager _timeManager;
         [Inject] private GameSettings _gameSettings;
+        [Inject] private IGameData _gameData;
+        
         private Coroutine _animation;
 
         private int _used;
@@ -41,6 +44,7 @@ namespace Presentation.Gameplay
             _animation = _timeManager.Wait(_gameSettings.healDuration, () =>
             {
                 _used++;
+                _gameData.Heals.Commit(_gameData.Heals.GetValue()+1);
                 if (_used == 1)
                 {
                     full.SetActive(false);

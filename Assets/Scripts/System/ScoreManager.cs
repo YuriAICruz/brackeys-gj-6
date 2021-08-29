@@ -12,17 +12,19 @@ namespace System
     {
         public Observer<int> Score { get; } = new Observer<int>();
         public Observer<int> Combo { get; } = new Observer<int>();
+        public Observer<int> MaxCombo { get; } = new Observer<int>();
 
         private readonly SignalBus _signalBus;
         private readonly ITimeManager _timer;
+        private readonly IGameData _gameData;
         private readonly GameSettings _gameSettings;
         private Coroutine _comboDelayAnimation;
 
-        public ScoreManager(SignalBus signalBus, ITimeManager timer,
-            GameSettings gameSettings)
+        public ScoreManager(SignalBus signalBus, ITimeManager timer, IGameData gameData, GameSettings gameSettings)
         {
             _signalBus = signalBus;
             _timer = timer;
+            _gameData = gameData;
             _gameSettings = gameSettings;
 
             _signalBus.Subscribe<Player.HitEnemy>(AddComboEvt);
@@ -39,6 +41,8 @@ namespace System
 
         private void ResetComboEvt(Player.Hitted data)
         {
+            _gameData.Damages.Commit(_gameData.Damages.GetValue()+1);
+            
             ResetCombo();
         }
 
@@ -77,6 +81,8 @@ namespace System
         {
             var currentCombo = Combo.GetValue();
             currentCombo++;
+            
+            _gameData.Hits.Commit(_gameData.Hits.GetValue()+1);
 
             Score.Commit(Score.GetValue() +
                          (int) (_gameSettings.scoreBase * (currentCombo * _gameSettings.comboMultiplier)));
@@ -84,7 +90,9 @@ namespace System
             _signalBus.Fire(new Score.ComboChange(currentCombo));
             _signalBus.Fire(new Score.ScoreChange(Score.GetValue()));
 
-
+            if(currentCombo > MaxCombo.GetValue())
+                MaxCombo.Commit(currentCombo);
+            
             Combo.Commit(currentCombo);
             ComboDelay();
         }

@@ -31,3 +31,13 @@ MonoBehaviour:
     mark: 20
   - feedback: PUGNATOR
     mark: 25
+  grades:
+  - F
+  - D
+  - C
+  - B
+  - A
+  - S
+  gradeDamageCap: 4
+  gradeHitsCap: 30
+  comboHitsCap: 25

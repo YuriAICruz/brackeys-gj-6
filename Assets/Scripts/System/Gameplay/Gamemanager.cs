@@ -1,27 +1,38 @@
 ﻿using Graphene.Time;
 using Models.Accessors;
 using Models.Signals;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace System.Gameplay
 {
-    public class GameManager
+    public class GameManager : IGameData
     {
+        public Observer<float> Time { get; } = new Observer<float>();
+        public Observer<int> Grade { get; } = new Observer<int>();
+        public Observer<int> Hits { get; } = new Observer<int>();
+        public Observer<int> Damages { get; } = new Observer<int>();
+        public Observer<int> Heals { get; } = new Observer<int>();
+        public Observer<int> Deaths { get; } = new Observer<int>();
+
         private readonly SignalBus _signalBus;
         private readonly ITimeManager _timer;
+        private readonly ICombo _combo;
         private readonly GameSettings _settings;
         private IActorData player;
         private IActorData boss;
         private bool _gamerunning;
+        private float _time;
 
         public IActorData Player => (IActorData) player;
         public IActorData Boss => (IActorData) boss;
 
-        public GameManager(SignalBus signalBus, ITimeManager timer, GameSettings settings)
+        public GameManager(SignalBus signalBus, ITimeManager timer, ICombo combo, GameSettings settings)
         {
             _signalBus = signalBus;
             _timer = timer;
+            _combo = combo;
             _settings = settings;
 
             _signalBus.Subscribe<Models.Signals.Player.Death>(OnPlayerDeath);
@@ -39,6 +50,8 @@ namespace System.Gameplay
 
         private void OnPlayerDeath(Player.Death data)
         {
+            
+            Deaths.Commit(Deaths.GetValue()+1);
             _signalBus.Fire(new Bgm.Stop());
             EndGame();
         }
@@ -46,10 +59,32 @@ namespace System.Gameplay
         private void EndGame()
         {
             if(!_gamerunning) return;
+            
             _gamerunning = false;
             _signalBus.Fire<Game.End>();
+            
+            Time.Commit(Timer.time - _time);
+
+            CalculateRank();
 
             _timer.Wait(_settings.restartDelay, ReloadGame);
+        }
+
+        private void CalculateRank()
+        {
+            var grade = _settings.grades.Length/2;
+
+            grade -= Deaths.GetValue();
+
+            grade -= Mathf.FloorToInt(Damages.GetValue() / (float)_settings.gradeDamageCap);
+            
+            grade += Hits.GetValue() > _settings.gradeHitsCap ? 1 : 0;
+            
+            grade += _combo.MaxCombo.GetValue() >= _settings.gradeHitsCap ? 1 : 0;
+
+            grade = Mathf.Clamp(grade, 0, _settings.grades.Length-1);
+            
+            Grade.Commit(grade);
         }
 
         private void ReloadGame()
@@ -60,6 +95,8 @@ namespace System.Gameplay
         private void StartGame()
         {
             if(_gamerunning) return;
+
+            _time = Timer.time;
 
             _gamerunning = true;
             _signalBus.Fire<Models.Signals.Game.Start>();
