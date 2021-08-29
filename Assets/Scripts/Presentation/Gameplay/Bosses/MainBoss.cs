@@ -720,22 +720,24 @@ namespace Presentation.Gameplay.Bosses
             
             _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Spit, Center));
 
+            var playerDir = PlayerDistance(pos);
+            playerDir.y = mouth.hierarchyCapacity;
+            playerDir.Normalize();
+            
+            mouth.rotation = Quaternion.LookRotation(playerDir);
+            
             for (int i = 0, n = bossStats.sprayCount + bossStats.sprayCount * difficulty * 3; i < n; i++)
             {
-                var playerDir = PlayerDistance(pos);
-                playerDir.y = mouth.hierarchyCapacity;
-                
-                var step = (i / (n * 0.5f)) * Mathf.PI * 2f;
-                var dir = new Vector3(Mathf.Sin(step + Random.value * bossStats.spitRandomMultiplier), 0, Mathf.Cos(step+ Random.value * bossStats.spitRandomMultiplier));
+                var step = (i / (float)(n / (difficulty+1f))) * Mathf.PI * 2f;
+                var dir = new Vector3(Mathf.Sin(step + Random.value * bossStats.spitRandomMultiplier), Mathf.Cos(step+ Random.value * bossStats.spitRandomMultiplier));
 
-                mouth.rotation = Quaternion.LookRotation(playerDir);
                 dir = mouth.TransformDirection(dir);
-                dir.y = 0;
-                dir.Normalize();
+                //dir.y = 0;
+                //dir.Normalize();
 
                 GetNextSpit();
-                _bullets[_currentSpit].Shoot(pos, dir, bossStats.spitBaseSpeed,
-                    i * bossStats.stagBaseDelay * (1 / ((float) difficulty + 1)));
+                _bullets[_currentSpit].Shoot(pos, dir, bossStats.spitBaseSpeed, i * bossStats.stagBaseDelay * (1 / ((float) difficulty + 1)));
+                
                 Debug.DrawRay(pos, dir * 5, Color.blue, 2);
             }
         }
