@@ -19,11 +19,15 @@ MonoBehaviour:
   scoreBase: 1
   comboMultiplier: 2
   comboFeedbacks:
-  - feedback: GOOD
+  - feedback: DOOGOO
     mark: 3
-  - feedback: GREAT
+  - feedback: CRAZY
     mark: 6
-  - feedback: AWSOME
+  - feedback: BADASS
     mark: 10
-  - feedback: WONDERFULL
+  - feedback: AWSOME
     mark: 15
+  - feedback: SELVAGEM!
+    mark: 20
+  - feedback: PUGNATOR
+    mark: 25
