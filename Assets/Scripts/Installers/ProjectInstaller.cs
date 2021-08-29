@@ -1,4 +1,9 @@
+using System;
 using System.Gameplay;
+using System.Input;
+using System.Sound;
+using Graphene.Time;
+using Models.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -7,19 +12,53 @@ namespace Graphene.Installers
     [CreateAssetMenu(fileName = "ProjectInstaller", menuName = "Installers/ProjectInstaller")]
     public class ProjectInstaller : ScriptableObjectInstaller<ProjectInstaller>
     {
-        public InputSettings settings;
+        public InputSettings inputSettings;
+        public PhysicsSettings physicsSettings;
+        public GameSettings gameSettings;
+        public FxSettings fxSettings;
+        public BgmSettings bgmSettings;
+        public SfxSettings sfxSettings;
+
+        public AudioSource bgm, sfx;
         
         public override void InstallBindings()
         {
             SignalBusInstaller.Install(Container);
 
+            Container.Bind<BgmManager>().AsSingle().WithArguments(Instantiate(bgm)).NonLazy();
+            
+            Container.Bind<SfxManager>().AsSingle().WithArguments(Instantiate(sfx)).NonLazy();
+            Container.BindInterfacesAndSelfTo<HighScoreManager>().AsSingle().NonLazy();
+
+        
+            Container.DeclareSignal<Models.Signals.Score.ComboChange>();
+            Container.DeclareSignal<Models.Signals.Score.ComboUpdate>();
+            Container.DeclareSignal<Models.Signals.Score.ScoreChange>();
+            Container.DeclareSignal<Models.Signals.Score.OnHit>();
+            Container.DeclareSignal<Models.Signals.Score.OnHitObject>();
+            
+            Container.DeclareSignal<Bgm.Play>();
+            Container.DeclareSignal<Bgm.Stop>();
+            
+            Container.DeclareSignal<SFX.Play>();
+            
             Container.DeclareSignal<InputSignal.Up>();
             Container.DeclareSignal<InputSignal.Down>();
             Container.DeclareSignal<InputSignal.Axes>();
 
-            Container.BindInstance(settings);
+            Container.BindInstance(inputSettings);
+            Container.BindInstance(physicsSettings);
+            Container.BindInstance(gameSettings);
+            Container.BindInstance(fxSettings);
+            Container.BindInstance(bgmSettings);
+            Container.BindInstance(sfxSettings);
 
             Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle().NonLazy();
+            
+            Container.BindInterfacesAndSelfTo<TimeManager>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<Timer>().AsSingle().NonLazy();
+            
+            Container.BindInterfacesAndSelfTo<System.Gameplay.Physics>().AsTransient();
         }
     }
 }

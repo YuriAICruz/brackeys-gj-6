@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966330809e2a44c78852f6e5a6ca5cb4, type: 3}
+  m_Name: FxSettings
+  m_EditorClassIdentifier: 
+  puff: {fileID: 5749693182295892772, guid: b6ecf064ee911364c840f0935536a500, type: 3}
+  slash: {fileID: 6073883319431393539, guid: 4986c0a29e7ff6342be89e555a0137d4, type: 3}
+  hit: {fileID: 5257120810661052958, guid: 3675b7da5b38da247a5792a73df5c51b, type: 3}
+  smokeScreen: {fileID: 8120459690201535240, guid: 369f550bc44d9974dbc14079bd2bffcc, type: 3}

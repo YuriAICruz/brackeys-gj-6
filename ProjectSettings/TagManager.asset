@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Collide
   layers:
   - Default
   - TransparentFX
@@ -11,19 +12,19 @@ TagManager:
   - 
   - Water
   - UI
+  - Colliders
+  - Actors
+  - Enemies
+  - Hitable
+  - Player
+  - Occluder
+  - Floor
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Post processing
   - 
   - 
   - 

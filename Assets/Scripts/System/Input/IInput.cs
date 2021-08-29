@@ -1,4 +1,4 @@
-﻿namespace System.Gameplay
+﻿namespace System.Input
 {
     public interface IInput
     {

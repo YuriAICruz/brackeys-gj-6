@@ -57,6 +57,6 @@ MonoBehaviour:
     _validationErrorResponse: 0
     _signalSettings:
       _defaultSyncMode: 0
-      _missingHandlerDefaultResponse: 2
+      _missingHandlerDefaultResponse: 0
       _requireStrictUnsubscribe: 0
       _defaultAsyncTickPriority: 1

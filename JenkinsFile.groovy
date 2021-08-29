@@ -13,7 +13,7 @@ pipeline{
     stages { 
         stage('Checkout') {
             steps {
-                //checkout([$class: 'GitSCM', branches: [[name: "*/${env.BRANCH_NAME}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth: 1, noTags: false, reference: '', shallow: true, timeout: 45]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b24266f2-2db3-4d10-a622-bbaefafca6cf', url: 'git@github.com:YuriAICruz/shmup-steam.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: "*/${env.BRANCH_NAME}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth: 1, noTags: false, reference: '', shallow: true, timeout: 45]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b24266f2-2db3-4d10-a622-bbaefafca6cf', url: 'git@github.com:YuriAICruz/brackeys-gj-6.git']]])
             }
         }
         stage('Build Windows') {
@@ -28,7 +28,7 @@ pipeline{
                     
                     mkdir Builds
                     
-                    %UNITY_19_4% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildWindows
+                    %UNITY_20_3% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildWindows
                     
                     type log.txt
                 '''
@@ -40,11 +40,14 @@ pipeline{
             }
             steps {
                 bat '''
-                    %Butler% push Builds/StandaloneWindows64/ graphene-ai/shmup:windows-beta
+                    %Butler% push Builds/StandaloneWindows64/ graphene-ai/pug-action-game:windows-beta
                 '''
             }
         }
         stage('Build Mac') {
+            agent {
+                label "macos"
+            }
             when {
                 expression { env.Mac == 'true' }
             }
@@ -56,19 +59,22 @@ pipeline{
                     
                     mkdir Builds
                     
-                    %UNITY_19_4% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildMac
+                    %UNITY_20_3% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildMac
                     
                     type log.txt
                 '''
             }
         }
         stage('Upload Mac') {
+            agent {
+                label "macos"
+            }
             when {
                 expression { env.Mac == 'true' }
             }
             steps {
                 bat '''
-                    %Butler% push Builds/StandaloneOSX/ graphene-ai/shmup:osx-beta
+                    %Butler% push Builds/StandaloneOSX/ graphene-ai/pug-action-game:osx-beta
                 '''
             }
         }
@@ -84,7 +90,7 @@ pipeline{
                     
                     mkdir Builds
                     
-                    %UNITY_19_4% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildWeb
+                    %UNITY_20_3% -quit --stacktrace --info -logFile log.txt -batchmode -buildTarget Standalone -projectPath "%cd%" -executeMethod Builder.BuildWeb
                     
                     type log.txt
                 '''
@@ -96,7 +102,7 @@ pipeline{
             }
             steps {
                 bat '''
-                    %Butler% push Builds/WebGL/brackeys-gj-6_Web/ graphene-ai/brackeys-gj-6:'web-beta'
+                    %Butler% push Builds/WebGL/pug-action-game_Web/ graphene-ai/pug-action-game:'web-beta'
                 '''
             }
         }

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219b4a2ccc15418e9f021304494ed79b, type: 3}
+  m_Name: PhysicsSettings
+  m_EditorClassIdentifier: 
+  gravity: {x: 0, y: -9.8, z: 0}
+  actors:
+    serializedVersion: 2
+    m_Bits: 128
+  enemies:
+    serializedVersion: 2
+    m_Bits: 256
+  colliders:
+    serializedVersion: 2
+    m_Bits: 4160
+  hittable:
+    serializedVersion: 2
+    m_Bits: 576
+  player:
+    serializedVersion: 2
+    m_Bits: 1024
+  movementBlockers:
+    serializedVersion: 2
+    m_Bits: 2112
+  minimumDistance: 0.15
+  rayPrecision: 4
+  maxCollision: 6
+  maxSlope: 45
+  yDeath: -10
+  yRespawn: 4
