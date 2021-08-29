@@ -399,21 +399,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2742743184757631315, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2742743184757631315, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.28
-      objectReference: {fileID: 0}
     - target: {fileID: 5863718124247497681, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
       propertyPath: m_Name
       value: Characters
-      objectReference: {fileID: 0}
-    - target: {fileID: 6379980596825496933, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
-      propertyPath: m_BlendShapeWeights.Array.data[0]
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8150891524047828676, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
       propertyPath: table
@@ -443,25 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b91ba2549e848a0b26612c6e598ab20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &825755415782212470 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8465265637190764407, guid: eb794ef4a4d18f14ea437acd8749aff9, type: 3}
-  m_PrefabInstance: {fileID: 825755415782212467}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &825755415782212471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 825755415782212470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81b84df7a6624334b6cda00bbb441313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ease: 0
-  transition: 0.6
 --- !u!1001 &2165781028796107921
 PrefabInstance:
   m_ObjectHideFlags: 0
