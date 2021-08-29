@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Gameplay;
+using Midiadub.EasyEase;
 using Models.Accessors;
 using Presentation.Gameplay;
 using UnityEngine;
@@ -15,7 +16,9 @@ namespace Presentation.UI
         [Inject] private GameManager _gameManager;
 
         public Image fill;
+        public float duration;
         private IActorData _actor;
+        private Coroutine _animation;
 
         private void Awake()
         {
@@ -25,7 +28,13 @@ namespace Presentation.UI
 
         private void UpdateHealth(int hp)
         {
-            fill.fillAmount = hp / (float) _actor.MaxHp;
+            if (_animation != null)
+                EaseEasy.Stop(_animation);
+            
+            _animation = EaseEasy.Animate(t =>
+            {
+                fill.fillAmount = t;
+            }, fill.fillAmount, hp / (float) _actor.MaxHp, duration, 0,EaseTypes.Linear);
         }
     }
 }

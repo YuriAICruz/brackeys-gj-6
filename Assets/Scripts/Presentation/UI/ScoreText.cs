@@ -1,4 +1,6 @@
-﻿using Models.Accessors;
+﻿using Midiadub.EasyEase;
+using Models.Accessors;
+using UnityEngine;
 using Zenject;
 
 namespace Presentation.UI
@@ -6,6 +8,8 @@ namespace Presentation.UI
     public class ScoreText: TextViewer
     {
         [Inject] private IScore _score;
+        private Coroutine _animation;
+        private float _currentScore;
 
         protected override void Awake()
         {
@@ -22,7 +26,14 @@ namespace Presentation.UI
 
         private void UpdateScore(int score)
         {
-            SetText(score.ToString("000000"));
+            if (_animation != null)
+                EaseEasy.Stop(_animation);
+            
+            _animation = EaseEasy.Animate(t =>
+            {
+                _currentScore = t;
+                SetText(_currentScore.ToString("000000"));
+            }, _currentScore, score, duration, 0,EaseTypes.Linear);
         }
     }
 }
