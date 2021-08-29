@@ -142,6 +142,8 @@ namespace Presentation.Gameplay
 
         public override void Damage(int damage)
         {
+            if( states.dead) return;
+            
             base.Damage(damage);
             
             _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.PlayerHit, Center));

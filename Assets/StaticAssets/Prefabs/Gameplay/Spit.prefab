@@ -49,7 +49,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 1088
-  duration: 3
+  duration: 6
   _radius: 0.1
   trail: {fileID: 7373687540775116925}
   waveSize: 0.6

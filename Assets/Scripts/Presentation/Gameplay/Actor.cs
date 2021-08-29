@@ -236,7 +236,7 @@ namespace Presentation.Gameplay
 
         protected virtual void Dodge()
         {
-            if (states.dodging || !_physics.Grounded)
+            if (states.dodging || !_physics.Grounded || states.dead)
                 return;
 
             states.attacking = false;
@@ -261,7 +261,7 @@ namespace Presentation.Gameplay
 
             _timer.Wait(stats.dodgeDuration, (t) =>
             {
-                transform.position = _physics.Evaluate(dir2d  * stats.dodgeSpeed, transform.position, t - t0);
+                transform.position = _physics.Evaluate(dir2d * stats.dodgeSpeed, transform.position, t - t0);
                 t0 = t;
             }, () =>
             {
@@ -289,7 +289,7 @@ namespace Presentation.Gameplay
 
         protected virtual void Jump()
         {
-            if (states.jumping) return;
+            if (states.jumping || states.dead) return;
 
             if (_physics.Grounded)
             {

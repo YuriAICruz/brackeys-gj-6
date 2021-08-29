@@ -77,15 +77,18 @@ namespace System.Gameplay
             CalculateRank();
 
             var t = Timer.time;
-            _interacted = false;
-            _timer.Wait(() =>
+            _timer.Wait(0.4f, () =>
             {
-                var e = Timer.time - t;
-                if (_interacted && e > _settings.restartDelay)
-                    return true;
-                
-                return false;
-            }, ReloadGame);
+                _interacted = false;
+                _timer.Wait(() =>
+                {
+                    var e = Timer.time - t;
+                    if (_interacted && e > _settings.restartDelay)
+                        return true;
+
+                    return false;
+                }, ReloadGame);
+            });
         }
 
         private void CalculateRank()
