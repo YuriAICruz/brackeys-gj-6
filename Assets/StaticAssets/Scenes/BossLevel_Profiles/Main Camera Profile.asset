@@ -59,7 +59,7 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.244
+    value: 0.284
   fastMode:
     overrideState: 0
     value: 0
@@ -84,10 +84,10 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.489
+    value: 0.296
   size:
     overrideState: 1
-    value: 0.56
+    value: 0.73
   lumContrib:
     overrideState: 1
     value: 0.41
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb84e30e02715445aeb9959894e3b4d, type: 3}
   m_Name: ColorGrading
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1543,13 +1543,13 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 10
+    value: 4
   threshold:
     overrideState: 1
     value: 1
   softKnee:
     overrideState: 1
-    value: 0.469
+    value: 0.501
   clamp:
     overrideState: 0
     value: 65472
@@ -1584,7 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1621,10 +1621,10 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 0.38
+    value: 0.43
   color:
     overrideState: 1
-    value: {r: 0, g: 0.09824936, b: 0.6415094, a: 1}
+    value: {r: 0.12495541, g: 0.016820943, b: 0.509434, a: 1}
   ambientOnly:
     overrideState: 0
     value: 1
