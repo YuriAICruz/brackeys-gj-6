@@ -16,6 +16,7 @@ namespace System.Sound
             _source = source;
             _settings = settings;
             
+            GameObject.DontDestroyOnLoad(_source);
             _signalBus.Subscribe<Bgm.Play>(Play);
         }
 

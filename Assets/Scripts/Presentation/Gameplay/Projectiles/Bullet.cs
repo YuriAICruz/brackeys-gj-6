@@ -45,7 +45,7 @@ namespace Presentation.Gameplay.Projectiles
         private float _speed;
         
         private float _time;
-        private float _delay;
+        private protected float _delay;
         [SerializeField] private float _radius;
 
         private Collider[] _collision;
@@ -56,7 +56,7 @@ namespace Presentation.Gameplay.Projectiles
             Deactivate();
         }
 
-        private void Deactivate()
+        protected virtual void Deactivate()
         {
             Running = false;
 
@@ -102,7 +102,7 @@ namespace Presentation.Gameplay.Projectiles
 
             var pos = _lastPosition;
 
-            pos += _direction * (_speed * Timer.fixedDeltaTime);
+            pos += GetDirection(_direction) * (_speed * Timer.fixedDeltaTime);
 
             var dir = pos - _lastPosition;
 
@@ -114,6 +114,7 @@ namespace Presentation.Gameplay.Projectiles
                 if (damageable != null)
                 {
                     _signalBus.Fire(new FX.Hit(hit.point));
+                    _signalBus.Fire(new Score.OnHit(hit.transform.gameObject));
                     damageable.Damage(damage);
                 }
 
@@ -137,6 +138,11 @@ namespace Presentation.Gameplay.Projectiles
 
             _lastPosition = pos;
             transform.position = pos;
+        }
+
+        protected virtual Vector3 GetDirection(Vector3 dir)
+        {
+            return dir;
         }
     }
 }

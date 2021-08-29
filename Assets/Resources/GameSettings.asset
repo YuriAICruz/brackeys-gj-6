@@ -15,3 +15,15 @@ MonoBehaviour:
   restartDelay: 2
   startDelay: 0.4
   healDuration: 0.8
+  comboDelay: 4
+  scoreBase: 1
+  comboMultiplier: 2
+  comboFeedbacks:
+  - feedback: GOOD
+    mark: 3
+  - feedback: GREAT
+    mark: 6
+  - feedback: AWSOME
+    mark: 10
+  - feedback: WONDERFULL
+    mark: 15

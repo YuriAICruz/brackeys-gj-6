@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f53fca46dc904056b7f7fa223a91b1aa, type: 3}
+  m_Name: SfxSettings
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 4edbf582933c0ff4f97e224429aa9336, type: 3}
+  - {fileID: 8300000, guid: b3f67de81d0b06343a7524ff26af8488, type: 3}
+  - {fileID: 8300000, guid: 5272151885b29834ea7a6aab96d86912, type: 3}
+  - {fileID: 8300000, guid: 0a1e8faf3e5807347a6cc1cd6c199e6e, type: 3}
+  - {fileID: 8300000, guid: d90e765d26cb83a4ab3df115e64c1dad, type: 3}
+  - {fileID: 8300000, guid: 37b4600eef436404e80c5c001e7a976b, type: 3}
+  - {fileID: 8300000, guid: dedb86f3b04746c4997f2e0efbc9da56, type: 3}
+  - {fileID: 8300000, guid: 577f4e28b20d1b246b1803839f27049e, type: 3}
+  - {fileID: 8300000, guid: 738ef4f7165b65545b34c084aa9b63be, type: 3}
+  - {fileID: 8300000, guid: 6bc7b184520797546b4c3f738f51af3e, type: 3}
+  - {fileID: 8300000, guid: 6faa57cb689f83f4eb4e85e37692b0db, type: 3}
+  - {fileID: 8300000, guid: 4f19a0678caca1643a55cc3de270d256, type: 3}
+  key: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000

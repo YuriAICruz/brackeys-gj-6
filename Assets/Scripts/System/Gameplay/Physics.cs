@@ -94,7 +94,7 @@ namespace System.Gameplay
 
         private bool CheckUpCollision(Vector3 position, float radius)
         {
-            return UnityEngine.Physics.Raycast(new Ray(position + Vector3.up * radius, Vector3.up * radius));
+            return UnityEngine.Physics.Raycast(new Ray(position + Vector3.up * radius, Vector3.up * radius), radius, _settings.colliders);
         }
 
         public void Jump(float statsJumpForce)

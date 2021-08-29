@@ -38,6 +38,10 @@ MonoBehaviour:
       id: 3
     - key: 330
       id: 3
+    - key: 114
+      id: 4
+    - key: 338
+      id: 4
     axes:
     - positive: 119
       negative: 115

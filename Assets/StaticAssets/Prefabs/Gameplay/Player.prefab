@@ -93,7 +93,7 @@ MonoBehaviour:
   stats:
     maxHp: 5
     damageStagDuration: 0.3
-    damageInvincibilityDuration: 0.4
+    damageInvincibilityDuration: 0.25
     speed: 3
     dodgeSpeed: 4
     runSpeed: 6

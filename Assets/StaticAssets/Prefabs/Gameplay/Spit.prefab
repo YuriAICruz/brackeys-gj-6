@@ -51,6 +51,9 @@ MonoBehaviour:
     m_Bits: 1088
   duration: 3
   _radius: 0.1
+  trail: {fileID: 7373687540775116925}
+  waveSize: 0.6
+  waveLength: 10
 --- !u!1 &4192067797164312583
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,19 +129,46 @@ TrailRenderer:
   m_Time: 0.6
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.2
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.5047627
         inSlope: -2.3203876
         outSlope: -2.3203876
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.070815444
+      - serializedVersion: 3
+        time: 0.28310966
+        value: 0.9904766
+        inSlope: -0.22793011
+        outSlope: -0.22793011
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.19337627
+        outWeight: 0.20738158
+      - serializedVersion: 3
+        time: 0.4820467
+        value: 0.2509206
+        inSlope: -1.8325368
+        outSlope: -1.8325368
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7437662
+        value: 0.5734298
+        inSlope: -0.9858013
+        outSlope: -0.9858013
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
         value: 0
@@ -153,8 +183,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.01978819, b: 0, a: 1}
-      key1: {r: 0.1981132, g: 0, b: 0, a: 1}
+      key0: {r: 0, g: 0.7019608, b: 1, a: 1}
+      key1: {r: 0.027367389, g: 0.2796697, b: 0.38679248, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
