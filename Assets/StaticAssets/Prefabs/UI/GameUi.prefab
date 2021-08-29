@@ -48,6 +48,8 @@ GameObject:
   - component: {fileID: 7377289738469392779}
   - component: {fileID: 1564878516800127869}
   - component: {fileID: 2531112421655759520}
+  - component: {fileID: 8857196594088684610}
+  - component: {fileID: 5389385882255168487}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -136,6 +138,39 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8857196594088684610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854102678504386486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa9303f08aa43249ba44d2078b27860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topColor:
+    serializedVersion: 2
+    rgba: 4289985791
+  bottomColor:
+    serializedVersion: 2
+    rgba: 4284064485
+--- !u!114 &5389385882255168487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854102678504386486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.4433962, g: 0.123398006, b: 0.123398006, a: 0.5}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2168204919188381833
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +223,8 @@ GameObject:
   - component: {fileID: 4766970263614779132}
   - component: {fileID: 3715807199068854331}
   - component: {fileID: 2738166021558701360}
+  - component: {fileID: 549226425}
+  - component: {fileID: 549226424}
   m_Layer: 5
   m_Name: ComboFeedback
   m_TagString: Untagged
@@ -235,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.783123, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.78732306, b: 0.4198113, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -312,6 +349,39 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &549226425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2864006570143158125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa9303f08aa43249ba44d2078b27860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topColor:
+    serializedVersion: 2
+    rgba: 4284606463
+  bottomColor:
+    serializedVersion: 2
+    rgba: 4278199807
+--- !u!114 &549226424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2864006570143158125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.7075472, g: 0.010012442, b: 0.010012442, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &3185270627210360110
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +394,8 @@ GameObject:
   - component: {fileID: 5259837296723352723}
   - component: {fileID: 9220397229379066388}
   - component: {fileID: 1472794302924870596}
+  - component: {fileID: 517035374108935867}
+  - component: {fileID: 7773581918121928076}
   m_Layer: 5
   m_Name: HighScore
   m_TagString: Untagged
@@ -412,6 +484,39 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &517035374108935867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185270627210360110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa9303f08aa43249ba44d2078b27860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topColor:
+    serializedVersion: 2
+    rgba: 4289985791
+  bottomColor:
+    serializedVersion: 2
+    rgba: 4284064485
+--- !u!114 &7773581918121928076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185270627210360110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.4433962, g: 0.123398006, b: 0.123398006, a: 0.5}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!114 &236335058378402923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,6 +806,8 @@ GameObject:
   - component: {fileID: 8872296419533735493}
   - component: {fileID: 4302257542615786836}
   - component: {fileID: 3589652796184600354}
+  - component: {fileID: 6923959574906569263}
+  - component: {fileID: 6374720879520529670}
   m_Layer: 5
   m_Name: ScoreLabel
   m_TagString: Untagged
@@ -770,6 +877,39 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'SCORE: '
+--- !u!114 &6923959574906569263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5862775283787170059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa9303f08aa43249ba44d2078b27860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topColor:
+    serializedVersion: 2
+    rgba: 4293066495
+  bottomColor:
+    serializedVersion: 2
+    rgba: 4288854732
+--- !u!114 &6374720879520529670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5862775283787170059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.4433962, g: 0.123398006, b: 0.123398006, a: 0.5}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &7081243161687482109
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,6 +922,7 @@ GameObject:
   - component: {fileID: 7437044548249056944}
   - component: {fileID: 2066205016976314200}
   - component: {fileID: 5511040753633058580}
+  - component: {fileID: 5208363955127587527}
   - component: {fileID: 6744706736647010563}
   m_Layer: 5
   m_Name: Combo
@@ -900,6 +1041,24 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5208363955127587527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7081243161687482109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa9303f08aa43249ba44d2078b27860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topColor:
+    serializedVersion: 2
+    rgba: 4289985791
+  bottomColor:
+    serializedVersion: 2
+    rgba: 4284064485
 --- !u!114 &6744706736647010563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -912,8 +1071,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.80811393, b: 0, a: 1}
-  m_EffectDistance: {x: 2, y: -2}
+  m_EffectColor: {r: 0.4433962, g: 0.123398006, b: 0.123398006, a: 0.5}
+  m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!1 &8889422931060906692
 GameObject:
@@ -926,6 +1085,8 @@ GameObject:
   - component: {fileID: 5721642859804719602}
   - component: {fileID: 6457395329403021787}
   - component: {fileID: 3069616970978296855}
+  - component: {fileID: 7008721552070687991}
+  - component: {fileID: 498415949797831423}
   m_Layer: 5
   m_Name: HighScoreLabel
   m_TagString: Untagged
@@ -995,6 +1156,39 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'HIGH SCORE: '
+--- !u!114 &7008721552070687991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8889422931060906692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa9303f08aa43249ba44d2078b27860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topColor:
+    serializedVersion: 2
+    rgba: 4293066495
+  bottomColor:
+    serializedVersion: 2
+    rgba: 4288854732
+--- !u!114 &498415949797831423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8889422931060906692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.4433962, g: 0.123398006, b: 0.123398006, a: 0.5}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &1517569375479461663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1165,14 +1359,14 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4139702480122487387, guid: 516d113c7a809b847924d00038691e5a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 516d113c7a809b847924d00038691e5a, type: 3}
---- !u!224 &3205525229803132227 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4139702480122487388, guid: 516d113c7a809b847924d00038691e5a, type: 3}
-  m_PrefabInstance: {fileID: 1517569375479461663}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3205525229803132226 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4139702480122487389, guid: 516d113c7a809b847924d00038691e5a, type: 3}
+  m_PrefabInstance: {fileID: 1517569375479461663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &3205525229803132227 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4139702480122487388, guid: 516d113c7a809b847924d00038691e5a, type: 3}
   m_PrefabInstance: {fileID: 1517569375479461663}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1542976667489449389
