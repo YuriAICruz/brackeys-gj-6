@@ -12,6 +12,8 @@ Shader "Unlit/Toon"
         
         // texture
         _MainTex ("Main Texture", 2D) = "white" { }
+        [KeywordEnum(OFF, ON)] USE_SUB ("Use Sub", float) = 0
+        _SubTexture ("Sub Texture", 2D) = "black" { }
 
         // ramp
         _RampThreshold ("Ramp Threshold", Range(0.1, 1)) = 0.5
@@ -45,6 +47,7 @@ Shader "Unlit/Toon"
         
         #pragma multi_compile SPECULAR_DEF_ON SPECULAR_DEF_OFF
         #pragma multi_compile CUT_ON CUT_OFF
+        #pragma multi_compile USE_SUB_ON USE_SUB_OFF
         #pragma multi_compile BACK_BLACK_ON BACK_BLACK_OFF
         
         #pragma surface surf Toon addshadow fullforwardshadows exclude_path:deferred exclude_path:prepass
@@ -55,6 +58,9 @@ Shader "Unlit/Toon"
         fixed4 _SColor;
         
         sampler2D _MainTex;
+        sampler2D _SubTexture;
+        
+        float _SubTextureAnimation;
         
         float _RampThreshold;
         float _RampSmooth;
@@ -115,6 +121,12 @@ Shader "Unlit/Toon"
         void surf(Input IN, inout SurfaceOutput o)
         {
             fixed4 mainTex = tex2D(_MainTex, IN.uv_MainTex);
+            
+            #if USE_SUB_ON
+                fixed4 sub = tex2D(_SubTexture, IN.uv_MainTex);
+                mainTex = lerp(mainTex, sub, sub.a);
+            #endif
+            
             o.Albedo = mainTex.rgb * _Color.rgb;
           
             o.Alpha = mainTex.a * _Color.a;
@@ -129,6 +141,7 @@ Shader "Unlit/Toon"
             #else
                 o.Specular = pow(2,64);
             #endif
+            
             o.Gloss = mainTex.a;
         }
         

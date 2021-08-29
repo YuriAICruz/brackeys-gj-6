@@ -171,45 +171,48 @@ namespace Presentation.Gameplay.Bosses
                     new MemorySequence(new List<Node>() // Final State
                     {
                         new CallSystemActionMemory((int) BlackboardIds.FinalState),
-                        new MemorySequence(new List<Node>()
+                        new MemoryPriority(new List<Node>
                         {
-                            new CallSystemActionMemory((int) BlackboardIds.PlayerNear),
-                            new CallSystemActionMemory((int) BlackboardIds.Anticipate),
-                            new MemoryPriority(new List<Node>
+                            new MemorySequence(new List<Node>()
                             {
-                                new CallSystemActionMemory((int) BlackboardIds.PlayerBehind),
-                                new CallSystemActionMemory((int) BlackboardIds.TailHit),
-                                new CallSystemActionMemory((int) BlackboardIds.Stag),
+                                new CallSystemActionMemory((int) BlackboardIds.PlayerNear),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
+                                new MemoryPriority(new List<Node>
+                                {
+                                    new CallSystemActionMemory((int) BlackboardIds.PlayerBehind),
+                                    new CallSystemActionMemory((int) BlackboardIds.TailHit),
+                                    new CallSystemActionMemory((int) BlackboardIds.Stag),
+                                }),
+                                new MemoryPriority(new List<Node>
+                                {
+                                    new CallSystemActionMemory((int) BlackboardIds.PlayerFront),
+                                    new CallSystemActionMemory((int) BlackboardIds.Bite),
+                                    new CallSystemActionMemory((int) BlackboardIds.Stag),
+                                }),
+                                new MemorySequence(new List<Node>
+                                {
+                                    new CallSystemActionMemory((int) BlackboardIds.Spit),
+                                    new CallSystemActionMemory((int) BlackboardIds.Stag),
+                                }),
                             }),
-                            new MemoryPriority(new List<Node>
+                            new MemorySequence(new List<Node>
                             {
-                                new CallSystemActionMemory((int) BlackboardIds.PlayerFront),
-                                new CallSystemActionMemory((int) BlackboardIds.Bite),
+                                new Chance(bossStats.spitProbability[2]),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
+                                new CallSystemActionMemory((int) BlackboardIds.Spit),
                                 new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
                             new MemorySequence(new List<Node>
                             {
-                                new CallSystemActionMemory((int) BlackboardIds.Spit),
+                                new Chance(bossStats.dashBiteProbability[2]),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
+                                new CallSystemActionMemory((int) BlackboardIds.DashBite),
                                 new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
-                        }),
-                        new MemorySequence(new List<Node>
-                        {
-                            new Chance(bossStats.spitProbability[2]),
-                            new CallSystemActionMemory((int) BlackboardIds.Anticipate),
-                            new CallSystemActionMemory((int) BlackboardIds.Spit),
-                            new CallSystemActionMemory((int) BlackboardIds.Stag),
-                        }),
-                        new MemorySequence(new List<Node>
-                        {
-                            new Chance(bossStats.dashBiteProbability[2]),
-                            new CallSystemActionMemory((int) BlackboardIds.Anticipate),
-                            new CallSystemActionMemory((int) BlackboardIds.DashBite),
-                            new CallSystemActionMemory((int) BlackboardIds.Stag),
-                        }),
-                        new MemorySequence(new List<Node>()
-                        {
-                            new CallSystemActionMemory((int) BlackboardIds.Chase),
+                            new MemorySequence(new List<Node>()
+                            {
+                                new CallSystemActionMemory((int) BlackboardIds.Chase),
+                            }),
                         }),
                     })
                 }
@@ -356,7 +359,7 @@ namespace Presentation.Gameplay.Bosses
             {
                 bossStates.stagElapsed += Timer.deltaTime;
 
-                if (bossStates.stagElapsed >= bossStats.stagBaseDuration)
+                if (bossStates.stagElapsed >= bossStats.stagBaseDuration*(1/(bossStates.stage+1f)))
                 {
                     bossStates.stagged = false;
                     return NodeStates.Success;
@@ -469,7 +472,7 @@ namespace Presentation.Gameplay.Bosses
             bossStates.spiting = true;
             bossStates.spited = false;
             bossStates.spitingElapsed = 0f;
-            
+
             _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Anticipation, Center));
 
             return NodeStates.Running;
@@ -552,9 +555,10 @@ namespace Presentation.Gameplay.Bosses
             states.attackStage = 1;
             states.attackElapsed = 0f;
             bossStates.playerDirection = PlayerDistance(mouth.position);
-            
+
             _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Anticipation, Center));
-            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Bite, Center, stats.attacks[states.attackStage].delay));
+            _signalBus.Fire(
+                new Models.Signals.SFX.Play(SFX.Clips.Bite, Center, stats.attacks[states.attackStage].delay));
 
             return NodeStates.Running;
         }
@@ -587,14 +591,15 @@ namespace Presentation.Gameplay.Bosses
 
                 return NodeStates.Running;
             }
-            
+
             states.attacking = true;
             states.attackStage = 0;
             states.attackElapsed = 0f;
-            
-            
+
+
             _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Anticipation, Center));
-            _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Bite, Center, stats.attacks[states.attackStage].delay));
+            _signalBus.Fire(
+                new Models.Signals.SFX.Play(SFX.Clips.Bite, Center, stats.attacks[states.attackStage].delay));
 
             return NodeStates.Running;
         }
@@ -624,7 +629,8 @@ namespace Presentation.Gameplay.Bosses
         {
             var dir = PlayerDistance(transform.position);
 
-            if (Vector3.Angle(transform.forward, dir) < bossStats.backAttackAngle || dir.magnitude < bossStats.backDistance)
+            if (Vector3.Angle(transform.forward, dir) < bossStats.backAttackAngle ||
+                dir.magnitude < bossStats.backDistance)
                 return NodeStates.Success;
 
             return NodeStates.Failure;
@@ -719,27 +725,29 @@ namespace Presentation.Gameplay.Bosses
         private void InstantiateSplash(int difficulty)
         {
             var pos = new Vector3(mouth.position.x, _gameManager.Player.Center.y, mouth.position.z);
-            
+
             _signalBus.Fire(new Models.Signals.SFX.Play(SFX.Clips.Spit, Center));
 
             var playerDir = PlayerDistance(pos);
             playerDir.y = mouth.hierarchyCapacity;
             playerDir.Normalize();
-            
+
             mouth.rotation = Quaternion.LookRotation(playerDir);
-            
+
             for (int i = 0, n = bossStats.sprayCount + bossStats.sprayCount * difficulty * 3; i < n; i++)
             {
-                var step = (i / (float)(n / (difficulty+1f))) * Mathf.PI * 2f;
-                var dir = new Vector3(Mathf.Sin(step + Random.value * bossStats.spitRandomMultiplier), Mathf.Cos(step+ Random.value * bossStats.spitRandomMultiplier));
+                var step = (i / (float) (n / (difficulty + 1f))) * Mathf.PI * 2f;
+                var dir = new Vector3(Mathf.Sin(step + Random.value * bossStats.spitRandomMultiplier),
+                    Mathf.Cos(step + Random.value * bossStats.spitRandomMultiplier));
 
                 dir = mouth.TransformDirection(dir);
                 //dir.y = 0;
                 //dir.Normalize();
 
                 GetNextSpit();
-                _bullets[_currentSpit].Shoot(pos, dir, bossStats.spitBaseSpeed, i * bossStats.stagBaseDelay * (1 / ((float) difficulty + 1)));
-                
+                _bullets[_currentSpit].Shoot(pos, dir, bossStats.spitBaseSpeed,
+                    i * bossStats.stagBaseDelay * (1 / ((float) difficulty + 1)));
+
                 Debug.DrawRay(pos, dir * 5, Color.blue, 2);
             }
         }

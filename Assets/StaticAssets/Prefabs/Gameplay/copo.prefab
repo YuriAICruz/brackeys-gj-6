@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 260365836861135713}
   - component: {fileID: 6748752258894870117}
   - component: {fileID: 5034833334840992560}
+  - component: {fileID: 4778996485120851798}
   m_Layer: 9
   m_Name: copo
   m_TagString: Untagged
@@ -111,3 +112,19 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7268431805607363093, guid: 9e04397c4bd2444429767fa4089436cf, type: 3}
   stand: {fileID: 0}
   speed: 10
+--- !u!54 &4778996485120851798
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855003526652566724}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
