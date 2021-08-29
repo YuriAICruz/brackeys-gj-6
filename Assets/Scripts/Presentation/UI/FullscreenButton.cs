@@ -23,7 +23,7 @@ namespace Presentation.UI
 
         private void SetText()
         {
-            text.text = Screen.fullScreen ? "Fullscreen" : "Exit Fullscreen";
+            text.text = "Fullscreen";//Screen.fullScreen ? "Fullscreen" : "Exit Fullscreen";
         }
 
         protected override void OnClick()

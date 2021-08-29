@@ -741,8 +741,8 @@ namespace Presentation.Gameplay.Bosses
                     Mathf.Cos(step + Random.value * bossStats.spitRandomMultiplier));
 
                 dir = mouth.TransformDirection(dir);
-                //dir.y = 0;
-                //dir.Normalize();
+                dir.y = 0;
+                dir.Normalize();
 
                 GetNextSpit();
                 _bullets[_currentSpit].Shoot(pos, dir, bossStats.spitBaseSpeed,

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c12f6b49a847fdb73dd9403c8c15f6, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  restartDelay: 4
-  startDelay: 0.4
+  restartDelay: 2.5
+  startDelay: 1.2
   healDuration: 0.8
   comboDelay: 4
   scoreBase: 10
@@ -41,4 +41,4 @@ MonoBehaviour:
   gradeDamageCap: 4
   gradeHitsCap: 30
   comboHitsCap: 25
-  gradeScoreCap: 25000
+  gradeScoreCap: 2500

@@ -12,6 +12,13 @@ namespace System.Gameplay
 
         public InputSignal.Axes _axes;
 
+        private bool _rt;
+        private float _rtTime;
+
+        private bool _lt;
+        private float _ltTime;
+
+
         public class buttonInfo
         {
             public bool down;
@@ -26,8 +33,10 @@ namespace System.Gameplay
         {
             _signalBus = signalBus;
             _settings = settings;
+
             _axes = new InputSignal.Axes(_axesCount);
             _buttons = new buttonInfo[_settings.inputMap.inputs.Max(x => x.id) + 1];
+
             for (int i = 0; i < _buttons.Length; i++)
             {
                 _buttons[i] = new buttonInfo();
@@ -46,7 +55,8 @@ namespace System.Gameplay
                     _signalBus.Fire(new InputSignal.Down(_settings.inputMap.inputs[i].id));
                 }
 
-                if (_buttons[_settings.inputMap.inputs[i].id].down && UnityEngine.Input.GetKeyUp(_settings.inputMap.inputs[i].key))
+                if (_buttons[_settings.inputMap.inputs[i].id].down &&
+                    UnityEngine.Input.GetKeyUp(_settings.inputMap.inputs[i].key))
                 {
                     _buttons[_settings.inputMap.inputs[i].id].down = false;
                     _signalBus.Fire(new InputSignal.Up(_settings.inputMap.inputs[i].id,
@@ -72,6 +82,43 @@ namespace System.Gameplay
 
                 if (value != 0)
                     _axes.values[i] = value;
+            }
+
+            var r = UnityEngine.Input.GetAxisRaw($"Axis_4");
+            var l = UnityEngine.Input.GetAxisRaw($"Axis_5");
+            
+            Debug.Log($"l {l} - r {r}");
+
+            if (r > 0.5f != _rt)
+            {
+                _rt = r > 0.5f;
+                if (_rt)
+                {
+                    Debug.Log("RtDown");
+                    _signalBus.Fire(new InputSignal.Down(_settings.inputMap.rtId));
+                    _rtTime = Time.time;
+                }
+                else
+                {
+                    Debug.Log("RtUp");
+                    _signalBus.Fire(new InputSignal.Up(_settings.inputMap.rtId, Time.time - _rtTime));
+                }
+            }
+
+            if (l > 0.5f != _lt)
+            {
+                _lt = l > 0.5f;
+                if (_lt)
+                {
+                    Debug.Log("LtDown");
+                    _signalBus.Fire(new InputSignal.Down(_settings.inputMap.ltId));
+                    _rtTime = Time.time;
+                }
+                else
+                {
+                    Debug.Log("LtUp");
+                    _signalBus.Fire(new InputSignal.Up(_settings.inputMap.ltId, Time.time - _ltTime));
+                }
             }
 
             _signalBus.Fire(_axes);

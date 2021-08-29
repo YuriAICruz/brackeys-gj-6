@@ -9,7 +9,6 @@ namespace Presentation.UI
     {
         [Inject] private ICombo _combo;
         
-
         protected override void Awake()
         {
             base.Awake();
@@ -20,12 +19,13 @@ namespace Presentation.UI
         protected override void OnDestroy()
         {
             base.OnDestroy();
+            
             _combo.MaxCombo.RemoveListener(UpdateCombo);
         }
 
         private void UpdateCombo(int combo)
         {
-            SetText(combo.ToString("000000"));
+            SetText(combo.ToString("00"));
         }
     }
 }
