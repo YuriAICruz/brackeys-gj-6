@@ -110,13 +110,13 @@ namespace Presentation.Gameplay.Bosses
                             new MemorySequence(new List<Node>
                             {
                                 new Chance(bossStats.spitProbability[0]),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                                 new CallSystemActionMemory((int) BlackboardIds.Spit),
                                 new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
                             new MemorySequence(new List<Node>()
                             {
                                 new CallSystemActionMemory((int) BlackboardIds.Chase),
-                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                             }),
                         })
                     }),
@@ -151,19 +151,20 @@ namespace Presentation.Gameplay.Bosses
                             new MemorySequence(new List<Node>
                             {
                                 new Chance(bossStats.spitProbability[1]),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                                 new CallSystemActionMemory((int) BlackboardIds.Spit),
                                 new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
                             new MemorySequence(new List<Node>
                             {
                                 new Chance(bossStats.dashBiteProbability[1]),
+                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                                 new CallSystemActionMemory((int) BlackboardIds.DashBite),
                                 new CallSystemActionMemory((int) BlackboardIds.Stag),
                             }),
                             new MemorySequence(new List<Node>()
                             {
                                 new CallSystemActionMemory((int) BlackboardIds.Chase),
-                                new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                             }),
                         }),
                     }),
@@ -195,19 +196,20 @@ namespace Presentation.Gameplay.Bosses
                         new MemorySequence(new List<Node>
                         {
                             new Chance(bossStats.spitProbability[2]),
+                            new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                             new CallSystemActionMemory((int) BlackboardIds.Spit),
                             new CallSystemActionMemory((int) BlackboardIds.Stag),
                         }),
                         new MemorySequence(new List<Node>
                         {
                             new Chance(bossStats.dashBiteProbability[2]),
+                            new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                             new CallSystemActionMemory((int) BlackboardIds.DashBite),
                             new CallSystemActionMemory((int) BlackboardIds.Stag),
                         }),
                         new MemorySequence(new List<Node>()
                         {
                             new CallSystemActionMemory((int) BlackboardIds.Chase),
-                            new CallSystemActionMemory((int) BlackboardIds.Anticipate),
                         }),
                     })
                 }
