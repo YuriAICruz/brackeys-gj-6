@@ -19,6 +19,7 @@ namespace System.Gameplay
         private readonly SignalBus _signalBus;
         private readonly ITimeManager _timer;
         private readonly ICombo _combo;
+        private readonly IScore _score;
         private readonly GameSettings _settings;
         private IActorData player;
         private IActorData boss;
@@ -29,11 +30,12 @@ namespace System.Gameplay
         public IActorData Player => (IActorData) player;
         public IActorData Boss => (IActorData) boss;
 
-        public GameManager(SignalBus signalBus, ITimeManager timer, ICombo combo, GameSettings settings)
+        public GameManager(SignalBus signalBus, ITimeManager timer, ICombo combo, IScore score, GameSettings settings)
         {
             _signalBus = signalBus;
             _timer = timer;
             _combo = combo;
+            _score = score;
             _settings = settings;
 
             _signalBus.Subscribe<Models.Signals.Player.Death>(OnPlayerDeath);
@@ -97,6 +99,7 @@ namespace System.Gameplay
             grade += Hits.GetValue() > _settings.gradeHitsCap ? 1 : 0;
             
             grade += _combo.MaxCombo.GetValue() >= _settings.gradeHitsCap ? 1 : 0;
+            grade += _score.Score.GetValue() >= _settings.gradeScoreCap ? 1 : 0;
 
             grade = Mathf.Clamp(grade, 0, _settings.grades.Length-1);
             

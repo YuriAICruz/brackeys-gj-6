@@ -16,8 +16,8 @@ MonoBehaviour:
   startDelay: 0.4
   healDuration: 0.8
   comboDelay: 4
-  scoreBase: 1
-  comboMultiplier: 2
+  scoreBase: 10
+  comboMultiplier: 5
   comboFeedbacks:
   - feedback: DOOGOO
     mark: 3
@@ -41,3 +41,4 @@ MonoBehaviour:
   gradeDamageCap: 4
   gradeHitsCap: 30
   comboHitsCap: 25
+  gradeScoreCap: 2500

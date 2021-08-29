@@ -25,5 +25,6 @@ namespace System.Gameplay
         public int gradeDamageCap;
         public int gradeHitsCap;
         public int comboHitsCap;
+        public int gradeScoreCap;
     }
 }
